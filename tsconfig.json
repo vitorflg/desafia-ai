@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": false,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": false,
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "lib": ["es2017", "dom", "es2018.promise", "esnext.asynciterable"],
+    "jsx": "react",
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2017"
+  },
+  "include": ["./types/*.d.ts", "./**/*.tsx", "./**/*.ts"],
+  "exclude": ["./webpack.config.js"]
+}
