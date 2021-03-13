@@ -18,10 +18,11 @@ export const theme = {
     heading: 1.3,
   },
   colors: {
-    text: '#000',
+    black: '#000',
     background: '#fff',
     primary: '#333333',
     secondary: '#00B3B6',
+    purple: '#3730A3',
     muted: '#f6f6f6',
     grey: '#cfcfcf',
     yellow: '#FEF7AC',

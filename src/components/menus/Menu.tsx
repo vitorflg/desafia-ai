@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Box, Heading, SxStyleProp } from 'theme-ui';
+import { Box, SxStyleProp } from 'theme-ui';
 import { useDataDispatch, useDataState } from '../../data/DataLayer';
 
 export interface MenuProps {

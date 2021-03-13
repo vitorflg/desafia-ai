@@ -1,7 +1,7 @@
 {
   "name": "@uff/desafia-ai",
-  "version": "1.0.0",
-  "description": "Component's kit to help building UI's easily",
+  "version": "1.1.0",
+  "description": "Plataforma de desafios do instituto de computação da UFF.",
   "dependencies": {
     "react": "0.0.0-experimental-94c0244ba",
     "react-dom": "0.0.0-experimental-94c0244ba",

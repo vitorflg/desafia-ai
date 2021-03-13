@@ -65,7 +65,7 @@ const Home: React.FC = () => {
             sx={{
               flexDirection: 'row',
               alignItems: 'center',
-              backgroundColor: '#3730A3',
+              backgroundColor: 'purple',
               borderRadius: '99rem',
               maxWidth: 'fit-content',
               padding: '0.25rem 0.75rem',
