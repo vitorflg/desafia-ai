@@ -1,5 +1,5 @@
 export const theme = {
-  breakpoints: ['40em', '52em', '64em'],
+  breakpoints: ['40em', '64em', '79em', '120em'],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: 'Roboto',
@@ -108,7 +108,7 @@ export const theme = {
     },
     h1: {
       variant: 'text.heading',
-      fontSize: 7,
+      fontSize: [6, 6, 7],
     },
     h2: {
       variant: 'text.heading',
@@ -166,7 +166,10 @@ export const theme = {
       texDecoration: 'none',
     },
     menu: {
-      display: 'inline-block',
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      alignItems: 'center',
     },
     menuItem: {
       cursor: 'pointer',

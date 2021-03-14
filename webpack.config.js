@@ -3,8 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//   .BundleAnalyzerPlugin;
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: 'index.html',
@@ -36,8 +36,8 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.(woff2|ttf|woff)$/,
-        use: ['file-loader'],
+        test: /\.(woff2|ttf|woff|ico)$/,
+        use: ['file-loader?name=[name].[ext]'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -47,7 +47,6 @@ module.exports = {
   },
   devServer: {
     hot: true,
-    inline: true,
     liveReload: true,
     historyApiFallback: true,
   },
@@ -79,6 +78,6 @@ module.exports = {
         { from: './src/assets/fonts/roboto-light.woff2', to: './' },
       ],
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };

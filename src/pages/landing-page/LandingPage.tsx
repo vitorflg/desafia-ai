@@ -9,10 +9,30 @@ import { Card, CardContent } from '../../components/cards/Card';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Menu, MenuItem } from '../../components/menus/Menu';
 import CardsList from './self-components/header/CardsList';
+import { CgMenuGridO } from 'react-icons/cg';
+
+export type MenuItemType = {
+  text?: string;
+  icon?: React.ComponentType;
+  url: string;
+};
+
+const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
+  left: [
+    { text: 'Criar desafio', url: '/' },
+    { text: 'Como funciona?', url: '/' },
+    { text: 'Apoio', url: '/' },
+  ],
+  right: [
+    { icon: CgMenuGridO, url: '/' },
+    { text: 'Cadastre-se', url: '/' },
+    { text: 'Entrar', url: '/' },
+  ],
+};
 
 const Home: React.FC = () => {
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <Header
         sx={{
           px: 4,
@@ -21,32 +41,39 @@ const Home: React.FC = () => {
         behaviour="relative"
       >
         <HeaderRow sx={{ alignItems: 'center' }}>
-          <Box
-            data-testid="headerLeft"
-            sx={{ flexGrow: 1, display: 'inline-block' }}
-          >
-            <Image
-              width="140"
-              sx={{ display: 'inline-block', verticalAlign: 'middle' }}
-              src={logoSrc}
-            />
+          <Image
+            width="140"
+            sx={{
+              display: 'inline-block',
+              verticalAlign: 'middle',
+              minWidth: '140px',
+              flexGrow: 1,
+            }}
+            src={logoSrc}
+          />
 
-            <Menu sx={{ ml: 5 }}>
+          <Menu schema={MENU_SCHEMA} sx={{ variant: 'styles.menu' }}>
+            <Box
+              data-testid="headerLeft"
+              sx={{ flexGrow: 1, display: 'inherit', ml: 3 }}
+            >
               <MenuItem OnHover={() => <CardsList />}>Criar desafio</MenuItem>
-            </Menu>
 
-            <Menu sx={{ ml: 5 }}>Como funciona?</Menu>
+              <MenuItem sx={{ ml: 5 }}>Como funciona?</MenuItem>
 
-            <Menu sx={{ ml: 5 }}>Apoio</Menu>
-          </Box>
+              <MenuItem sx={{ ml: 5 }}>Apoio</MenuItem>
+            </Box>
 
-          <Box sx={{ mr: 2 }}>
-            <AiOutlineSearch size="30"></AiOutlineSearch>
-          </Box>
+            <MenuItem sx={{ ml: 5 }}>
+              <Box sx={{ mr: 2 }}>
+                <AiOutlineSearch size="30"></AiOutlineSearch>
+              </Box>
+            </MenuItem>
 
-          <Menu sx={{ ml: 5 }}>Cadastre-se</Menu>
+            <MenuItem sx={{ ml: 5 }}>Cadastre-se</MenuItem>
 
-          <Menu sx={{ ml: 5 }}>Entrar</Menu>
+            <MenuItem sx={{ ml: 5 }}>Entrar</MenuItem>
+          </Menu>
         </HeaderRow>
       </Header>
 
@@ -55,9 +82,8 @@ const Home: React.FC = () => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          pt: 5,
           px: 4,
-          paddingTop: '354px',
+          paddingTop: ['200px', '200px', '354px'],
         }}
       >
         <Box sx={{ position: 'relative', bottom: '150px' }}>
@@ -107,7 +133,13 @@ const Home: React.FC = () => {
 
         <Image
           width="1200"
-          sx={{ position: 'absolute', right: '-650px', minWidth: '1400px' }}
+          sx={{
+            position: 'absolute',
+            top: ['-50px', '-50px', '0', '50px'],
+            right: ['0', '-800px', '-800px', '-650px'],
+            minWidth: '1400px',
+            display: ['none', 'none', 'block'],
+          }}
           src={illustrationSrc}
         ></Image>
       </Flex>
@@ -116,7 +148,7 @@ const Home: React.FC = () => {
         Como funciona?
       </Heading>
 
-      <Flex sx={{ py: 4, px: 4, flexDirection: 'row' }}>
+      <Flex sx={{ py: 4, px: 4, flexDirection: ['column', 'column', 'row'] }}>
         <Card sx={{ maxWidth: '400px' }}>
           <CardContent>
             <Heading sx={{ mt: 2 }} as="h4">
@@ -130,7 +162,7 @@ const Home: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card sx={{ maxWidth: '300px', marginLeft: 5 }}>
+        <Card sx={{ maxWidth: '300px', marginLeft: [0, 0, 5] }}>
           <CardContent>
             <Heading sx={{ mt: 2 }} as="h4">
               <u>2. Convide pessoas</u>
@@ -143,9 +175,20 @@ const Home: React.FC = () => {
         </Card>
       </Flex>
 
-      <Flex sx={{ mt: 5 }}>
-        <Image sx={{ width: '100%' }} src={featuresSrc}></Image>
-        <Box sx={{ width: '20rem', marginLeft: 4, marginRight: 4 }}>
+      <Flex sx={{ mt: 5, flexDirection: ['column', 'column', 'row'] }}>
+        <Image
+          sx={{ width: '100%', order: [2, 2, 1], marginTop: [4, 4, 0] }}
+          src={featuresSrc}
+        ></Image>
+
+        <Box
+          sx={{
+            width: ['10rem', '10rem', '20rem'],
+            marginLeft: 4,
+            marginRight: 4,
+            order: [1, 1, 2],
+          }}
+        >
           <Button
             sx={{ width: '100%', textDecoration: 'underline' }}
             variant="disabled"
@@ -157,24 +200,31 @@ const Home: React.FC = () => {
 
       <Flex
         sx={{
-          flexDirection: 'row',
+          flexDirection: ['column', 'column', 'row'],
           justifyContent: 'center',
           alignItems: 'center',
-          py: 7,
+          py: 5,
         }}
       >
-        <Box>
-          <Heading>Newsletter</Heading>
-          <Text sx={{ maxWidth: '22rem' }} variant="styles.p">
+        <Box sx={{ textAlign: ['center', 'center', 'left'] }}>
+          <Heading as="h1">Newsletter</Heading>
+
+          <Text sx={{ maxWidth: '22rem', mt: 3 }} variant="styles.p">
             Receba desafios periodicamente de acordo com o seu perfil
           </Text>
         </Box>
+
         <Input
           variant="inputs.primary"
-          sx={{ maxWidth: '20rem', mr: 3 }}
+          sx={{ maxWidth: '20rem', mr: [0, 0, 3], mt: 3 }}
           placeholder="vitorflg@id.uff.br"
         ></Input>
-        <Button>Assinar</Button>
+
+        <Button
+          sx={{ mt: 3, width: ['100%', '100%', 'auto'], maxWidth: '20rem' }}
+        >
+          Assinar
+        </Button>
       </Flex>
 
       <Box

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Responsive landing page and favicon.
+
 ## [1.1.0] - 2021-03-13
 
 ### Added

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './pages/home/Home';
+import LandingPage from './pages/landing-page/LandingPage';
 import { ThemeProvider } from 'theme-ui';
 import theme from './themes';
 import { Route } from 'wouter';
@@ -13,7 +13,7 @@ const App = () => {
     <DataProvider>
       <ThemeProvider theme={theme}>
         <ErrorBoundary>
-          <Route path={routes.home} component={Home}></Route>
+          <Route path={routes.landing_page} component={LandingPage}></Route>
         </ErrorBoundary>
       </ThemeProvider>
     </DataProvider>
