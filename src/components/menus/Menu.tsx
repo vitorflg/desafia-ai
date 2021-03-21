@@ -5,13 +5,14 @@ import { MobileAndTablet, Desktop } from 'react-responsive-simple';
 import { CgMenuGridO } from 'react-icons/cg';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { MenuItemType } from '../../pages/landing-page/LandingPage';
-
+import { useLocation } from 'wouter';
 export interface MenuProps {
   sx?: SxStyleProp;
   schema: Record<'left' | 'right', MenuItemType[]>;
 }
 
 export interface MenuItemProps {
+  onClick?: () => void;
   children: ReactNode;
   OnHover?: () => JSX.Element;
   sx?: SxStyleProp;
@@ -19,12 +20,16 @@ export interface MenuItemProps {
 
 export type MenuActions = 'setMenuState';
 
-export const MenuItem: React.FC<MenuItemProps> = ({ children, sx }) => {
+export const MenuItem: React.FC<MenuItemProps> = ({
+  onClick,
+  children,
+  sx,
+}) => {
   // const state = useDataState();
   // const dispatch = useDataDispatch();
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box onClick={onClick} sx={{ position: 'relative' }}>
       <Box sx={{ ...sx, variant: 'styles.menuItem' }}>{children}</Box>
     </Box>
   );
@@ -51,6 +56,7 @@ export const Menu: React.FC<MenuProps> = ({ schema, sx }) => {
 };
 
 export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
+  const [, setLocation] = useLocation();
   const leftItems = schema.left;
   const rightItems = schema.right;
 
@@ -73,7 +79,12 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
       {rightItems &&
         rightItems.map((rightItem, _) => {
           return (
-            <MenuItem sx={{ ml: 5 }}>
+            <MenuItem
+              onClick={
+                rightItem.url ? () => setLocation(rightItem.url) : undefined
+              }
+              sx={{ ml: 5 }}
+            >
               {rightItem.text ?? rightItem.icon}
             </MenuItem>
           );
