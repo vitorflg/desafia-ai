@@ -25,6 +25,7 @@ export const theme = {
     purple: '#3730A3',
     muted: '#f6f6f6',
     grey: '#cfcfcf',
+    gray: '#555555',
     yellow: '#FEF7AC',
     red: '#db0404',
   },
@@ -112,7 +113,7 @@ export const theme = {
     },
     h2: {
       variant: 'text.heading',
-      fontSize: 5,
+      fontSize: [6, 6, 6],
     },
     h3: {
       variant: 'text.heading',
@@ -170,6 +171,7 @@ export const theme = {
       flexDirection: 'row',
       width: '100%',
       alignItems: 'center',
+      color: 'gray',
     },
     menuItem: {
       cursor: 'pointer',

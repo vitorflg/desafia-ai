@@ -32,7 +32,18 @@
       content="Plataforma de desafios do instituto de computação da UFF."
     />
     <title>desafia aí</title>
-    <link rel="shortcut icon" href="./public/favicon.ico" type="image/ico" />
+    <script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>
+    <script>
+      var webAuth = new auth0.WebAuth({
+        domain: 'https://dev-7b-wpe4a.us.auth0.com',
+        clientID: 'kBauIRTheaVnfPcUqhhSm7w4FPWHGLt8',
+      });
+
+      webAuth.authorize({
+        connection: 'google-oauth2',
+      });
+    </script>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/ico" />
   </head>
 
   <body>

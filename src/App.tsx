@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './pages/landing-page/LandingPage';
+import AuthPage from './pages/auth/AuthPage';
 import { ThemeProvider } from 'theme-ui';
 import theme from './themes';
 import { Route } from 'wouter';
@@ -14,6 +15,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <ErrorBoundary>
           <Route path={routes.landing_page} component={LandingPage}></Route>
+          <Route path={routes.auth} component={AuthPage}></Route>
         </ErrorBoundary>
       </ThemeProvider>
     </DataProvider>

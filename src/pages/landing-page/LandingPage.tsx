@@ -1,15 +1,15 @@
 import React from 'react';
 import { Header, HeaderRow } from '../../components/headers/PublicHeader';
-import logoSrc from '../../assets/images/logo.jpg';
+import logoSrc from '../../assets/images/logo.png';
 import { Box, Image, Heading, Flex, Button, Text, Input } from 'theme-ui';
 import illustrationSrc from '../../assets/images/illustration2.png';
 import featuresSrc from '../../assets/images/features.png';
-import icSrc from '../../assets/images/ic.png';
 import { Card, CardContent } from '../../components/cards/Card';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Menu, MenuItem } from '../../components/menus/Menu';
-import CardsList from './self-components/header/CardsList';
 import { CgMenuGridO } from 'react-icons/cg';
+import { IoLogoDropbox } from 'react-icons/io';
+import { clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 export type MenuItemType = {
   text?: string;
@@ -26,13 +26,22 @@ const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
   right: [
     { icon: CgMenuGridO, url: '/' },
     { text: 'Cadastre-se', url: '/' },
-    { text: 'Entrar', url: '/' },
+    { text: 'Entrar', url: '/auth' },
   ],
 };
 
-const Home: React.FC = () => {
+const LandingPage: React.FC = () => {
+  React.useEffect(() => {
+    clearAllBodyScrollLocks();
+  });
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '100%',
+        background:
+          'radial-gradient(254.64% 159.5% at 92.27% 17.71%, #E6E6E6 0%, rgba(247, 247, 247, 0) 100%)',
+      }}
+    >
       <Header
         sx={{
           px: 4,
@@ -57,7 +66,7 @@ const Home: React.FC = () => {
               data-testid="headerLeft"
               sx={{ flexGrow: 1, display: 'inherit', ml: 3 }}
             >
-              <MenuItem OnHover={() => <CardsList />}>Criar desafio</MenuItem>
+              <MenuItem>Criar desafio</MenuItem>
 
               <MenuItem sx={{ ml: 5 }}>Como funciona?</MenuItem>
 
@@ -176,10 +185,55 @@ const Home: React.FC = () => {
       </Flex>
 
       <Flex sx={{ mt: 5, flexDirection: ['column', 'column', 'row'] }}>
-        <Image
-          sx={{ width: '100%', order: [2, 2, 1], marginTop: [4, 4, 0] }}
-          src={featuresSrc}
-        ></Image>
+        <Box
+          sx={{
+            backgroundColor: 'purple',
+            color: 'white',
+            width: ['100%', '100%', '80%'],
+            padding: ['7rem 2rem', '7rem 2rem', '7rem 7rem'],
+          }}
+        >
+          <Box
+            sx={{
+              display: 'inline-block',
+              position: 'relative',
+              bottom: '3rem',
+            }}
+          >
+            <Box
+              sx={{
+                padding: '0.5rem',
+                backgroundColor: 'white',
+                borderRadius: 4,
+                width: 'fit-content',
+                '> *': { display: 'inline-block', verticalAlign: 'middle' },
+              }}
+            >
+              <IoLogoDropbox size="25" color="#3730A3"></IoLogoDropbox>
+
+              <Text sx={{ color: 'purple', ml: 2 }}>Integrações</Text>
+            </Box>
+
+            <Heading
+              sx={{ maxWidth: '40rem', mt: 4 }}
+              variant="styles.h1"
+              as="h1"
+            >
+              Integrações para diferentes tipos de desafios.
+            </Heading>
+
+            <Heading
+              sx={{ maxWidth: '40rem', mt: 4 }}
+              variant="styles.h3"
+              as="h3"
+            >
+              Conecte outras aplicações com a nossa plataforma para facilmente
+              permitir uma maior range de desafios!
+            </Heading>
+          </Box>
+
+          <Image src={featuresSrc} />
+        </Box>
 
         <Box
           sx={{
@@ -203,7 +257,7 @@ const Home: React.FC = () => {
           flexDirection: ['column', 'column', 'row'],
           justifyContent: 'center',
           alignItems: 'center',
-          py: 5,
+          py: 6,
         }}
       >
         <Box sx={{ textAlign: ['center', 'center', 'left'] }}>
@@ -229,19 +283,19 @@ const Home: React.FC = () => {
 
       <Box
         sx={{
-          height: '30rem',
+          height: '6rem',
           backgroundColor: 'primary',
           position: 'relative',
         }}
       >
         <Image
           sx={{ position: 'absolute', left: 4, bottom: 4 }}
-          width="120"
-          src={icSrc}
+          width="140"
+          src={logoSrc}
         ></Image>
       </Box>
     </Box>
   );
 };
 
-export default Home;
+export default LandingPage;
