@@ -26,8 +26,11 @@ export const theme = {
     muted: '#f6f6f6',
     grey: '#cfcfcf',
     gray: '#555555',
+    grai: '#3F3F46',
     yellow: '#FEF7AC',
     red: '#db0404',
+    whiteIce: '#E0E0E0',
+    black2: '#222222'
   },
   links: {
     clean: {
