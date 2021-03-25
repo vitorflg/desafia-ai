@@ -1,12 +1,14 @@
 import React from 'react';
 import { Header, HeaderRow } from '../../components/headers/PublicHeader';
 import logoSrc from '../../assets/images/logo.png';
-import { Box, Image, Heading, Flex, Button, Text, Input } from 'theme-ui';
+import whiteLogoSrc from '../../assets/images/white-logo.png';
+import { Box, Image, Heading, Flex, Button, Text, Input, Link } from 'theme-ui';
 import illustrationSrc from '../../assets/images/illustration2.png';
 import featuresSrc from '../../assets/images/features.png';
 import { Card, CardContent } from '../../components/cards/Card';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch, AiOutlineFacebook, AiOutlineTwitter, AiOutlineWhatsApp, AiOutlineArrowUp } from 'react-icons/ai';
 import { Menu, MenuItem } from '../../components/menus/Menu';
+import { Footer, FooterRow } from '../../components/footers/PublicFooter';
 import { CgMenuGridO } from 'react-icons/cg';
 import { IoLogoDropbox } from 'react-icons/io';
 import { clearAllBodyScrollLocks } from 'body-scroll-lock';
@@ -281,19 +283,88 @@ const LandingPage: React.FC = () => {
         </Button>
       </Flex>
 
-      <Box
+      <Footer
         sx={{
-          height: '6rem',
-          backgroundColor: 'primary',
-          position: 'relative',
+          height: '11rem',
+          px: 4,
+          py: '1.25rem',
+          backgroundColor: 'black2'
         }}
+        behaviour="relative"
       >
-        <Image
-          sx={{ position: 'absolute', left: 4, bottom: 4 }}
-          width="140"
-          src={logoSrc}
-        ></Image>
-      </Box>
+        <FooterRow sx={{ alignItems: 'center' }}>
+          <Box
+            data-testid="footerLeft"
+            sx={{ flexGrow: 1, display: 'inline-block' }}
+          >
+            <Image
+              width="160"
+              sx={{ display: 'inline-block', verticalAlign: 'middle' }}
+              src={whiteLogoSrc}
+            />
+          </Box>
+
+          <Link sx={{ ml: 5, color: 'whiteIce' }}>Direitos autorais</Link>
+
+          <Link sx={{ ml: 5, color: 'whiteIce' }}>Termos de uso</Link>
+
+          <Link sx={{ ml: 5, color: 'whiteIce' }}>Políticas de privacidade</Link>
+        </FooterRow>
+        <FooterRow sx={{ alignItems: 'center', marginTop: 4 }}>
+          <Box
+            data-testid="footerLeft"
+            sx={{ flexGrow: 1, display: 'inline-block' }}
+          >
+            <Link
+              sx={{
+                backgroundColor: 'grai',
+                padding: 1,
+              }}
+            >
+              <AiOutlineFacebook color="#fff" />
+            </Link>
+            <Link
+              sx={{
+                backgroundColor: 'grai',
+                ml: 3,
+                padding: 1,
+              }}
+            >
+              <AiOutlineTwitter color="#fff"  />
+            </Link>
+            <Link
+              sx={{
+                backgroundColor: 'grai',
+                ml: 3,
+                padding: 1,
+              }}
+            >
+              <AiOutlineWhatsApp color="#fff"  />
+            </Link>
+
+            <Link sx={{ ml: 3, color: 'whiteIce' }}>Central de Ajuda</Link>
+          </Box>
+
+          <Text sx={{
+            color: '#2062AC',
+            fontSize: 2,
+            fontWeight: 'bold',
+            textDecoration: 'underline'
+          }}>
+            Desafie você mesmo!
+          </Text>
+
+          <Link
+            sx={{
+              backgroundColor: 'grai',
+              ml: 4,
+              padding: 1,
+            }}
+          >
+            <AiOutlineArrowUp color="#fff" />
+          </Link>
+        </FooterRow>
+      </Footer>
     </Box>
   );
 };
