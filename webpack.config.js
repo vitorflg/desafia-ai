@@ -7,7 +7,7 @@ const PreloadWebpackPlugin = require('preload-webpack-plugin');
 //   .BundleAnalyzerPlugin;
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: 'index.html',
+  template: './dist/index.html',
 });
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
   filename: '[name].css',
@@ -76,7 +76,8 @@ module.exports = {
       patterns: [
         { from: './src/assets/fonts/roboto.woff2', to: './' },
         { from: './src/assets/fonts/roboto-light.woff2', to: './' },
-        { from: './dist/favicon.ico', to: './' },
+        { from: './public/favicon.ico', to: './' },
+        { from: './public/index.html', to: './' },
       ],
     }),
     // new BundleAnalyzerPlugin(),
