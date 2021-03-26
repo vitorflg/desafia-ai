@@ -18,7 +18,12 @@ const AuthPage: React.FC = () => {
     };
   }, []);
 
-  const responseGoogle = (response: any) => {
+  /* 
+    TODO: Integrate with a custom back-end to control user authentication
+    in the server
+  */
+
+  const onSuccess = (response: any) => {
     setCurrentUser(response);
     toast.dark('🚀 Login realizado com sucesso!', {
       position: 'bottom-left',
@@ -31,7 +36,7 @@ const AuthPage: React.FC = () => {
     });
   };
 
-  const BadresponseGoogle = (response: any) => {
+  const onFailure = (response: any) => {
     console.log(response);
     toast.dark('❌ Erro ao realizar login', {
       position: 'bottom-left',
@@ -106,8 +111,8 @@ const AuthPage: React.FC = () => {
               }}
               clientId="800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com"
               buttonText="Entrar com e-mail da UFF"
-              onSuccess={responseGoogle}
-              onFailure={BadresponseGoogle}
+              onSuccess={onSuccess}
+              onFailure={onFailure}
               cookiePolicy={'single_host_origin'}
             />
           </Box>
