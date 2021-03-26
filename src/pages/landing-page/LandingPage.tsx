@@ -2,7 +2,7 @@ import React from 'react';
 import { Header, HeaderRow } from '../../components/headers/PublicHeader';
 import logoSrc from '../../assets/images/logo.png';
 import whiteLogoSrc from '../../assets/images/white-logo.png';
-import { Box, Image, Heading, Flex, Button, Text, Input, Link } from 'theme-ui';
+import { Box, Image, Heading, Flex, Button, Text, Input, Link, Badge } from 'theme-ui';
 import illustrationSrc from '../../assets/images/illustration2.png';
 import featuresSrc from '../../assets/images/features.png';
 import { Card, CardContent } from '../../components/cards/Card';
@@ -87,6 +87,95 @@ const LandingPage: React.FC = () => {
           </Menu>
         </HeaderRow>
       </Header>
+
+      <Flex
+        sx={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'left',
+          px: 4,
+          paddingTop: '1rem'
+        }}
+      >
+        <Box>
+          <Badge
+            sx={{
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Desenvolvimento Web
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Lógica de Programação
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Internet das Coisas
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Machine Learning
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Redes
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              padding: 2,
+              borderRadius: '99px',
+              border: '2px solid #3d3d3d',
+              background: 'transparent',
+              color: 'gray'
+            }}
+          >
+            Ciência de Dados
+          </Badge>
+        </Box>
+      </Flex>
 
       <Flex
         sx={{
@@ -330,7 +419,7 @@ const LandingPage: React.FC = () => {
                 padding: 1,
               }}
             >
-              <AiOutlineTwitter color="#fff"  />
+              <AiOutlineTwitter color="#fff" />
             </Link>
             <Link
               sx={{
@@ -339,7 +428,7 @@ const LandingPage: React.FC = () => {
                 padding: 1,
               }}
             >
-              <AiOutlineWhatsApp color="#fff"  />
+              <AiOutlineWhatsApp color="#fff" />
             </Link>
 
             <Link sx={{ ml: 3, color: 'whiteIce' }}>Central de Ajuda</Link>
