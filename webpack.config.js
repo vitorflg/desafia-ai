@@ -76,7 +76,7 @@ module.exports = {
       patterns: [
         { from: './src/assets/fonts/roboto.woff2', to: './' },
         { from: './src/assets/fonts/roboto-light.woff2', to: './' },
-        { from: './public/favicon.ico', to: './' },
+        { from: './dist/favicon.ico', to: './' },
       ],
     }),
     // new BundleAnalyzerPlugin(),
