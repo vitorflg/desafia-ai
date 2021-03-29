@@ -4,7 +4,9 @@ import React from 'react';
 import logoImgSrc from '../../assets/images/logo.png';
 import authImgSrc from '../../assets/images/woman-in-science.jpg';
 import { Header, HeaderRow } from '../../components/headers/PublicHeader';
-import GoogleLogin from 'react-google-login';
+import GoogleLogin, { GoogleLogout } from 'react-google-login';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthPage: React.FC = () => {
   const [currentUser, setCurrentUser] = React.useState();
@@ -16,13 +18,52 @@ const AuthPage: React.FC = () => {
     };
   }, []);
 
-  const responseGoogle = (response: any) => {
-    console.log(response);
+  /* 
+    TODO: Integrate with a custom back-end to control user authentication
+    in the server
+  */
+
+  const onSuccess = (response: any) => {
     setCurrentUser(response);
+    toast.dark('🚀 Login realizado com sucesso!', {
+      position: 'bottom-left',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
+
+  const onFailure = (response: any) => {
+    console.log(response);
+    toast.dark('❌ Erro ao realizar login', {
+      position: 'bottom-left',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  console.log(currentUser);
 
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Header
         sx={{
           px: 4,
@@ -70,18 +111,46 @@ const AuthPage: React.FC = () => {
               }}
               clientId="800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com"
               buttonText="Entrar com e-mail da UFF"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onSuccess={onSuccess}
+              onFailure={onFailure}
               cookiePolicy={'single_host_origin'}
             />
           </Box>
-          <Box>
+          {currentUser && (
+            <Box
+              id="222"
+              sx={{
+                position: 'fixed',
+                top: '1rem',
+                right: '1rem',
+                zIndex: 999,
+              }}
+            >
+              <GoogleLogout
+                clientId="800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com"
+                buttonText="Logout"
+                onLogoutSuccess={() => {
+                  setCurrentUser(undefined);
+                  toast.dark('Logout realizado com sucesso!', {
+                    position: 'bottom-left',
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }}
+              />
+            </Box>
+          )}
+          {/* <Box>
             {currentUser && (
               <Heading sx={{ marginTop: '6rem' }} as="h6">
                 {JSON.stringify(currentUser)}
               </Heading>
             )}
-          </Box>
+          </Box> */}
         </Box>
 
         <Box sx={{ width: '55%', position: 'relative' }}>
