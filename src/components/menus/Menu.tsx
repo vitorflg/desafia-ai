@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { Box, SxStyleProp } from 'theme-ui';
-// import { useDataDispatch, useDataState } from '../../data/DataLayer';
 import { MobileAndTablet, Desktop } from 'react-responsive-simple';
 import { CgMenuGridO } from 'react-icons/cg';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
@@ -13,33 +12,10 @@ export interface MenuProps {
 
 export interface MenuItemProps {
   onClick?: () => void;
-  children: ReactNode;
   OnHover?: () => JSX.Element;
+  children: ReactNode;
   sx?: SxStyleProp;
 }
-
-export type MenuActions = 'setMenuState';
-
-export const MenuItem: React.FC<MenuItemProps> = ({
-  onClick,
-  children,
-  sx,
-}) => {
-  // const state = useDataState();
-  // const dispatch = useDataDispatch();
-
-  return (
-    <Box onClick={onClick} sx={{ position: 'relative' }}>
-      <Box sx={{ ...sx, variant: 'styles.menuItem' }}>{children}</Box>
-    </Box>
-  );
-};
-
-export const menuReducer = {
-  setMenuState: (open: boolean): Record<string, unknown> => {
-    return { open };
-  },
-};
 
 export const Menu: React.FC<MenuProps> = ({ schema, sx }) => {
   return (
@@ -55,6 +31,18 @@ export const Menu: React.FC<MenuProps> = ({ schema, sx }) => {
   );
 };
 
+export const MenuItem: React.FC<MenuItemProps> = ({
+  onClick,
+  children,
+  sx,
+}) => {
+  return (
+    <Box onClick={onClick} sx={{ position: 'relative' }}>
+      <Box sx={{ ...sx, variant: 'styles.menuItem' }}>{children}</Box>
+    </Box>
+  );
+};
+
 export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
   const [, setLocation] = useLocation();
   const leftItems = schema.left;
@@ -62,10 +50,7 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
 
   return (
     <Box sx={{ ...sx, variant: 'styles.menu' }}>
-      <Box
-        data-testid="headerLeft"
-        sx={{ flexGrow: 1, display: 'inherit', ml: 3 }}
-      >
+      <Box sx={{ flexGrow: 1, display: 'inherit', ml: 3 }}>
         {leftItems &&
           leftItems.map((leftItem, _) => {
             return (
@@ -118,7 +103,7 @@ export const MenuMobile: React.FC<MenuProps> = ({ schema }) => {
           position: 'relative',
           textAlign: 'right',
           cursor: 'pointer',
-          zIndex: 999999,
+          zIndex: 9,
         }}
       >
         <CgMenuGridO size="30"></CgMenuGridO>
@@ -129,7 +114,7 @@ export const MenuMobile: React.FC<MenuProps> = ({ schema }) => {
           data-testid="menuOverlay"
           sx={{
             position: 'fixed',
-            zIndex: 99,
+            zIndex: 9,
             width: '100%',
             backgroundColor: 'white',
             maxHeight: '100vh',

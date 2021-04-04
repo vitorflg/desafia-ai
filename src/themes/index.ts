@@ -18,29 +18,29 @@ export const theme = {
     heading: 1.3,
   },
   colors: {
-    black: '#000',
+    green: '#00B3B6',
     background: '#fff',
-    primary: '#333333',
-    secondary: '#00B3B6',
+    blue: '#2062AC',
     purple: '#3730A3',
-    muted: '#f6f6f6',
-    grey: '#cfcfcf',
-    gray: '#555555',
-    grai: '#3F3F46',
+    'gray--200': '#E6E6E6',
+    'gray--300': '#cfcfcf',
+    'gray--400': '#555555',
+    'gray-700': '#3F3F46',
     yellow: '#FEF7AC',
     red: '#db0404',
     whiteIce: '#E0E0E0',
-    black2: '#222222'
+    'black--500': '#333333',
+    'black--600': '#222222',
   },
   links: {
     clean: {
       textDecoration: 'none',
-      color: 'primary',
+      color: 'black--600',
     },
   },
   cards: {
     primary: {
-      border: '1px solid #dedede',
+      border: '1px solid gray--300',
       borderRadius: '2rem',
       padding: '5rem',
       background: 'white',
@@ -49,12 +49,12 @@ export const theme = {
   inputs: {
     primary: {
       py: 3,
-      borderColor: 'grey',
+      borderColor: 'gray--300',
     },
   },
   buttons: {
     primary: {
-      bg: 'secondary',
+      bg: 'green',
       color: '#fff',
       border: 'none',
       padding: '15px 30px',
@@ -63,8 +63,8 @@ export const theme = {
       borderRadius: 10,
     },
     secondary: {
-      bg: 'grey',
-      color: 'primary',
+      bg: 'gray--300',
+      color: 'black--600',
       border: 'none',
       padding: '15px 30px',
       cursor: 'pointer',
@@ -73,16 +73,16 @@ export const theme = {
     },
     disabled: {
       variant: 'buttons.secondary',
-      color: 'primary',
+      color: 'black--600',
       cursor: 'not-allowed',
     },
   },
   borders: {
     primary: {
-      border: '1px solid primary',
+      border: '1px solid black--600',
     },
     header: {
-      borderBottom: '1px solid #dedede',
+      borderBottom: '1px solid gray--300',
     },
   },
   text: {
@@ -158,7 +158,7 @@ export const theme = {
     p: {
       variant: 'text.display',
       margin: '0 auto',
-      color: 'gray',
+      color: 'gray--400',
       fontSize: 3,
     },
     td: {
@@ -167,14 +167,13 @@ export const theme = {
     },
     a: {
       variant: 'text.link',
-      texDecoration: 'none',
     },
     menu: {
       display: 'flex',
       flexDirection: 'row',
       width: '100%',
       alignItems: 'center',
-      color: 'gray',
+      color: 'gray--400',
     },
     menuItem: {
       cursor: 'pointer',

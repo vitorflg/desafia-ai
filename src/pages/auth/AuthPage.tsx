@@ -3,7 +3,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import React from 'react';
 import logoImgSrc from '../../assets/images/logo.png';
 import authImgSrc from '../../assets/images/woman-in-science.jpg';
-import { Header, HeaderRow } from '../../components/headers/PublicHeader';
+import { Header } from '../../components/headers/PublicHeader';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -71,11 +71,8 @@ const AuthPage: React.FC = () => {
           width: 'fit-content',
           margin: 0,
         }}
-        behaviour="relative"
       >
-        <HeaderRow>
-          <Image width="140" src={logoImgSrc} />
-        </HeaderRow>
+        <Image width="140" src={logoImgSrc} />
       </Header>
 
       <Flex
@@ -144,13 +141,6 @@ const AuthPage: React.FC = () => {
               />
             </Box>
           )}
-          {/* <Box>
-            {currentUser && (
-              <Heading sx={{ marginTop: '6rem' }} as="h6">
-                {JSON.stringify(currentUser)}
-              </Heading>
-            )}
-          </Box> */}
         </Box>
 
         <Box sx={{ width: '55%', position: 'relative' }}>
