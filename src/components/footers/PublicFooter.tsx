@@ -1,33 +1,23 @@
 /** @jsx jsx */
 import React, { ReactNode } from 'react';
-import { Flex, Box, jsx, SxStyleProp } from 'theme-ui';
+import { Flex, jsx, SxStyleProp } from 'theme-ui';
 
 interface Footer {
   children: ReactNode;
-  behaviour: 'sticky' | 'relative' | 'absolute';
-  sx?: SxStyleProp;
-}
-interface FooterRow {
-  children: ReactNode;
   sx?: SxStyleProp;
 }
 
-export const Footer: React.FC<Footer> = ({ children, behaviour, sx }) => {
+export const Footer: React.FC<Footer> = ({ children, sx }) => {
   return (
-    <Box
+    <Flex
       as="footer"
       sx={{
         ...sx,
-        position: behaviour,
-        flexDirection: 'column',
+        flexDirection: 'row',
         variant: 'stytes.footer',
       }}
     >
       {children}
-    </Box>
+    </Flex>
   );
-};
-
-export const FooterRow: React.FC<FooterRow> = ({ children, sx }) => {
-  return <Flex sx={{ ...sx, flexDirection: 'row' }}>{children}</Flex>;
 };

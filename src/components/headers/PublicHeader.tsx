@@ -1,33 +1,25 @@
 /** @jsx jsx */
 import React, { ReactNode } from 'react';
-import { Flex, Box, jsx, SxStyleProp } from 'theme-ui';
+import { jsx, SxStyleProp } from 'theme-ui';
+import { Flex } from 'theme-ui';
 
 interface Header {
   children: ReactNode;
-  behaviour: 'sticky' | 'relative' | 'absolute';
-  sx?: SxStyleProp;
-}
-interface HeaderRow {
-  children: ReactNode;
   sx?: SxStyleProp;
 }
 
-export const Header: React.FC<Header> = ({ children, behaviour, sx }) => {
+export const Header: React.FC<Header> = ({ children, sx }) => {
   return (
-    <Box
+    <Flex
       as="header"
       sx={{
         ...sx,
-        position: behaviour,
-        flexDirection: 'column',
+        position: 'relative',
+        flexDirection: 'row',
         variant: 'stytes.header',
       }}
     >
       {children}
-    </Box>
+    </Flex>
   );
-};
-
-export const HeaderRow: React.FC<HeaderRow> = ({ children, sx }) => {
-  return <Flex sx={{ ...sx, flexDirection: 'row' }}>{children}</Flex>;
 };
