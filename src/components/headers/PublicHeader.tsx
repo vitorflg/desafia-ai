@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import React, { ReactNode } from 'react';
-import { jsx, SxStyleProp } from 'theme-ui';
+import { jsx, ThemeUICSSObject } from 'theme-ui';
 import { Flex } from 'theme-ui';
 
 interface Header {
   children: ReactNode;
-  sx?: SxStyleProp;
+  sx?: ThemeUICSSObject;
 }
 
 export const Header: React.FC<Header> = ({ children, sx }) => {
