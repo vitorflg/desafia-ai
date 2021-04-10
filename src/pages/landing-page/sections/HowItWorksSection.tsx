@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Flex } from 'theme-ui';
+import { Heading, Flex, Paragraph } from 'theme-ui';
 import { Card, CardContent } from '../../../components/cards/Card';
 
 const HowItWorksSection: React.FC = () => {
@@ -13,13 +13,13 @@ const HowItWorksSection: React.FC = () => {
         <Card sx={{ maxWidth: '25rem' }}>
           <CardContent>
             <Heading sx={{ mt: 2 }} as="h4">
-              <u>1. Crie um desafio</u>
+              <u>1. Encontre/crie um desafio</u>
             </Heading>
 
-            <Heading sx={{ mt: 3 }} as="p">
-              Escolha uma categoria e proponha um desafio relacionada à ciência
-              da computação
-            </Heading>
+            <Paragraph sx={{ mt: 3 }}>
+              Escolha uma categoria e proponha/aceite um desafio relacionado à
+              ciência da computação
+            </Paragraph>
           </CardContent>
         </Card>
 
@@ -29,9 +29,10 @@ const HowItWorksSection: React.FC = () => {
               <u>2. Convide pessoas</u>
             </Heading>
 
-            <Heading sx={{ mt: 3 }} as="p">
-              Lorem ipsum
-            </Heading>
+            <Paragraph sx={{ mt: 3 }}>
+              Envie o link para pessoas vinculadas à UFF para colaborar, seja
+              com soluções ou avaliações!
+            </Paragraph>
           </CardContent>
         </Card>
       </Flex>

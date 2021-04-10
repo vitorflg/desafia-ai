@@ -115,6 +115,7 @@ const FooterSection = () => {
           <Link
             sx={{
               backgroundColor: 'gray-700',
+              display: 'inline-grid',
               padding: 1,
             }}
           >
@@ -125,6 +126,7 @@ const FooterSection = () => {
             sx={{
               backgroundColor: 'gray-700',
               ml: 3,
+              display: 'inline-grid',
               padding: 1,
             }}
           >
@@ -135,6 +137,7 @@ const FooterSection = () => {
             sx={{
               backgroundColor: 'gray-700',
               ml: 3,
+              display: 'inline-grid',
               padding: 1,
             }}
           >
@@ -159,6 +162,7 @@ const FooterSection = () => {
           sx={{
             backgroundColor: 'gray-700',
             ml: 4,
+            display: 'inline-grid',
             padding: 1,
           }}
         >

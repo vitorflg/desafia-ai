@@ -9,6 +9,7 @@ const badgeStyle = {
   borderColor: 'gray--700',
   background: 'transparent',
   color: 'gray--400',
+  fontSize: 2,
 };
 
 const HeroSection: React.FC = () => {

@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import React, { ReactNode } from 'react';
-import { Box, jsx, SxStyleProp } from 'theme-ui';
+import { Box, jsx, ThemeUICSSObject } from 'theme-ui';
 
 interface Card {
   children: ReactNode;
-  sx?: SxStyleProp;
+  sx?: ThemeUICSSObject;
 }
 
 export const Card: React.FC<Card> = ({ children, sx }) => {

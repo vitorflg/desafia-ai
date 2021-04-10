@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import React, { ReactNode } from 'react';
-import { Flex, jsx, SxStyleProp } from 'theme-ui';
+import { Flex, jsx, ThemeUICSSObject } from 'theme-ui';
 
 interface Footer {
   children: ReactNode;
-  sx?: SxStyleProp;
+  sx?: ThemeUICSSObject;
 }
 
 export const Footer: React.FC<Footer> = ({ children, sx }) => {

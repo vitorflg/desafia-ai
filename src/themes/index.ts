@@ -1,4 +1,6 @@
-export const theme = {
+import { Theme } from '@theme-ui/css';
+
+export const theme: Theme = {
   breakpoints: ['40em', '64em', '79em', '120em'],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -46,10 +48,12 @@ export const theme = {
       background: 'white',
     },
   },
-  inputs: {
-    primary: {
-      py: 3,
-      borderColor: 'gray--300',
+  forms: {
+    input: {
+      primary: {
+        py: 3,
+        borderColor: 'gray--300',
+      },
     },
   },
   buttons: {
@@ -93,15 +97,6 @@ export const theme = {
     },
     display: {
       fontFamily: 'auxiliar',
-    },
-  },
-  containers: {
-    center: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-      margin: 'auto',
     },
   },
   styles: {
@@ -156,6 +151,7 @@ export const theme = {
       borderBottomStyle: 'solid',
     },
     p: {
+      display: 'block',
       variant: 'text.display',
       margin: '0 auto',
       color: 'gray--400',

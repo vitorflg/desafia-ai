@@ -20,7 +20,7 @@ const NewsletterSection: React.FC = () => {
       </Box>
 
       <Input
-        variant="inputs.primary"
+        variant="forms.input.primary"
         sx={{ maxWidth: '20rem', mr: [0, 0, 3], mt: 3 }}
         placeholder="vitorflg@id.uff.br"
       ></Input>

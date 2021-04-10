@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
-import { Box, SxStyleProp } from 'theme-ui';
+import { Box, ThemeUICSSObject } from 'theme-ui';
 import { MobileAndTablet, Desktop } from 'react-responsive-simple';
 import { CgMenuGridO } from 'react-icons/cg';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { MenuItemType } from '../../pages/landing-page/LandingPage';
 import { useLocation } from 'wouter';
 export interface MenuProps {
-  sx?: SxStyleProp;
+  sx?: ThemeUICSSObject;
   schema: Record<'left' | 'right', MenuItemType[]>;
 }
 
@@ -14,7 +14,7 @@ export interface MenuItemProps {
   onClick?: () => void;
   OnHover?: () => JSX.Element;
   children: ReactNode;
-  sx?: SxStyleProp;
+  sx?: ThemeUICSSObject;
 }
 
 export const Menu: React.FC<MenuProps> = ({ schema, sx }) => {
