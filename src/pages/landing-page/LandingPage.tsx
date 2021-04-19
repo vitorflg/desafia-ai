@@ -37,6 +37,24 @@ const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
   ],
 };
 
+const footerLinks = [
+  {
+    id: 0,
+    name: 'Direitos Autorais',
+    link: ''
+  },
+  {
+    id: 1,
+    name: 'Termos de Uso',
+    link: ''
+  },
+  {
+    id: 2,
+    name: 'Políticas de privacidade',
+    link: ''
+  }
+]
+
 const LandingPage: React.FC = () => {
   React.useEffect(() => {
     clearAllBodyScrollLocks();
@@ -89,28 +107,28 @@ const FooterSection = () => {
   return (
     <Footer
       sx={{
-        height: '11rem',
-        px: 4,
+        minHeight: '11rem',
+        px: [2, 4],
         py: '1.25rem',
         backgroundColor: 'black--600',
         flexWrap: 'wrap',
       }}
     >
-      <Box sx={{ flexGrow: 1, display: 'inline-block' }}>
+      <Box sx={{ flexGrow: 1, display: 'inline-block', mb: [2, 0] }}>
         <Image
           width="160"
           sx={{ display: 'block', verticalAlign: 'middle' }}
           src={whiteLogoSrc}
         />
       </Box>
+      
+      {
+        footerLinks.map(link => (
+          <Link key={link.id} sx={{ ml: [0, 4], color: 'whiteIce', width: ['100%', 'auto'] }}>{link.name}</Link>
+        ))
+      }
 
-      <Link sx={{ ml: 5, color: 'whiteIce' }}>Direitos autorais</Link>
-
-      <Link sx={{ ml: 5, color: 'whiteIce' }}>Termos de uso</Link>
-
-      <Link sx={{ ml: 5, color: 'whiteIce' }}>Políticas de privacidade</Link>
-
-      <Flex sx={{ width: '100%', alignItems: 'center' }}>
+      <Flex sx={{ width: '100%', alignItems: 'center', mt: [3,0] }}>
         <Box sx={{ flexGrow: 1 }}>
           <Link
             sx={{
@@ -144,7 +162,7 @@ const FooterSection = () => {
             <AiOutlineWhatsApp color="#fff" />
           </Link>
 
-          <Link sx={{ ml: 3, color: 'whiteIce' }}>Central de Ajuda</Link>
+          <Link sx={{ ml: [0, 4], color: 'whiteIce', display: ['inline-block', 'auto'] }}>Central de Ajuda</Link>
         </Box>
 
         <Text
