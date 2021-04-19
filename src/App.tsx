@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './pages/landing-page/LandingPage';
 import AuthPage from './pages/auth/AuthPage';
+import CreateChallengePage from './pages/create-challenge-page/CreateChallengePage';
 import { ThemeProvider } from 'theme-ui';
 import theme from './themes';
 import { Route } from 'wouter';
@@ -16,6 +17,7 @@ const App = () => {
         <ErrorBoundary>
           <Route path={routes.landing_page} component={LandingPage}></Route>
           <Route path={routes.auth} component={AuthPage}></Route>
+          <Route path={routes.create_challenge_page} component={CreateChallengePage}></Route>
         </ErrorBoundary>
       </ThemeProvider>
     </DataProvider>

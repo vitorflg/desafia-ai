@@ -26,7 +26,7 @@ export type MenuItemType = {
 
 const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
   left: [
-    { text: 'Criar desafio', url: '/' },
+    { text: 'Criar desafio', url: '/createChallenge' },
     { text: 'Como funciona?', url: '/' },
     { text: 'Apoio', url: '/' },
   ],

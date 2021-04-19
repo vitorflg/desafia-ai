@@ -54,7 +54,11 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
         {leftItems &&
           leftItems.map((leftItem, _) => {
             return (
-              <MenuItem sx={{ ml: 5 }}>
+              <MenuItem
+              onClick={
+                leftItem.url ? () => setLocation(leftItem.url) : undefined
+              }
+                sx={{ ml: 5 }}>
                 {leftItem.text ?? leftItem.icon}
               </MenuItem>
             );
