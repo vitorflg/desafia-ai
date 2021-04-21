@@ -30,9 +30,9 @@ const IntegrationsSection: React.FC = () => {
               '> *': { display: 'inline-block', verticalAlign: 'middle' },
             }}
           >
-            <IoLogoDropbox size="25" color="purple"></IoLogoDropbox>
+            <IoLogoDropbox size="25" color="blue"></IoLogoDropbox>
 
-            <Text sx={{ color: 'purple', ml: 2 }}>Integrações</Text>
+            <Text sx={{ color: 'blue', ml: 2 }}>Integrações</Text>
           </Box>
 
           <Heading

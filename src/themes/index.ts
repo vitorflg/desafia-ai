@@ -99,6 +99,14 @@ export const theme: Theme = {
       fontFamily: 'auxiliar',
     },
   },
+  images: {
+    avatar: {
+      width: 48,
+      height: 48,
+      borderRadius: 99999,
+      verticalAlign: 'middle',
+    },
+  },
   styles: {
     root: {
       fontFamily: 'body',
@@ -173,6 +181,15 @@ export const theme: Theme = {
     },
     menuItem: {
       cursor: 'pointer',
+    },
+    containers: {
+      center: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: 'auto',
+      },
     },
   },
 };

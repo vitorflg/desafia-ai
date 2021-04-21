@@ -55,7 +55,7 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
           leftItems.map((leftItem, _) => {
             return (
               <MenuItem sx={{ ml: 5 }}>
-                {leftItem.text ?? leftItem.icon}
+                {leftItem.text || leftItem.icon}
               </MenuItem>
             );
           })}
@@ -70,7 +70,7 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
               }
               sx={{ ml: 5 }}
             >
-              {rightItem.text ?? rightItem.icon}
+              {rightItem.text || rightItem.icon}
             </MenuItem>
           );
         })}

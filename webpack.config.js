@@ -1,19 +1,45 @@
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//   .BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-//   .BundleAnalyzerPlugin;
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+const ForkTsCheckerWebpackPluginConfig = new ForkTsCheckerWebpackPlugin();
+
+const ReactWebpackPluginConfig = new ReactRefreshWebpackPlugin();
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './dist/index.html',
 });
+
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
   filename: '[name].css',
   chunkFilename: '[id].css',
 });
+
 const CompressionPluginConfig = new CompressionPlugin();
+
+const HardSourceWebpackPluginConfig = new HardSourceWebpackPlugin();
+
+const PreloadWebpackPluginConfig = new PreloadWebpackPlugin({
+  rel: 'preload',
+  as: 'font',
+  include: 'allAssets',
+  fileWhitelist: [/\.(woff2?|eot|ttf|otf)(\?.*)?$/i],
+});
+
+const CopyWebpackPluginConfig = new CopyPlugin({
+  patterns: [
+    { from: './src/assets/fonts/roboto.woff2', to: './' },
+    { from: './src/assets/fonts/roboto-light.woff2', to: './' },
+    { from: './public/favicon.ico', to: './' },
+  ],
+});
 
 module.exports = {
   entry: './src/App.tsx',
@@ -21,16 +47,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: { presets: ['@babel/env'] },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              plugins: [require.resolve('react-refresh/babel')],
+            },
+          },
+        ],
       },
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
+
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -63,15 +92,12 @@ module.exports = {
     filename: 'bundle.js',
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     MiniCssExtractPluginConfig,
     HTMLWebpackPluginConfig,
-    new PreloadWebpackPlugin({
-      rel: 'preload',
-      as: 'font',
-      include: 'allAssets',
-      fileWhitelist: [/\.(woff2?|eot|ttf|otf)(\?.*)?$/i],
-    }),
+    PreloadWebpackPluginConfig,
     CompressionPluginConfig,
+<<<<<<< Updated upstream
     new CopyPlugin({
       patterns: [
         { from: './src/assets/fonts/roboto.woff2', to: './' },
@@ -81,5 +107,11 @@ module.exports = {
       ],
     }),
     // new BundleAnalyzerPlugin(),
+=======
+    CopyWebpackPluginConfig,
+    ReactWebpackPluginConfig,
+    ForkTsCheckerWebpackPluginConfig,
+    HardSourceWebpackPluginConfig,
+>>>>>>> Stashed changes
   ],
 };
