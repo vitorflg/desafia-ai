@@ -5,6 +5,7 @@ import { Heading } from 'theme-ui';
 import { HiOutlineLightBulb } from 'react-icons/Hi'
 import { GoFile, GoTag } from 'react-icons/Go'
 import { RiCheckboxMultipleBlankLine } from 'react-icons/Ri'
+import { AiOutlineUpload}  from 'react-icons/Ai'
 import { clearAllBodyScrollLocks } from 'body-scroll-lock';
 import EXPERIMENTAL_Select from '@vtex/styleguide/lib/EXPERIMENTAL_Select'
 
@@ -50,15 +51,15 @@ const CreateChallengePage: React.FC = () => {
     const optionsTags: Options = [
         {
             value: { id: 0, name: 'ReactJs' },
-            label: 'Lógica de Programação',
+            label: 'ReactJs',
         },
         {
             value: { id: 1, name: 'NodeJs' },
-            label: 'Desenvolvimento Web',
+            label: 'NodeJs',
         },
         {
             value: { id: 2, name: 'DynamoDB' },
-            label: 'Internet das Coisas',
+            label: 'DynamoDB',
         },
     ]
 
@@ -67,7 +68,7 @@ const CreateChallengePage: React.FC = () => {
             <Box
                 sx={{
                     width: '100%',
-                    height: '100vh',
+                    height: ['auto', '100vh'],
                     backgroundColor: 'gray--200',
                 }}
             >
@@ -87,29 +88,35 @@ const CreateChallengePage: React.FC = () => {
                         flexDirection: ['column', 'row'],
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: '90%'
+                        height: ['100%','90%']
                     }}
                 >
-                    <Box sx={{ width: ['100%', '40%'], padding: '0rem 3rem', color: 'gray-700', opacity: '0.8' }}>
+                    <Box sx={{ width: ['100%', '40%'], padding: '0rem 2rem', color: 'gray-700', opacity: '0.8' }}>
                         <Heading variant="caps" sx={{ fontFamily: 'monospace' }}>Crie seu desafio!</Heading>
                         <Text mt={1} >Tenha certeza de que o título contenha todas as palavras chaves do seu desafio e que ao mesmo tempo seja uma síntese do que precisa.</Text>
                         <Text mt={1} >Na descrição você pode desenvolver mais a ideia, quanto mais completa ela for, mais rápido o desafiante resolverá seu desafio!</Text>
                     </Box>
-                    <Box sx={{ padding: '0rem 3rem', width: ['100%', '60%'], marginTop: ['1rem', '0']}}>
+                    <Box sx={{ padding: '0rem 2rem', width: ['100%', '60%'], marginTop: ['1rem', '0']}}>
                         <Box as="form" onSubmit={(e) => e.preventDefault()}
                         >
                             <Flex>
                                 <HiOutlineLightBulb size="20px" color="#3F3F46" />
                                 <Label htmlFor="challenge-name" pl={1} sx={{ color: 'gray-700' }}>Título do desafio</Label>
                             </Flex>
-                            <Input name="challenge-name" id="challenge-name" placeholder="Ex: Aplicação web de xadrez com IA" sx={{ backgroundColor: 'background', border: '0.125rem solid', borderColor: 'gray-700', opacity: '0.6' }} />
+                            <Input type="text" name="challenge-name" id="challenge-name" placeholder="Ex: Aplicação web de xadrez com IA" sx={{ backgroundColor: 'background', border: '0.125rem solid', borderColor: 'gray-700', opacity: '0.6' }} />
 
                             <Flex mt={3}>
                                 <GoFile size="20px" color="#3F3F46" />
                                 <Label htmlFor="challenge-description" pl={1} sx={{ color: 'gray-700' }}>Descreva o desafio com suas palavras</Label>
                             </Flex>
                             <Textarea name="challenge-description" id="challenge-description" placeholder="Ex: Meu desafio consiste em uma aplicação web de xadrez online com IA. A IA precisa apenas responder a jogada após o jogador humano ter feito uma jogada." rows={6} sx={{ backgroundColor: 'background', border: '0.125rem solid', borderColor: 'gray-700', opacity: '0.6' }} />
-
+                            
+                            <Flex mt={3}>
+                                <AiOutlineUpload size="20px" color="#3F3F46" />
+                                <Label htmlFor="challenge-name" pl={1} sx={{ color: 'gray-700' }}>Upload de arquivos</Label>
+                            </Flex>
+                            <Input type="file" multiple name="challenge-file" id="challenge-file" sx={{ backgroundColor: 'background', border: '0.125rem solid', borderColor: 'gray-700', opacity: '0.6' }} />
+                            
                             <Flex mt={3}>
                                 <RiCheckboxMultipleBlankLine  size="20px" color="#3F3F46" />
                                 <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>Categoria</Label>
@@ -119,6 +126,7 @@ const CreateChallengePage: React.FC = () => {
                                 multi={true}
                                 options={optionsCategory}
                             />
+
                             <Flex mt={3}>
                                 <GoTag size="20px" color="#3F3F46" />
                                 <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>Tags</Label>

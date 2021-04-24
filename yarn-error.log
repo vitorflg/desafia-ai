@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/15.8.0/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js add @types/vtex__styleguide -D
+  /usr/local/Cellar/node/15.14.0/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/nicholasferrer/.zinit/polaris/bin
@@ -8,23 +8,23 @@ Yarn version:
   1.22.10
 
 Node version: 
-  15.8.0
+  15.14.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fvtex__styleguide: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:66988:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:140749:22)
-      at Request.emit (node:events:378:20)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:141721:10)
-      at Request.emit (node:events:378:20)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:141643:12)
-      at Object.onceWrapper (node:events:484:28)
-      at IncomingMessage.emit (node:events:390:22)
-      at endReadableNT (node:internal/streams/readable:1307:12)
-      at processTicksAndRejections (node:internal/process/task_queues:81:21)
+  Invariant Violation: expected hoisted manifest for "purgecss-webpack-plugin#webpack#terser-webpack-plugin#webpack"
+      at invariant (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:2314:15)
+      at _loop2 (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:94966:9)
+      at PackageHoister.init (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:95036:19)
+      at PackageLinker.getFlatHoistedTree (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:48744:20)
+      at PackageLinker.<anonymous> (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:48755:27)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:328:14
+      at new Promise (<anonymous>)
+      at new F (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:5301:28)
 
 npm manifest: 
   {
@@ -79,6 +79,7 @@ npm manifest:
       "mini-css-extract-plugin": "^0.11.2",
       "preload-webpack-plugin": "^3.0.0-beta.3",
       "prettier": "^2.2.1",
+      "purgecss-webpack-plugin": "^4.0.3",
       "react-snap": "^1.23.0",
       "ts-loader": "^8.0.4",
       "typescript": "^4.1.3",

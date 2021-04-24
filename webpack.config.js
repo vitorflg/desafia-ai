@@ -1,3 +1,5 @@
+const path = require('path');
+const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -5,6 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 //   .BundleAnalyzerPlugin;
+const PurgeCSSPlugin = require('purgecss-webpack-plugin');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: 'index.html',
@@ -14,6 +17,10 @@ const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
   chunkFilename: '[id].css',
 });
 const CompressionPluginConfig = new CompressionPlugin();
+
+const PATHS = {
+    src: path.join(__dirname, 'src'),
+  };
 
 module.exports = {
   entry: './src/App.tsx',
@@ -64,6 +71,9 @@ module.exports = {
   },
   plugins: [
     MiniCssExtractPluginConfig,
+    new PurgeCSSPlugin({
+            paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+          }),
     HTMLWebpackPluginConfig,
     new PreloadWebpackPlugin({
       rel: 'preload',

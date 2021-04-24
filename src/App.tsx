@@ -5,6 +5,7 @@ import AuthPage from './pages/auth/AuthPage';
 import CreateChallengePage from './pages/create-challenge-page/CreateChallengePage';
 import { ThemeProvider } from 'theme-ui';
 import theme from './themes';
+import './themes/tachyons.min.css';
 import { Route } from 'wouter';
 import routes from './routes';
 import ErrorBoundary from './components/error-boundary/ErrorBoundary';
