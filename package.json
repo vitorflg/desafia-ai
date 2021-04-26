@@ -7,6 +7,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "@vtex/styleguide": "^9.138.0",
     "body-scroll-lock": "^3.1.5",
     "react": "0.0.0-experimental-94c0244ba",
     "react-dom": "0.0.0-experimental-94c0244ba",
@@ -48,6 +49,7 @@
     "mini-css-extract-plugin": "^0.11.2",
     "preload-webpack-plugin": "^3.0.0-beta.3",
     "prettier": "^2.2.1",
+    "purgecss-webpack-plugin": "^4.0.3",
     "react-snap": "^1.23.0",
     "ts-loader": "^8.0.4",
     "typescript": "^4.1.3",
