@@ -89,6 +89,9 @@ export const theme: Theme = {
       borderBottom: '1px solid gray--300',
     },
   },
+  shadows: {
+    primary: '0 7px 30px -10px rgba(150,170,180,0.5)',
+  },
   text: {
     heading: {
       fontFamily: 'auxiliar',
@@ -177,7 +180,7 @@ export const theme: Theme = {
       flexDirection: 'row',
       width: '100%',
       alignItems: 'center',
-      color: 'gray--400',
+      color: 'black--600',
     },
     menuItem: {
       cursor: 'pointer',

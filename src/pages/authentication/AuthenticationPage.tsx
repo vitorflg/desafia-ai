@@ -88,7 +88,7 @@ const AuthenticationPage: React.FC = () => {
                         {currentUserProfile.name}
                       </Heading>
                     </Box>
-                    <Button mr={3}>
+                    <Button onClick={Authentication.checkAPIAndRedirect} mr={3}>
                       Continuar como {currentUserProfile.firstName}
                     </Button>
                     <Button
@@ -121,3 +121,6 @@ const AuthenticationPage: React.FC = () => {
 };
 
 export default AuthenticationPage;
+function getOrCreateUser(getOrCreateUser: any) {
+  throw new Error('Function not implemented.');
+}

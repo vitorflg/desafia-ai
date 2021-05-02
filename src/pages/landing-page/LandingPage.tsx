@@ -85,16 +85,17 @@ const HeaderSection = () => {
         py: '1.25rem',
       }}
     >
-      <Image
-        width="140"
-        sx={{
-          display: 'inline-block',
-          verticalAlign: 'middle',
-          minWidth: '140px',
-          flexGrow: 1,
-        }}
-        src={logoSrc}
-      />
+      <Box sx={{ flexGrow: 1 }}>
+        <Image
+          sx={{
+            minWidth: '140px',
+            maxWidth: '140px',
+            display: 'inline-block',
+            verticalAlign: 'middle',
+          }}
+          src={logoSrc}
+        />
+      </Box>
 
       <Menu schema={MENU_SCHEMA} sx={{ variant: 'styles.menu' }}>
         <Box sx={{ flexGrow: 1, display: 'inherit', ml: 3 }} />

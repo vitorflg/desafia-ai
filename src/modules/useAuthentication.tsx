@@ -1,5 +1,7 @@
 import React from 'react';
 import { GoogleClient, GoogleUser, GoogleAPI } from '../types/global';
+import { useLocation } from 'wouter';
+import { gql, useMutation } from '@apollo/client';
 
 const GOOGLE_CLIENT_ID =
   '800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com';
@@ -13,9 +15,23 @@ export function useAuthentication() {
     loading: true,
     error: undefined,
   });
+  const [location, setLocation] = useLocation();
+
+  const GET_OR_CREATE_USER_QUERY = gql`
+    mutation User($googleId: String!, $email: String!, $name: String) {
+      user(input: { googleId: $googleId, email: $email, name: $name })
+    }
+  `;
+  const [getOrCreateUser] = useMutation(GET_OR_CREATE_USER_QUERY, {
+    context: {
+      headers: {
+        Authorization: currentUser?.qc?.access_token,
+      },
+    },
+  });
 
   React.useEffect(() => {
-    if (window?.gapi) {
+    if (window.gapi) {
       window.gapi.load('auth2', () => {
         initializeGoogleLib();
       });
@@ -42,7 +58,7 @@ export function useAuthentication() {
           setUser({ status: 'expired_token' });
         }
 
-        setGoogleAPI({ loading: false });
+        return setGoogleAPI({ loading: false });
       });
   };
 
@@ -59,6 +75,8 @@ export function useAuthentication() {
 
     return GoogleClient?.signIn().then((user: GoogleUser) => {
       setUser(user);
+      document.cookie = `da_google_token=${user.qc.access_token}`;
+
       setGoogleAPI({ loading: false });
     });
   };
@@ -68,11 +86,37 @@ export function useAuthentication() {
 
     return GoogleClient?.signOut().then(() => {
       setUser({ status: 'expired_token' });
+      document.cookie = 'da_google_token=';
+
+      if (location !== '/auth') {
+        setLocation('/auth');
+      }
+
       setGoogleAPI({ loading: false });
     });
   };
 
   // OUR LOGIC
+
+  const checkAPIAndRedirect = async () => {
+    const data = await getOrCreateUser({
+      variables: {
+        googleId: currentUser?.Aa,
+        email: currentUser?.profile?.email,
+        name: currentUser?.profile?.name,
+      },
+    }).catch(() => {
+      signOut();
+
+      return alert(
+        'Não conseguimos reconhecer o seu usuário em nossa base de dados. Por favor, entre em contato pelo chat!'
+      );
+    });
+
+    if (data) {
+      return setLocation('/dashboard');
+    }
+  };
 
   const getUserProfile = () => {
     return currentUser.profile;
@@ -95,7 +139,7 @@ export function useAuthentication() {
       };
     }
 
-    setCurrentUser({
+    return setCurrentUser({
       ...currentUser,
       ...user,
       ...formattedProfile,
@@ -107,7 +151,7 @@ export function useAuthentication() {
   };
 
   const isTokenValid = () => {
-    return currentUser.status === 'valid_token' ? true : false;
+    return currentUser.status === 'valid_token';
   };
 
   return {
@@ -120,5 +164,6 @@ export function useAuthentication() {
     isUserSignedIn,
     isLoading,
     isTokenValid,
+    checkAPIAndRedirect,
   };
 }
