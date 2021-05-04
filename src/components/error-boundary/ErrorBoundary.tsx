@@ -3,12 +3,18 @@ import { Styled, Flex, Box, jsx } from 'theme-ui';
 import React from 'react';
 import routes from '../../routes';
 
-class ErrorBoundary extends React.Component {
-  state = {
-    error: null,
-  };
+type State = {
+  error: unknown;
+};
+class ErrorBoundary extends React.Component<{}, State> {
+  constructor(props: {}) {
+    super(props);
 
-  static getDerivedStateFromError(error: any) {
+    this.state = {
+      error: null,
+    };
+  }
+  static getDerivedStateFromError(error: unknown) {
     return { error };
   }
 
@@ -20,7 +26,7 @@ class ErrorBoundary extends React.Component {
     if (this.state.error) {
       return (
         <Box>
-          <Flex sx={{ pt: 7 }} variant="containers.center">
+          <Flex sx={{ pt: 7 }} variant="styles.containers.center">
             <Styled.h1>Something broke</Styled.h1>
             <Styled.a href={routes.landing_page}>Back to home</Styled.a>
           </Flex>

@@ -2,13 +2,15 @@ import React from 'react';
 import { Box, Heading, Flex, Text, Badge, Button, Image } from 'theme-ui';
 import illustrationSrc from '../../../assets/images/illustration.png';
 
-const badgeStyle = {
+export const badgeStyle = {
   padding: 2,
   borderRadius: '99px',
   border: '2px solid',
-  borderColor: 'gray--700',
+  mt: 2,
+  borderColor: 'purple',
   background: 'transparent',
-  color: 'gray--400',
+  fontFamily: 'Roboto Light',
+  color: 'purple',
   fontSize: 2,
 };
 

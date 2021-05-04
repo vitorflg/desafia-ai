@@ -1,0 +1,13 @@
+node_modules/
+static/
+.cache/
+.*
+*.marko.js
+*.dust.js
+*.coffee.js
+
+.git/
+
+# Add these files to ignore, since webpack is storing the compiled output to assets/ folder
+src/
+dist/
