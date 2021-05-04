@@ -5,7 +5,7 @@ declare module '@vtex/styleguide/lib/EXPERIMENTAL_Charts/LineChart';
 declare module '@vtex/styleguide/lib/EXPERIMENTAL_Charts/BarChart';
 declare module '@vtex/styleguide/lib/Tag';
 declare module '@vtex/styleguide/lib/InputSearch';
-declare module '@vtex/styleguide/lib/EXPERIMENTAL_SELECT';
+declare module '@vtex/styleguide/lib/EXPERIMENTAL_Select';
 declare module '@vtex/styleguide/lib/Tabs';
 declare module '@vtex/styleguide/lib/Tab';
 declare module '@vtex/styleguide/lib/ActionMenu';

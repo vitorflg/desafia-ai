@@ -5,7 +5,7 @@ import Image from '../../components/image/Image';
 import { badgeStyle } from '../landing-page/sections/HeroSection';
 import Tag from '@vtex/styleguide/lib/Tag';
 import InputSearch from '@vtex/styleguide/lib/InputSearch';
-import Select from '@vtex/styleguide/lib/EXPERIMENTAL_SELECT';
+import Select from '@vtex/styleguide/lib/EXPERIMENTAL_Select';
 import Pagination from '@vtex/styleguide/lib/Pagination';
 import { useThemeUI } from 'theme-ui';
 import { AiOutlineTags } from 'react-icons/ai';
