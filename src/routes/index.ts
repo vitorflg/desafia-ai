@@ -9,7 +9,9 @@ const routes: Routes = {
     home: '/dashboard',
     challenges: '/dashboard/challenges',
     challenge: '/dashboard/challenges/:id',
+    ranking: '/dashboard/ranking',
   },
+  create_challenge: '/create-challenge',
 };
 
 export default routes;

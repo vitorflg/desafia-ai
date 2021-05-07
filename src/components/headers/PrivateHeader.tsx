@@ -6,10 +6,11 @@ import { useAuthentication } from '../../modules/useAuthentication';
 function PrivateHeader() {
   const Authentication = useAuthentication();
 
+  const userName = Authentication.getUserProfile()?.email?.match(
+    /^([^@]*)@/
+  )?.[1];
+
   const OPTIONS = [
-    {
-      label: 'Meu perfil',
-    },
     {
       label: 'Sair',
       isDangerous: 'true',
@@ -25,15 +26,17 @@ function PrivateHeader() {
         justifyContent: 'flex-end',
       }}
     >
-      <Box sx={{ position: 'absolute', top: 3, right: 3 }}>
-        <ActionMenu
-          label="@vitorflg"
-          buttonProps={{
-            variation: 'tertiary',
-          }}
-          options={OPTIONS}
-        />
-      </Box>
+      {userName && (
+        <Box sx={{ position: 'absolute', top: 3, right: 3 }}>
+          <ActionMenu
+            label={`@${userName}`}
+            buttonProps={{
+              variation: 'tertiary',
+            }}
+            options={OPTIONS}
+          />
+        </Box>
+      )}
     </Flex>
   );
 }

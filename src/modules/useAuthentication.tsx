@@ -10,11 +10,13 @@ export function useAuthentication() {
   const [GoogleClient, setGoogleClient] = React.useState<
     GoogleClient | undefined
   >(undefined);
+
   const [currentUser, setCurrentUser] = React.useState<GoogleUser>({});
   const [googleAPI, setGoogleAPI] = React.useState<GoogleAPI>({
     loading: true,
     error: undefined,
   });
+
   const [location, setLocation] = useLocation();
 
   const GET_OR_CREATE_USER_QUERY = gql`

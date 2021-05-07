@@ -18,7 +18,7 @@ const LINKS: Link[] = [
   { Icon: AiFillHome, label: 'Home', href: routes.dashboard.home },
   { Icon: AiFillTrophy, label: 'Desafios', href: routes.dashboard.challenges },
   { Icon: AiOutlineAliwangwang, label: 'Comunidade' },
-  { Icon: GiNetworkBars, label: 'Ranking' },
+  { Icon: GiNetworkBars, label: 'Ranking', href: routes.dashboard.ranking },
 ];
 function Sidebar() {
   return (

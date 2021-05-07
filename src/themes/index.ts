@@ -77,8 +77,9 @@ export const theme: Theme = {
     },
     disabled: {
       variant: 'buttons.secondary',
-      color: 'black--600',
+      color: 'gray--200',
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
   borders: {
