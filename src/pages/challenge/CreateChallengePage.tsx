@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Flex, Image, Button, Label, Text } from '@theme-ui/components';
 import { Heading, Paragraph } from 'theme-ui';
-import { HiOutlineLightBulb } from 'react-icons/Hi';
-import { GoFile, GoTag } from 'react-icons/Go';
-import { RiCheckboxMultipleBlankLine } from 'react-icons/Ri';
+import { HiOutlineLightBulb } from 'react-icons/hi';
+import { GoFile, GoTag } from 'react-icons/go';
+import { RiCheckboxMultipleBlankLine } from 'react-icons/ri';
 import { clearAllBodyScrollLocks } from 'body-scroll-lock';
 import Select from '@vtex/styleguide/lib/EXPERIMENTAL_Select';
 import Modal from '@vtex/styleguide/lib/Modal';
