@@ -19,7 +19,6 @@ const AuthenticationPage: React.FC = () => {
   }, []);
 
   function onClick() {
-    console.log('setting location');
     setLocation('/');
   }
 
@@ -121,6 +120,3 @@ const AuthenticationPage: React.FC = () => {
 };
 
 export default AuthenticationPage;
-function getOrCreateUser(getOrCreateUser: any) {
-  throw new Error('Function not implemented.');
-}
