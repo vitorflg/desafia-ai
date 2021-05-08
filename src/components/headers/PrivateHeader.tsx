@@ -6,9 +6,7 @@ import { useAuthentication } from '../../modules/useAuthentication';
 function PrivateHeader() {
   const Authentication = useAuthentication();
 
-  const userName = Authentication.getUserProfile()?.email?.match(
-    /^([^@]*)@/
-  )?.[1];
+  const userName = Authentication.getUserProfile()?.email?.match(/^([^@]*)@/)?.[1];
 
   const OPTIONS = [
     {

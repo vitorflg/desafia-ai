@@ -12,9 +12,10 @@ import Textarea from '@vtex/styleguide/lib/Textarea';
 
 import logoSrc from '../../assets/images/logo.png';
 import useForm from '../../modules/useForm';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useLocation } from 'wouter';
 import PrivateHeader from '../../components/headers/PrivateHeader';
+import CreateChallengeQuery from '../../data/queries/createChallengeQuery.graphql';
 
 type Options = {
   label: string;
@@ -27,24 +28,7 @@ const CreateChallengePage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
-  const CREATE_CHALLENGE_QUERY = gql`
-    mutation Challenge(
-      $name: String!
-      $description: String!
-      $tags: [JSON]
-      $category: String
-    ) {
-      challenge(
-        input: {
-          name: $name
-          description: $description
-          tags: $tags
-          category: $category
-        }
-      )
-    }
-  `;
-  const [createChallenge] = useMutation(CREATE_CHALLENGE_QUERY, {});
+  const [createChallenge] = useMutation(CreateChallengeQuery, {});
 
   React.useEffect(() => {
     clearAllBodyScrollLocks();

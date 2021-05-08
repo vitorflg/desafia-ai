@@ -4,7 +4,6 @@ import { MobileAndTablet, Desktop } from 'react-responsive-simple';
 import { CgMenuGridO } from 'react-icons/cg';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { MenuItemType } from '../../pages/landing-page/LandingPage';
-import { useLocation } from 'wouter';
 export interface MenuProps {
   sx?: ThemeUICSSObject;
   schema: Record<'left' | 'right', MenuItemType[]>;
@@ -15,6 +14,8 @@ export interface MenuItemProps {
   OnHover?: () => JSX.Element;
   children: ReactNode;
   sx?: ThemeUICSSObject;
+  href: String;
+  as: String;
 }
 
 export const Menu: React.FC<MenuProps> = ({ schema, sx }) => {
@@ -35,16 +36,19 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   onClick,
   children,
   sx,
+  href,
+  as,
 }) => {
   return (
     <Box onClick={onClick} sx={{ position: 'relative' }}>
-      <Box sx={{ ...sx, variant: 'styles.menuItem' }}>{children}</Box>
+      <Box as="a" href={href} sx={{ ...sx, variant: 'styles.menuItem' }}>
+        {children}
+      </Box>
     </Box>
   );
 };
 
 export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
-  const [, setLocation] = useLocation();
   const leftItems = schema.left;
   const rightItems = schema.right;
 
@@ -54,7 +58,7 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
         {leftItems &&
           leftItems.map((leftItem, _) => {
             return (
-              <MenuItem sx={{ ml: 5 }}>
+              <MenuItem as="a" href={leftItem.href} sx={{ ml: 5 }}>
                 {leftItem.text || leftItem.icon}
               </MenuItem>
             );
@@ -64,12 +68,7 @@ export const MenuDesktop: React.FC<MenuProps> = ({ schema, sx }) => {
       {rightItems &&
         rightItems.map((rightItem, _) => {
           return (
-            <MenuItem
-              onClick={
-                rightItem.url ? () => setLocation(rightItem.url) : undefined
-              }
-              sx={{ ml: 5 }}
-            >
+            <MenuItem as="a" href={rightItem.href} sx={{ ml: 5 }}>
               {rightItem.text || rightItem.icon}
             </MenuItem>
           );

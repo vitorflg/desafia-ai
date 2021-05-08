@@ -17,7 +17,7 @@ type Link = {
 const LINKS: Link[] = [
   { Icon: AiFillHome, label: 'Home', href: routes.dashboard.home },
   { Icon: AiFillTrophy, label: 'Desafios', href: routes.dashboard.challenges },
-  { Icon: AiOutlineAliwangwang, label: 'Comunidade' },
+  { Icon: AiOutlineAliwangwang, label: 'Comunidade', href: routes.dashboard.community },
   { Icon: GiNetworkBars, label: 'Ranking', href: routes.dashboard.ranking },
 ];
 function Sidebar() {
@@ -45,11 +45,7 @@ function Sidebar() {
 
           return (
             <Link href={`${link.href}`}>
-              <Flex
-                sx={{ cursor: 'pointer', alignItems: 'center' }}
-                mt={4}
-                ml="auto"
-              >
+              <Flex sx={{ cursor: 'pointer', alignItems: 'center' }} mt={4} ml="auto">
                 <Icon
                   style={{ position: 'relative', bottom: '0.17rem' }}
                   color="#bebebe"

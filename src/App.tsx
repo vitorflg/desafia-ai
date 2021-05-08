@@ -19,34 +19,37 @@ import { DataProvider } from './data/DataLayer';
 import { ApolloProvider } from '@apollo/client/react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import PrivateRoutes from './routes/PrivateRoute';
+import { CookiesProvider } from 'react-cookie';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/dev/graphql',
+  uri: 'https://9lv33alab8.execute-api.us-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache(),
 });
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <DataProvider>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary>
-            <Switch>
-              <Route path={routes.landing_page} component={LandingPage}></Route>
-              <Route path={routes.auth} component={AuthenticationPage}></Route>
-              <PrivateRoutes>
-                <Route path={routes.dashboard.home} component={HomePage}></Route>
-                <Route path={routes.dashboard.ranking} component={RankingPage}></Route>
-                <Route path={routes.dashboard.challenges} component={ChallengesPage}></Route>
-                <Route path={routes.create_challenge} component={CreateChallengePage}></Route>
-                <Route path={routes.dashboard.challenge} component={ChallengePage}></Route>
-              </PrivateRoutes>
-              <Route component={NotFoundPage}></Route>
-            </Switch>
-          </ErrorBoundary>
-        </ThemeProvider>
-      </DataProvider>
-    </ApolloProvider>
+    <CookiesProvider>
+      <ApolloProvider client={client}>
+        <DataProvider>
+          <ThemeProvider theme={theme}>
+            <ErrorBoundary>
+                <Switch>
+                  <Route path={routes.landing_page} component={LandingPage}></Route>
+                  <Route path={routes.auth} component={AuthenticationPage}></Route>
+                  <PrivateRoutes>
+                    <Route path={routes.dashboard.home} component={HomePage}></Route>
+                    <Route path={routes.dashboard.ranking} component={RankingPage}></Route>
+                    <Route path={routes.dashboard.challenges} component={ChallengesPage}></Route>
+                    <Route path={routes.create_challenge} component={CreateChallengePage}></Route>
+                    <Route path={routes.dashboard.challenge} component={ChallengePage}></Route>
+                  </PrivateRoutes>
+                  <Route component={NotFoundPage}></Route>
+                </Switch>
+              </ErrorBoundary>
+            </ThemeProvider>
+          </DataProvider>
+        </ApolloProvider>
+      </CookiesProvider>
   );
 };
 

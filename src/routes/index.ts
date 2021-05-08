@@ -9,6 +9,7 @@ const routes: Routes = {
     home: '/dashboard',
     challenges: '/dashboard/challenges',
     challenge: '/dashboard/challenges/:id',
+    community: '/dashboard/community',
     ranking: '/dashboard/ranking',
   },
   create_challenge: '/create-challenge',

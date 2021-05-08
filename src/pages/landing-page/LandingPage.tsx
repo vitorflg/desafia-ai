@@ -21,19 +21,18 @@ import whiteLogoSrc from '../../assets/images/white-logo.png';
 export type MenuItemType = {
   text?: string;
   icon?: React.ComponentType;
-  url: string;
+  href: string;
 };
 
 const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
   left: [
-    { text: 'Criar desafio', url: '/' },
-    { text: 'Como funciona?', url: '/' },
-    { text: 'Apoio', url: '/' },
+    { text: 'Criar desafio', href: '/create-challenge' },
+    { text: 'Como funciona?', href: '#como-funciona' },
+    { text: 'Apoio', href: '/' },
   ],
   right: [
-    { icon: CgMenuGridO, url: '/' },
-    { text: 'Cadastre-se', url: '/' },
-    { text: 'Entrar', url: '/auth' },
+    { icon: CgMenuGridO, href: '/' },
+    { text: 'Entrar', href: '/auth' },
   ],
 };
 
@@ -41,24 +40,25 @@ const footerLinks = [
   {
     id: 0,
     name: 'Direitos Autorais',
-    link: ''
+    link: '',
   },
   {
     id: 1,
     name: 'Termos de Uso',
-    link: ''
+    link: '',
   },
   {
     id: 2,
     name: 'Políticas de privacidade',
-    link: ''
-  }
-]
+    link: '',
+  },
+];
 
 const LandingPage: React.FC = () => {
   React.useEffect(() => {
     clearAllBodyScrollLocks();
   });
+
   return (
     <Box
       sx={{
@@ -116,20 +116,16 @@ const FooterSection = () => {
       }}
     >
       <Box sx={{ flexGrow: 1, display: 'inline-block', mb: [2, 0] }}>
-        <Image
-          width="160"
-          sx={{ display: 'block', verticalAlign: 'middle' }}
-          src={whiteLogoSrc}
-        />
+        <Image width="160" sx={{ display: 'block', verticalAlign: 'middle' }} src={whiteLogoSrc} />
       </Box>
-      
-      {
-        footerLinks.map(link => (
-          <Link key={link.id} sx={{ ml: [0, 4], color: 'whiteIce', width: ['100%', 'auto'] }}>{link.name}</Link>
-        ))
-      }
 
-      <Flex sx={{ width: '100%', alignItems: 'center', mt: [3,0] }}>
+      {footerLinks.map((link) => (
+        <Link key={link.id} sx={{ ml: [0, 4], color: 'whiteIce', width: ['100%', 'auto'] }}>
+          {link.name}
+        </Link>
+      ))}
+
+      <Flex sx={{ width: '100%', alignItems: 'center', mt: [3, 0] }}>
         <Box sx={{ flexGrow: 1 }}>
           <Link
             sx={{
@@ -163,7 +159,15 @@ const FooterSection = () => {
             <AiOutlineWhatsApp color="#fff" />
           </Link>
 
-          <Link sx={{ ml: [0, 4], color: 'whiteIce', display: ['inline-block', 'auto'] }}>Central de Ajuda</Link>
+          <Link
+            sx={{
+              ml: [0, 4],
+              color: 'whiteIce',
+              display: ['inline-block', 'auto'],
+            }}
+          >
+            Central de Ajuda
+          </Link>
         </Box>
 
         <Text

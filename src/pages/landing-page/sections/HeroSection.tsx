@@ -7,10 +7,10 @@ export const badgeStyle = {
   borderRadius: '99px',
   border: '2px solid',
   mt: 2,
-  borderColor: 'purple',
+  borderColor: 'gray--400',
   background: 'transparent',
   fontFamily: 'Roboto Light',
-  color: 'purple',
+  color: 'gray--400',
   fontSize: 2,
 };
 
@@ -102,8 +102,8 @@ const HeroSection: React.FC = () => {
             <Box
               sx={{
                 borderRadius: '99rem',
-                backgroundColor: 'purple',
-                padding: '0.2rem 0.5rem',
+                backgroundColor: '#6366F1',
+                padding: '0.15rem 0.45rem',
                 marginRight: 2,
               }}
             >
@@ -127,7 +127,9 @@ const HeroSection: React.FC = () => {
             colaborativa.
           </Heading>
 
-          <Button sx={{ marginTop: 4 }}>Buscar desafios</Button>
+          <Button id="como-funciona" sx={{ marginTop: 4 }}>
+            Buscar desafios
+          </Button>
         </Box>
 
         <Image

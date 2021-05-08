@@ -1,0 +1,15 @@
+mutation Challenge(
+  $name: String!
+  $description: String!
+  $tags: [JSON]
+  $category: String
+) {
+  challenge(
+    input: {
+      name: $name
+      description: $description
+      tags: $tags
+      category: $category
+    }
+  )
+}
