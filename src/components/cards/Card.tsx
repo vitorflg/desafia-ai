@@ -25,5 +25,5 @@ export const CardHeader: React.FC<Card> = ({ children }) => {
 };
 
 export const CardContent: React.FC<Card> = ({ children }) => {
-  return <Box sx={{ padding: 3, textAlign: 'left' }}>{children}</Box>;
+  return <Box sx={{ textAlign: 'left' }}>{children}</Box>;
 };

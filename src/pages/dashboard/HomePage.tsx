@@ -33,17 +33,13 @@ function HomePage() {
 
   const ranking = usersData?.ranking;
   const theOne = theOneData?.theOne;
-  const userName = Authentication.getUserProfile()?.email?.match(
-    /^([^@]*)@/
-  )?.[1];
+  const userName = Authentication.getUserProfile()?.email?.match(/^([^@]*)@/)?.[1];
   const formattedUserName = `@${userName}!`;
 
   return (
     <div>
       <DashboardWrapper>
-        <Heading as="h1">{`👋 Bem-vindo ${
-          userName ? formattedUserName : ''
-        }`}</Heading>
+        <Heading as="h1">{`👋 Bem-vindo ${userName ? formattedUserName : ''}`}</Heading>
 
         <Box>
           <Box

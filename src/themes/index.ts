@@ -185,6 +185,8 @@ export const theme: Theme = {
     },
     menuItem: {
       cursor: 'pointer',
+      textDecoration: 'none',
+      color: 'gray--400',
     },
     containers: {
       center: {

@@ -1,30 +1,22 @@
 import React from 'react';
 import { GoogleClient, GoogleUser, GoogleAPI } from '../types/global';
 import { useLocation } from 'wouter';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { useCookies } from 'react-cookie';
+import createUserQuery from '../data/queries/createUserQuery.graphql';
+import { useDataDispatch } from '../data/DataLayer';
 
-const GOOGLE_CLIENT_ID =
-  '800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com';
 
 export function useAuthentication() {
-  const [GoogleClient, setGoogleClient] = React.useState<
-    GoogleClient | undefined
-  >(undefined);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['da_google_token']);
   const [currentUser, setCurrentUser] = React.useState<GoogleUser>({});
-  const [googleAPI, setGoogleAPI] = React.useState<GoogleAPI>({
-    loading: true,
-    error: undefined,
-  });
-
   const [location, setLocation] = useLocation();
+  const [GoogleClient, setGoogleClient] = React.useState<GoogleClient | undefined>(undefined);
+  const [googleAPI, setGoogleAPI] = React.useState<GoogleAPI>({ loading: true, error: undefined });
+  const dispatch = useDataDispatch();
 
-  const GET_OR_CREATE_USER_QUERY = gql`
-    mutation User($googleId: String!, $email: String!, $name: String) {
-      user(input: { googleId: $googleId, email: $email, name: $name })
-    }
-  `;
-  const [getOrCreateUser] = useMutation(GET_OR_CREATE_USER_QUERY, {
+  const [createUser] = useMutation(createUserQuery, {
     context: {
       headers: {
         Authorization: currentUser?.qc?.access_token,
@@ -33,7 +25,11 @@ export function useAuthentication() {
   });
 
   React.useEffect(() => {
-    if (window.gapi) {
+    dispatch && dispatch({ type: 'setUser', payload: currentUser });
+  }, [currentUser]);
+
+  React.useEffect(() => {
+    if (window.gapi && !Object.keys(currentUser).length) {
       window.gapi.load('auth2', () => {
         initializeGoogleLib();
       });
@@ -41,8 +37,6 @@ export function useAuthentication() {
       throw new Error('Google lib has not initialized');
     }
   }, []);
-
-  // GOOGLE LOGIC
 
   const initializeGoogleLib = () => {
     return window.gapi.auth2
@@ -77,7 +71,7 @@ export function useAuthentication() {
 
     return GoogleClient?.signIn().then((user: GoogleUser) => {
       setUser(user);
-      document.cookie = `da_google_token=${user.qc.access_token}`;
+      setCookie('da_google_token', user.qc.access_token);
 
       setGoogleAPI({ loading: false });
     });
@@ -88,7 +82,7 @@ export function useAuthentication() {
 
     return GoogleClient?.signOut().then(() => {
       setUser({ status: 'expired_token' });
-      document.cookie = 'da_google_token=';
+      removeCookie('da_google_token');
 
       if (location !== '/auth') {
         setLocation('/auth');
@@ -98,10 +92,18 @@ export function useAuthentication() {
     });
   };
 
-  // OUR LOGIC
+  const refreshCookie = () => {
+    const currentUserAccessToken = currentUser?.qc?.access_token;
+
+    if (currentUserAccessToken && currentUserAccessToken !== cookies['da_google_token']) {
+      setCookie('da_google_token', currentUserAccessToken);
+    }
+  };
 
   const checkAPIAndRedirect = async () => {
-    const data = await getOrCreateUser({
+    await refreshCookie();
+
+    const data = await createUser({
       variables: {
         googleId: currentUser?.Aa,
         email: currentUser?.profile?.email,
@@ -114,6 +116,8 @@ export function useAuthentication() {
         'Não conseguimos reconhecer o seu usuário em nossa base de dados. Por favor, entre em contato pelo chat!'
       );
     });
+
+    console.log(data);
 
     if (data) {
       return setLocation('/dashboard');
