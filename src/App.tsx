@@ -22,7 +22,7 @@ import PrivateRoutes from './routes/PrivateRoute';
 import { CookiesProvider } from 'react-cookie';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/dev/graphql',
+  uri: 'https://9lv33alab8.execute-api.us-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache(),
 });
 
