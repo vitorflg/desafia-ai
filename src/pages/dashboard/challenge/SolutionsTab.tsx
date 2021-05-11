@@ -130,7 +130,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
                       </div>
                     </SelectableCard>
 
-                    {currentUser && challenge && currentUser?.googleId === challenge?.userGoogleId && (
+                    {currentUser && challenge && currentUser?.googleId === solution?.userGoogleId && (
                       <SelectableCard
                         hasGroupLeft
                         noPadding
