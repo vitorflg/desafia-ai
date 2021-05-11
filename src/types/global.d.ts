@@ -1,3 +1,7 @@
+export type HistoryState = {
+  location: string;
+};
+
 export type GoogleAPI = {
   loading: boolean;
   error?: unknown;
@@ -40,9 +44,7 @@ declare global {
     gapi: {
       load: (module: string, callback: () => void) => Promise<any>;
       auth2: {
-        init: (initProps: {
-          client_id: string;
-        }) => Promise<GoogleClient | undefined>;
+        init: (initProps: { client_id: string }) => Promise<GoogleClient | undefined>;
       };
     };
   }

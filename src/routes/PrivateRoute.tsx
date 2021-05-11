@@ -1,28 +1,42 @@
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import { useLocation } from 'wouter';
 import routes from '.';
-
-const GOOGLE_TOKEN_INFO_BASE_URL = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
+import { useQuery } from '@apollo/client';
+import currentUserQuery from '../data/queries/currentUserQuery.graphql';
+import { useDataDispatch } from '../data/DataLayer';
 
 function PrivateRoutes({ children }) {
-  const [, setLocation] = useLocation();
+  const [location] = useLocation();
   const [googleApiCallResponse, setGoogleApiCallResponse] = React.useState<Response>();
-  const [cookies, _] = useCookies(['da_google_token']);
+  const dispatch = useDataDispatch();
+
+  const { data: currentUserData } = useQuery(currentUserQuery, {
+    context: {
+      headers: {
+        Authorization: window?.localStorage.getItem('da_google_token'),
+      },
+    },
+    fetchPolicy: 'network-only',
+    onError: (e) => {
+      window?.localStorage.removeItem('da_google_token');
+
+      setGoogleApiCallResponse(e);
+
+      window?.history.pushState({ location }, document.title, routes.auth);
+    },
+  });
+
+  const currentUser = currentUserData?.currentUser;
 
   React.useEffect(() => {
-    fetch(`${GOOGLE_TOKEN_INFO_BASE_URL}?access_token=${cookies['da_google_token']}`).then(
-      (data) => {
-        setGoogleApiCallResponse(data);
+    if (currentUser) {
+      dispatch && dispatch({ type: 'setCurrentUser', payload: currentUser });
 
-        if (data.status !== 200) {
-          setLocation(routes.auth);
-        }
-      }
-    );
-  }, []);
+      setGoogleApiCallResponse(currentUser);
+    }
+  }, [currentUser]);
 
-  return googleApiCallResponse ? children : <></>;
+  return googleApiCallResponse ? <>{children}</> : <></>;
 }
 
 export default PrivateRoutes;

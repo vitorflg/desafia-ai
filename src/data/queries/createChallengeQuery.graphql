@@ -1,15 +1,21 @@
 mutation Challenge(
+  $userGoogleId: String!
+  $id: String
   $name: String!
   $description: String!
   $tags: [JSON]
   $category: String
+  $details: String
 ) {
   challenge(
     input: {
+      id: $id
+      userGoogleId: $userGoogleId
       name: $name
       description: $description
       tags: $tags
       category: $category
+      details: $details
     }
   )
 }

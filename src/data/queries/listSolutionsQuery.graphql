@@ -1,0 +1,9 @@
+query listSolutions($challengeId: String) {
+  solutions(challengeId: $challengeId) {
+    title
+    description
+    likes
+    challengeId
+    userGoogleId
+  }
+}

@@ -1,20 +1,21 @@
 import React from 'react';
-import { GoogleClient, GoogleUser, GoogleAPI } from '../types/global';
+import { GoogleClient, GoogleUser, GoogleAPI, HistoryState } from '../types/global';
 import { useLocation } from 'wouter';
 import { useMutation } from '@apollo/client';
-import { useCookies } from 'react-cookie';
 import createUserQuery from '../data/queries/createUserQuery.graphql';
-import { useDataDispatch } from '../data/DataLayer';
+import { useDataDispatch, useDataState } from '../data/DataLayer';
 
 const GOOGLE_CLIENT_ID = '800974187362-ork5qrc63vnkvd3gme7p14bbba6ovfft.apps.googleusercontent.com';
 
 export function useAuthentication() {
-  const [cookies, setCookie, removeCookie] = useCookies(['da_google_token']);
-  const [currentUser, setCurrentUser] = React.useState<GoogleUser>({});
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const [GoogleClient, setGoogleClient] = React.useState<GoogleClient | undefined>(undefined);
-  const [googleAPI, setGoogleAPI] = React.useState<GoogleAPI>({ loading: true, error: undefined });
+  const [googleAPIStatus, setGoogleAPIStatus] = React.useState<GoogleAPI>({
+    loading: true,
+    error: undefined,
+  });
   const dispatch = useDataDispatch();
+  const currentUser = useDataState();
 
   const [createUser] = useMutation(createUserQuery, {
     context: {
@@ -25,16 +26,10 @@ export function useAuthentication() {
   });
 
   React.useEffect(() => {
-    dispatch && dispatch({ type: 'setUser', payload: currentUser });
-  }, [currentUser]);
-
-  React.useEffect(() => {
-    if (window.gapi && !Object.keys(currentUser).length) {
+    if (window.gapi) {
       window.gapi.load('auth2', () => {
         initializeGoogleLib();
       });
-    } else {
-      throw new Error('Google lib has not initialized');
     }
   }, []);
 
@@ -46,20 +41,14 @@ export function useAuthentication() {
       .then((Client) => {
         setGoogleClient(Client);
 
-        if (isUserSignedIn(Client)) {
-          const user = getUser(Client);
+        if (isUserSignedIn(Client) && window?.localStorage.getItem('da_google_token')) {
+          const user = Client?.currentUser?.get?.();
 
-          setUser(user);
-        } else {
-          setUser({ status: 'expired_token' });
+          setCurrentUser(user);
         }
 
-        return setGoogleAPI({ loading: false });
+        return setGoogleAPIStatus({ loading: false });
       });
-  };
-
-  const getUser = (Client?: GoogleClient) => {
-    return Client?.currentUser?.get?.();
   };
 
   const isUserSignedIn = (Client?: GoogleClient) => {
@@ -67,43 +56,32 @@ export function useAuthentication() {
   };
 
   const signIn = () => {
-    setGoogleAPI({ loading: true });
+    setGoogleAPIStatus({ loading: true });
 
     return GoogleClient?.signIn().then((user: GoogleUser) => {
-      setUser(user);
-      setCookie('da_google_token', user.qc.access_token);
+      setCurrentUser(user);
+      window?.localStorage.setItem('da_google_token', user.qc.access_token);
 
-      setGoogleAPI({ loading: false });
+      setGoogleAPIStatus({ loading: false });
     });
   };
 
   const signOut = () => {
-    setGoogleAPI({ loading: true });
+    setGoogleAPIStatus({ loading: true });
 
-    return GoogleClient?.signOut().then(() => {
-      setUser({ status: 'expired_token' });
-      removeCookie('da_google_token');
+    return GoogleClient?.signOut()
+      .then(() => {
+        window?.localStorage.removeItem('da_google_token');
 
-      if (location !== '/auth') {
-        setLocation('/auth');
-      }
-
-      setGoogleAPI({ loading: false });
-    });
+        setGoogleAPIStatus({ loading: false });
+      })
+      .catch((e) => {
+        console.log(e, 'e');
+      });
   };
 
-  const refreshCookie = () => {
-    const currentUserAccessToken = currentUser?.qc?.access_token;
-
-    if (currentUserAccessToken && currentUserAccessToken !== cookies['da_google_token']) {
-      setCookie('da_google_token', currentUserAccessToken);
-    }
-  };
-
-  const checkAPIAndRedirect = async () => {
-    await refreshCookie();
-
-    const data = await createUser({
+  const checkAPIAndRedirect = async (historyState: HistoryState) => {
+    const { data: userData } = await createUser({
       variables: {
         googleId: currentUser?.Aa,
         email: currentUser?.profile?.email,
@@ -112,29 +90,24 @@ export function useAuthentication() {
     }).catch(() => {
       signOut();
 
-      return alert(
-        'Não conseguimos reconhecer o seu usuário em nossa base de dados. Por favor, entre em contato pelo chat!'
-      );
+      return alert('Não conseguimos reconhecer o seu usuário em nossa base de dados.');
     });
 
-    console.log(data);
+    if (userData) {
+      const currentDataUser = await userData?.user;
 
-    if (data) {
-      return setLocation('/dashboard');
+      setCurrentUser(currentDataUser);
+
+      await setLocation(historyState?.location ?? '/dashboard');
     }
   };
 
-  const getUserProfile = () => {
-    return currentUser.profile;
-  };
-
-  const setUser = (user?: GoogleUser) => {
+  const setCurrentUser = (user?: GoogleUser) => {
     let formattedProfile = {};
     const profile = user?.getBasicProfile?.();
 
     if (profile) {
       formattedProfile = {
-        status: 'valid_token',
         profile: {
           ID: profile?.getId(),
           name: profile?.getName(),
@@ -145,31 +118,30 @@ export function useAuthentication() {
       };
     }
 
-    return setCurrentUser({
-      ...currentUser,
-      ...user,
-      ...formattedProfile,
-    });
+    return (
+      dispatch &&
+      dispatch({
+        type: 'setCurrentUser',
+        payload: {
+          ...user,
+          ...formattedProfile,
+        },
+      })
+    );
   };
 
   const isLoading = () => {
-    return !currentUser.status || googleAPI.loading;
-  };
-
-  const isTokenValid = () => {
-    return currentUser.status === 'valid_token';
+    return googleAPIStatus.loading;
   };
 
   return {
+    currentUser,
     initializeGoogleLib,
-    getUser,
-    getUserProfile,
-    setUser,
+    setCurrentUser,
     signIn,
     signOut,
     isUserSignedIn,
     isLoading,
-    isTokenValid,
     checkAPIAndRedirect,
   };
 }

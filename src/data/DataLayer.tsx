@@ -12,11 +12,14 @@ const DataDispatchContext = React.createContext<Dispatch | undefined>(undefined)
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'setUser': {
+    case 'setCurrentUser': {
       return {
         ...state,
         ...action.payload,
       };
+    }
+    case 'clearState': {
+      return {};
     }
   }
 

@@ -1,0 +1,10 @@
+query listChallenges($search: String, $tags: [String], $category: String) {
+  challenges(search: $search, tags: $tags, category: $category) {
+    id
+    name
+    description
+    imageUrl
+    category
+    tags
+  }
+}

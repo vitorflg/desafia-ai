@@ -2,12 +2,12 @@ import React from 'react';
 import DashboardWrapper from './DashboardWrapper';
 import { Heading, Box, Flex, Paragraph } from 'theme-ui';
 import Table from '@vtex/styleguide/lib/Table';
-import { useAuthentication } from '../../modules/useAuthentication';
 import { useQuery, gql } from '@apollo/client';
 import { Image } from '@theme-ui/components';
+import { useDataState } from '../../data/DataLayer';
 
-function HomePage() {
-  const Authentication = useAuthentication();
+function HomePage(props) {
+  const currentUser = useDataState();
 
   const { data: theOneData } = useQuery(
     gql`
@@ -33,7 +33,7 @@ function HomePage() {
 
   const ranking = usersData?.ranking;
   const theOne = theOneData?.theOne;
-  const userName = Authentication.getUserProfile()?.email?.match(/^([^@]*)@/)?.[1];
+  const userName = currentUser?.email?.match(/^([^@]*)@/)?.[1];
   const formattedUserName = `@${userName}!`;
 
   return (

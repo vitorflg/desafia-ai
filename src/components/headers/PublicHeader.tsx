@@ -14,7 +14,6 @@ export const Header: React.FC<Header> = ({ children, sx }) => {
       as="header"
       sx={{
         ...sx,
-        position: 'relative',
         flexDirection: 'row',
         variant: 'stytes.header',
       }}

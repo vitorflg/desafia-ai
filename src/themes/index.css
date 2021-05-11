@@ -20,16 +20,18 @@
   animation-duration: 1.37s;
 }
 
-.b--emphasis {
+.b--emphasis,
+.b--action-primary {
   border-color: var(--theme-ui-colors-purple) !important;
 }
 
 .bg-action-primary {
-  background-color: var(--theme-ui-colors-green) !important;
+  background: var(--theme-ui-colors-purple) !important;
 }
 
-.b--action-primary {
-  border-color: var(--theme-ui-colors-green) !important;
+.bg-action-primary:hover {
+  background: var(--theme-ui-colors-purple) !important;
+  filter: brightness(0.8);
 }
 
 .styleguide__floating-action-bar {
@@ -38,10 +40,15 @@
   right: 0;
 }
 
-.vtex-button {
-  padding: 15px 30px !important;
+.vtex-button * {
+  text-transform: initial !important;
 }
 
-.vtex-button__label {
-  padding: 0 !important;
+.c-disabled {
+  color: #979899 !important;
+}
+
+.hover-bg-action-secondary,
+.hover-b--action-secondary {
+  background-color: transparent !important;
 }

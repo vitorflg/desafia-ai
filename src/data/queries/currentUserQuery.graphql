@@ -1,0 +1,7 @@
+{
+  currentUser {
+    googleId
+    name
+    email
+  }
+}

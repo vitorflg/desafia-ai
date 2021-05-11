@@ -2,7 +2,7 @@ import React from 'react';
 
 type State = Record<string, any>;
 
-export default function Form() {
+export default function useForm() {
   const [state, setState] = React.useState<State>({});
 
   function handleInputChange(name: string, value: any) {
@@ -15,5 +15,6 @@ export default function Form() {
   return {
     handleInputChange,
     formData: state,
+    setFormData: setState,
   };
 }

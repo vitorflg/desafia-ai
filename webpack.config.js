@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const RemarkHTML = require('remark-html');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './dist/index.html',
@@ -38,6 +39,10 @@ module.exports = {
   mode: 'development',
   module: {
     rules: [
+      {
+        test: /\.md$/,
+        use: 'raw-loader',
+      },
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,

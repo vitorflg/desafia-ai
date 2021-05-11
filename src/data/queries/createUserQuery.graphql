@@ -1,3 +1,7 @@
 mutation User($googleId: String!, $email: String!, $name: String) {
-  user(input: { googleId: $googleId, email: $email, name: $name })
+  user(input: { googleId: $googleId, email: $email, name: $name }) {
+    googleId
+    name
+    email
+  }
 }

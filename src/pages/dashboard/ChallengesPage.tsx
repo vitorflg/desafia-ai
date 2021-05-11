@@ -1,7 +1,7 @@
 import React from 'react';
 import DashboardWrapper from './DashboardWrapper';
 import { Heading, Box, Paragraph, Flex, Badge } from 'theme-ui';
-import Image from '../../components/image/Image';
+import CustomImage from '../../components/image/Image';
 import { badgeStyle } from '../landing-page/sections/HeroSection';
 import Tag from '@vtex/styleguide/lib/Tag';
 import InputSearch from '@vtex/styleguide/lib/InputSearch';
@@ -10,34 +10,37 @@ import Pagination from '@vtex/styleguide/lib/Pagination';
 import { useThemeUI } from 'theme-ui';
 import { AiOutlineTags } from 'react-icons/ai';
 import { Link } from 'wouter';
-
-const OPTIONS = [
-  {
-    value: { id: 0, name: 'first-option' },
-    label: 'First Option',
-  },
-  {
-    value: { id: 1, name: 'second-option' },
-    label: 'Second Option',
-  },
-];
+import { useLazyQuery } from '@apollo/client';
+import listChallengesQuery from '../../data/queries/listChallengesQuery.graphql';
+import { Image } from '@theme-ui/components';
+import { tagOptions, categoryOptions } from '../../utils/constants';
 
 function ChallengesPage() {
   const context = useThemeUI();
   const colors = context?.theme?.rawColors;
   const [state, setState] = React.useState({
     search: '',
-    categories: [],
+    category: '',
     tags: [],
   });
+
+  const [listChallenges, { data }] = useLazyQuery(listChallengesQuery, {
+    fetchPolicy: 'cache-first',
+  });
+
+  const challenges = data?.challenges ?? [];
+
+  React.useEffect(() => {
+    listChallenges();
+  }, []);
 
   return (
     <DashboardWrapper>
       <Box>
-        <Image
+        <CustomImage
           sx={{ display: 'inline-block', verticalAlign: 'middle' }}
           src="challenges.svg"
-        ></Image>
+        ></CustomImage>
         <Heading ml={3} sx={{ display: 'inline-block' }} as="h2">
           Desafios
         </Heading>
@@ -53,90 +56,92 @@ function ChallengesPage() {
           }
           onSubmit={(e: React.SyntheticEvent) => {
             e.preventDefault();
-            console.log('submitted! search this: ', state.search);
+
+            listChallenges({
+              variables: { tags: state?.tags, category: state?.category, search: state?.search },
+            });
           }}
         />
 
-        <Flex mt={3} sx={{}}>
+        <Flex mt={3}>
           <Box sx={{ width: '30%' }}>
             <Select
-              defaultValue={OPTIONS[0]}
               size="large"
-              multi={true}
-              label="Categorias"
-              options={OPTIONS}
-              onChange={(values: Record<string, string>) => {
-                console.log(
-                  `[Select] Selected: ${JSON.stringify(values, null, 2)}`
-                );
+              multi={false}
+              options={categoryOptions}
+              onChange={(values: any) => {
+                setState({ ...state, category: values.label });
+                listChallenges({
+                  variables: { search: state?.search, tags: state?.tags, category: values.label },
+                });
               }}
             />
           </Box>
           <Box sx={{ width: '30%' }} ml={3}>
             <Select
-              defaultValue={OPTIONS[0]}
               size="large"
               multi={true}
-              label="Tags"
-              options={OPTIONS}
-              onChange={(values: Record<string, string>) => {
-                console.log(
-                  `[Select] Selected: ${JSON.stringify(values, null, 2)}`
-                );
+              options={tagOptions}
+              onChange={(values: any) => {
+                const newValues = values.map((tag: any) => tag.label);
+
+                setState({ ...state, tags: newValues });
+                listChallenges({
+                  variables: {
+                    search: state?.search,
+                    category: state?.category,
+                    tags: newValues,
+                  },
+                });
               }}
             />
           </Box>
         </Flex>
       </Box>
 
-      <Box
-        p={4}
-        mt={2}
-        sx={{
-          boxShadow: 'primary',
-          borderRadius: '1rem',
-        }}
-      >
-        <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
-          <Image sx={{ width: '7rem' }} src="xadrez-example.jpg" />
+      {challenges.map((challenge: any) => {
+        return (
+          <Box
+            p={4}
+            mt={2}
+            sx={{
+              boxShadow: 'primary',
+              borderRadius: '1rem',
+            }}
+          >
+            <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
+              <Image sx={{ width: '7rem' }} src={challenge.imageUrl} />
 
-          <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
-            <Link to="/dashboard/challenges/1">
-              <Heading sx={{}} as="h3">
-                Migração de base de dados usando python
-              </Heading>
-            </Link>
+              <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
+                <Link to={`/dashboard/challenges/${challenge?.id}`}>
+                  <Heading sx={{}} as="h3">
+                    {challenge.name}
+                  </Heading>
+                </Link>
 
-            <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse id iaculis ligula, in ultrices lorem.
-            </Paragraph>
+                <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
+                  {challenge.description}
+                </Paragraph>
 
-            <Badge sx={badgeStyle}>Desenvolvimento web</Badge>
+                <Badge sx={badgeStyle}>{challenge.category}</Badge>
+              </Box>
+
+              {challenge.tags?.map((tag: string) => {
+                return (
+                  <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
+                    <Tag bgColor={colors?.purple} color={colors?.white}>
+                      <Flex sx={{ alignItems: 'center' }}>
+                        <AiOutlineTags size={17} />
+                        {tag}
+                      </Flex>
+                    </Tag>
+                  </Box>
+                );
+              })}
+            </Flex>
           </Box>
-
-          <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
-            <Tag bgColor={colors?.purple} color={colors?.white}>
-              <Flex sx={{ alignItems: 'center' }}>
-                <AiOutlineTags size={17} />
-                Django
-              </Flex>
-            </Tag>
-            <Tag bgColor={colors?.purple} color={colors?.white}>
-              <Flex sx={{ alignItems: 'center' }}>
-                <AiOutlineTags size={17} />
-                React
-              </Flex>
-            </Tag>
-            <Tag bgColor={colors?.purple} color={colors?.white}>
-              <Flex sx={{ alignItems: 'center' }}>
-                <AiOutlineTags size={17} />
-                Jest
-              </Flex>
-            </Tag>
-          </Box>
-        </Flex>
-      </Box>
+        );
+      })}
 
       <Pagination
         rowsOptions={[5, 10, 15, 20]}

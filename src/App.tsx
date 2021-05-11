@@ -4,7 +4,7 @@ import LandingPage from './pages/landing-page/LandingPage';
 import HomePage from './pages/dashboard/HomePage';
 import RankingPage from './pages/dashboard/RankingPage';
 import ChallengesPage from './pages/dashboard/ChallengesPage';
-import ChallengePage from './pages/dashboard/ChallengePage';
+import ChallengePage from './pages/dashboard/challenge/ChallengePage';
 import CreateChallengePage from './pages/challenge/CreateChallengePage';
 import NotFoundPage from './pages/404/NotFoundPage';
 import AuthenticationPage from './pages/authentication/AuthenticationPage';
@@ -22,7 +22,7 @@ import PrivateRoutes from './routes/PrivateRoute';
 import { CookiesProvider } from 'react-cookie';
 
 const client = new ApolloClient({
-  uri: 'https://9lv33alab8.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  uri: 'http://localhost:3000/dev/graphql',
   cache: new InMemoryCache(),
 });
 
@@ -41,7 +41,9 @@ const App = () => {
                     <Route path={routes.dashboard.ranking} component={RankingPage}></Route>
                     <Route path={routes.dashboard.challenges} component={ChallengesPage}></Route>
                     <Route path={routes.create_challenge} component={CreateChallengePage}></Route>
-                    <Route path={routes.dashboard.challenge} component={ChallengePage}></Route>
+                    <Route path={routes.dashboard.challenge}>
+                      {(params) => <ChallengePage id={params.id} />}
+                    </Route>
                   </PrivateRoutes>
                   <Route component={NotFoundPage}></Route>
                 </Switch>

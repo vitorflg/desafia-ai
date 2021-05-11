@@ -1,0 +1,12 @@
+query getChallenge($id: String!) {
+  challenge(id: $id) {
+    id
+    details
+    userGoogleId
+    name
+    description
+    imageUrl
+    category
+    tags
+  }
+}

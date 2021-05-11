@@ -11,70 +11,26 @@ import Input from '@vtex/styleguide/lib/Input';
 import Textarea from '@vtex/styleguide/lib/Textarea';
 
 import logoSrc from '../../assets/images/logo.png';
-import useForm from '../../modules/useForm';
 import { useMutation } from '@apollo/client';
 import { useLocation } from 'wouter';
 import PrivateHeader from '../../components/headers/PrivateHeader';
 import CreateChallengeQuery from '../../data/queries/createChallengeQuery.graphql';
-
-type Options = {
-  label: string;
-  value: string | {};
-}[];
+import { categoryOptions, tagOptions } from '../../utils/constants';
+import { useDataState } from '../../data/DataLayer';
+import useForm from '../../modules/useForm';
 
 const CreateChallengePage: React.FC = () => {
   const Form = useForm();
   const formData = Form.formData;
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [, setLocation] = useLocation();
-
+  const currentUser = useDataState();
+  const userGoogleId = currentUser?.googleId;
   const [createChallenge] = useMutation(CreateChallengeQuery, {});
 
   React.useEffect(() => {
     clearAllBodyScrollLocks();
   });
-
-  const optionsCategory: Options = [
-    {
-      value: 'dev-web',
-      label: 'Desenvolvimento Web',
-    },
-    {
-      value: 'logica-programacao',
-      label: 'Lógica de Programação',
-    },
-    {
-      value: 'iot',
-      label: 'Internet das Coisas',
-    },
-    {
-      value: 'machine-learning',
-      label: 'Machine Learning',
-    },
-    {
-      value: 'redes',
-      label: 'Redes',
-    },
-    {
-      value: 'ciencia-dados',
-      label: 'Ciência de Dados',
-    },
-  ];
-
-  const optionsTags: Options = [
-    {
-      value: { id: 0, name: 'ReactJs' },
-      label: 'ReactJs',
-    },
-    {
-      value: { id: 1, name: 'NodeJs' },
-      label: 'NodeJs',
-    },
-    {
-      value: { id: 2, name: 'DynamoDB' },
-      label: 'DynamoDB',
-    },
-  ];
 
   const isFilled = () => {
     return (
@@ -90,10 +46,11 @@ const CreateChallengePage: React.FC = () => {
 
     createChallenge({
       variables: {
+        userGoogleId,
         name: formData.challengeName,
         description: formData.challengeDescription,
-        tags: formData.challengeTags,
-        category: formData.challengeCategory.value,
+        tags: formData.challengeTags.map((tag: any) => tag.label),
+        category: formData.challengeCategory.label,
       },
     })
       .then(() => {
@@ -147,13 +104,13 @@ const CreateChallengePage: React.FC = () => {
             </Heading>
 
             <Text as="p" mt={1}>
-              Tenha certeza de que o título contenha todas as palavras chaves do
-              seu desafio e que ao mesmo tempo seja uma síntese do que precisa.
+              Tenha certeza de que o título contenha todas as palavras chaves do seu desafio e que
+              ao mesmo tempo seja uma síntese do que precisa.
             </Text>
 
             <Text as="p" mt={1}>
-              Na descrição você pode desenvolver mais a ideia, quanto mais
-              completa ela for, mais rápido o desafiante resolverá seu desafio!
+              Na descrição você pode desenvolver mais a ideia, quanto mais completa ela for, mais
+              rápido o desafiante resolverá seu desafio!
             </Text>
           </Box>
           <Box
@@ -166,11 +123,7 @@ const CreateChallengePage: React.FC = () => {
             <Box onSubmit={onSubmit} as="form">
               <Flex>
                 <HiOutlineLightBulb size="20px" color="#3F3F46" />
-                <Label
-                  htmlFor="challenge-name"
-                  pl={1}
-                  sx={{ color: 'gray-700' }}
-                >
+                <Label htmlFor="challenge-name" pl={1} sx={{ color: 'gray-700' }}>
                   Título do desafio
                 </Label>
               </Flex>
@@ -189,11 +142,7 @@ const CreateChallengePage: React.FC = () => {
 
               <Flex mt={3}>
                 <GoFile size="20px" color="#3F3F46" />
-                <Label
-                  htmlFor="challenge-description"
-                  pl={1}
-                  sx={{ color: 'gray-700' }}
-                >
+                <Label htmlFor="challenge-description" pl={1} sx={{ color: 'gray-700' }}>
                   Descreva o desafio com suas palavras
                 </Label>
               </Flex>
@@ -209,11 +158,7 @@ const CreateChallengePage: React.FC = () => {
 
               <Flex mt={3}>
                 <RiCheckboxMultipleBlankLine size="20px" color="#3F3F46" />
-                <Label
-                  htmlFor="challenge-category"
-                  pl={1}
-                  sx={{ color: 'gray-700' }}
-                >
+                <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>
                   Categoria
                 </Label>
               </Flex>
@@ -221,19 +166,13 @@ const CreateChallengePage: React.FC = () => {
               <Select
                 size="large"
                 multi={false}
-                options={optionsCategory}
-                onChange={(values: any) =>
-                  Form.handleInputChange('challengeCategory', values)
-                }
+                options={categoryOptions}
+                onChange={(values: any) => Form.handleInputChange('challengeCategory', values)}
               />
 
               <Flex mt={3}>
                 <GoTag size="20px" color="#3F3F46" />
-                <Label
-                  htmlFor="challenge-category"
-                  pl={1}
-                  sx={{ color: 'gray-700' }}
-                >
+                <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>
                   Tags
                 </Label>
               </Flex>
@@ -241,10 +180,8 @@ const CreateChallengePage: React.FC = () => {
               <Select
                 size="large"
                 multi={true}
-                options={optionsTags}
-                onChange={(values: any) =>
-                  Form.handleInputChange('challengeTags', values)
-                }
+                options={tagOptions}
+                onChange={(values: any) => Form.handleInputChange('challengeTags', values)}
               />
 
               <Box mt={3} sx={{ float: 'right' }}>
@@ -258,9 +195,7 @@ const CreateChallengePage: React.FC = () => {
 
                 <Label>
                   {!isFilled() && (
-                    <Paragraph
-                      sx={{ textAlign: 'right', margin: '0 0 auto auto' }}
-                    >
+                    <Paragraph sx={{ textAlign: 'right', margin: '0 0 auto auto' }}>
                       Todos os campos são obrigatórios!
                     </Paragraph>
                   )}
@@ -270,6 +205,7 @@ const CreateChallengePage: React.FC = () => {
           </Box>
         </Flex>
       </Box>
+
       <Modal
         bottomBar={
           <div className="nowrap">

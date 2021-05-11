@@ -1,0 +1,17 @@
+mutation Solution(
+  $challengeId: String!
+  $title: String!
+  $description: JSON!
+  $userGoogleId: String!
+  $id: String
+) {
+  solution(
+    input: {
+      challengeId: $challengeId
+      title: $title
+      description: $description
+      userGoogleId: $userGoogleId
+      id: $id
+    }
+  )
+}
