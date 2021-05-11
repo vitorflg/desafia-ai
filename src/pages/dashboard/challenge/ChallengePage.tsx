@@ -1,7 +1,6 @@
-import { Box, Flex, Heading, Paragraph, Badge } from 'theme-ui';
+import { Box, Flex, Heading, Paragraph, Badge, Image } from 'theme-ui';
 import { useThemeUI } from 'theme-ui';
 import React from 'react';
-import Image from '../../../components/image/Image';
 import { badgeStyle } from '../../landing-page/sections/HeroSection';
 import Tag from '@vtex/styleguide/lib/Tag';
 import Tabs from '@vtex/styleguide/lib/Tabs';
