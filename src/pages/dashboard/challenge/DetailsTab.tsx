@@ -10,7 +10,7 @@ import { useDataState } from '../../../data/DataLayer';
 import { useMutation } from '@apollo/client';
 import createChallengeQuery from '../../../data/queries/createChallengeQuery.graphql';
 
-export default function DetailsTab({ challenge }) {
+export default function DetailsTab({ challenge, getChallengeRefetch }) {
   const Form = useForm();
   const formData = Form?.formData;
   const [previewMode, setPreviewMode] = React.useState('preview');
@@ -22,6 +22,8 @@ export default function DetailsTab({ challenge }) {
       setIsSaving(true);
 
       setPreviewMode('preview');
+
+      getChallengeRefetch();
 
       setTimeout(() => {
         setIsSaving(false);

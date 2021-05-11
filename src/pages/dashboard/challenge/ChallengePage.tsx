@@ -18,7 +18,7 @@ function ChallengePage({ id }) {
   const context = useThemeUI();
   const colors = context?.theme?.rawColors;
 
-  const { data: challengeData } = useQuery(getChallenge, {
+  const { data: challengeData, refetch: getChallengeRefetch } = useQuery(getChallenge, {
     variables: { id },
     fetchPolicy: 'network-only',
   });
@@ -80,7 +80,7 @@ function ChallengePage({ id }) {
             active={state.currentTab === 2}
             onClick={() => setState({ currentTab: 2 })}
           >
-            <DetailsTab challenge={challenge} />
+            <DetailsTab getChallengeRefetch={getChallengeRefetch} challenge={challenge} />
           </Tab>
 
           <Tab

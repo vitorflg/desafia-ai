@@ -4,7 +4,6 @@ import logoImgSrc from '../../assets/images/logo.png';
 import authImgSrc from '../../assets/images/woman-in-science.jpg';
 import loaderGifSrc from '../../assets/images/loader.gif';
 import { Header } from '../../components/headers/PublicHeader';
-import { disableBodyScroll } from 'body-scroll-lock';
 import { useAuthentication } from '../../modules/useAuthentication';
 import { useLocation } from 'wouter';
 import { useDataState } from '../../data/DataLayer';
@@ -15,10 +14,6 @@ const AuthenticationPage: React.FC = () => {
   const currentUser = useDataState();
   const currentUserProfile = currentUser?.profile;
   const isTokenValid = window?.localStorage.getItem('da_google_token');
-
-  React.useEffect(() => {
-    disableBodyScroll(document.body);
-  }, []);
 
   function onClick() {
     setLocation('/');
