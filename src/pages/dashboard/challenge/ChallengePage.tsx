@@ -37,7 +37,7 @@ function ChallengePage({ id }) {
         }}
       >
         <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
-          <Image sx={{ width: '7rem' }} src="xadrez-example.jpg" />
+          <Image sx={{ width: '7rem' }} src={challenge?.imageUrl} />
 
           <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
             <Heading sx={{}} as="h3">

@@ -1,7 +1,6 @@
 import React from 'react';
 import DashboardWrapper from './DashboardWrapper';
 import { Heading, Box, Paragraph, Flex, Badge } from 'theme-ui';
-import CustomImage from '../../components/image/Image';
 import { badgeStyle } from '../landing-page/sections/HeroSection';
 import Tag from '@vtex/styleguide/lib/Tag';
 import InputSearch from '@vtex/styleguide/lib/InputSearch';
@@ -14,6 +13,7 @@ import { useLazyQuery } from '@apollo/client';
 import listChallengesQuery from '../../data/queries/listChallengesQuery.graphql';
 import { Image } from '@theme-ui/components';
 import { tagOptions, categoryOptions } from '../../utils/constants';
+import challengeImgSrc from '../../assets/images/challenges.svg';
 
 function ChallengesPage() {
   const context = useThemeUI();
@@ -37,10 +37,10 @@ function ChallengesPage() {
   return (
     <DashboardWrapper>
       <Box>
-        <CustomImage
+        <Image
           sx={{ display: 'inline-block', verticalAlign: 'middle' }}
-          src="challenges.svg"
-        ></CustomImage>
+          src={challengeImgSrc}
+        ></Image>
         <Heading ml={3} sx={{ display: 'inline-block' }} as="h2">
           Desafios
         </Heading>

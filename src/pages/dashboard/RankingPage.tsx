@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Heading } from 'theme-ui';
+import { Box, Heading, Image } from 'theme-ui';
 import DashboardWrapper from './DashboardWrapper';
-import Image from '../../components/image/Image';
 import { useQuery, gql } from '@apollo/client';
 import Table from '@vtex/styleguide/lib/Table';
+import rankingImgSrc from '../../assets/images/ranking.svg';
 
 export default function RankingPage() {
   const { data: usersData } = useQuery(
@@ -27,7 +27,7 @@ export default function RankingPage() {
             display: 'inline-block',
             verticalAlign: 'middle',
           }}
-          src="ranking.svg"
+          src={rankingImgSrc}
         ></Image>
 
         <Heading ml={3} sx={{ display: 'inline-block' }} as="h2">
