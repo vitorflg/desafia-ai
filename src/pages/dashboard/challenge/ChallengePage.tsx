@@ -47,7 +47,7 @@ function ChallengePage({ id }) {
               {challenge?.description}
             </Paragraph>
 
-            <Badge sx={badgeStyle}>{challenge?.category}</Badge>
+            {/* <Badge sx={badgeStyle}>{challenge?.category}</Badge> */}
           </Box>
 
           {challenge?.tags?.map((tag: string) => {

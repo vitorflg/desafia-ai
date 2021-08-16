@@ -87,7 +87,7 @@ export default function DetailsTab({ challenge, getChallengeRefetch }) {
                     id: challenge?.id,
                     description: challenge?.description,
                     tags: challenge?.tags,
-                    category: challenge?.category,
+                    categories: challenge?.categories,
                     details: formData?.challengeDetails,
                   },
                 })

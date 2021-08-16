@@ -32,12 +32,18 @@ const CreateChallengePage: React.FC = () => {
     clearAllBodyScrollLocks();
   });
 
+  React.useEffect(() => {
+    if (!currentUser?.email.includes('ic.uff.br')) {
+      setLocation('/dashboard');
+    }
+  }, []);
+
   const isFilled = () => {
     return (
       formData.challengeName &&
       formData.challengeDescription &&
       formData.challengeTags?.length &&
-      formData.challengeCategory
+      formData.challengeCategories
     );
   };
 
@@ -50,7 +56,7 @@ const CreateChallengePage: React.FC = () => {
         name: formData.challengeName,
         description: formData.challengeDescription,
         tags: formData.challengeTags.map((tag: any) => tag.label),
-        category: formData.challengeCategory.label,
+        categories: formData.challengeCategories.map((category: any) => category.label),
       },
     })
       .then(() => {
@@ -159,15 +165,15 @@ const CreateChallengePage: React.FC = () => {
               <Flex mt={3}>
                 <RiCheckboxMultipleBlankLine size="20px" color="#3F3F46" />
                 <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>
-                  Categoria
+                  Categorias
                 </Label>
               </Flex>
 
               <Select
                 size="large"
-                multi={false}
+                multi={true}
                 options={categoryOptions}
-                onChange={(values: any) => Form.handleInputChange('challengeCategory', values)}
+                onChange={(values: any) => Form.handleInputChange('challengeCategories', values)}
               />
 
               <Flex mt={3}>

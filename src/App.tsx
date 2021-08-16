@@ -20,14 +20,16 @@ import { ApolloProvider } from '@apollo/client/react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import PrivateRoutes from './routes/PrivateRoute';
 import { CookiesProvider } from 'react-cookie';
+import { ToastProvider } from '@vtex/styleguide/lib/ToastProvider'
 
 const client = new ApolloClient({
-  uri: 'https://9lv33alab8.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  uri: 'https://ahx0ie83l6.execute-api.sa-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache(),
 });
 
 const App = () => {
   return (
+    <ToastProvider>
     <CookiesProvider>
       <ApolloProvider client={client}>
         <DataProvider>
@@ -52,6 +54,7 @@ const App = () => {
           </DataProvider>
         </ApolloProvider>
       </CookiesProvider>
+      </ToastProvider>
   );
 };
 

@@ -20,7 +20,7 @@ export function useAuthentication() {
   const [createUser] = useMutation(createUserQuery, {
     context: {
       headers: {
-        Authorization: currentUser?.qc?.access_token,
+        Authorization: currentUser?.id_token,
       },
     },
   });
@@ -58,9 +58,15 @@ export function useAuthentication() {
   const signIn = () => {
     setGoogleAPIStatus({ loading: true });
 
-    return GoogleClient?.signIn().then((user: GoogleUser) => {
-      setCurrentUser(user);
-      window?.localStorage.setItem('da_google_token', user.qc.access_token);
+    return GoogleClient?.signIn().then((user: GoogleUser = {}) => {
+      const userEmail = user?.getBasicProfile?.().getEmail() ?? '';
+
+      if (userEmail.includes('uff.br')) {
+        setCurrentUser(user);
+        window?.localStorage.setItem('da_google_token', user?.getAuthResponse().id_token);
+      } else {
+        alert('Apenas alunos do instituto de computação da UFF podem fazer parte do beta.');
+      }
 
       setGoogleAPIStatus({ loading: false });
     });
@@ -83,7 +89,7 @@ export function useAuthentication() {
   const checkAPIAndRedirect = async (historyState: HistoryState) => {
     const { data: userData } = await createUser({
       variables: {
-        googleId: currentUser?.Aa,
+        googleId: currentUser?.profile?.ID,
         email: currentUser?.profile?.email,
         name: currentUser?.profile?.name,
       },
@@ -95,9 +101,7 @@ export function useAuthentication() {
 
     if (userData) {
       const currentDataUser = await userData?.user;
-
       setCurrentUser(currentDataUser);
-
       await setLocation(historyState?.location ?? '/dashboard');
     }
   };
@@ -123,6 +127,7 @@ export function useAuthentication() {
       dispatch({
         type: 'setCurrentUser',
         payload: {
+          id_token: user?.getAuthResponse?.().id_token,
           ...user,
           ...formattedProfile,
         },

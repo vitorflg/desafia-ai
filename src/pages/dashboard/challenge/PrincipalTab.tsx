@@ -8,7 +8,7 @@ import VTEXBox from '@vtex/styleguide/lib/Box';
 import Select from '@vtex/styleguide/lib/EXPERIMENTAL_Select';
 import useForm from '../../../modules/useForm';
 
-export default function PrincipalTab({ challenge }) {
+export default function PrincipalTab({ challenge }: any) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const Form = useForm();
   const formData = Form?.formData;
@@ -17,8 +17,10 @@ export default function PrincipalTab({ challenge }) {
     Form.setFormData({
       challengeName: challenge?.name,
       challengeDescription: challenge?.description,
-      challengeCategory: { label: challenge?.category },
-      challengeTags: challenge?.tags.map((tag) => {
+      challengeCategories: challenge?.categories?.map((category: any) => {
+        return { label: category };
+      }),
+      challengeTags: challenge?.tags?.map((tag: any) => {
         return { label: tag };
       }),
     });
@@ -78,12 +80,12 @@ export default function PrincipalTab({ challenge }) {
 
             <Flex mt={3}>
               <Label htmlFor="challenge-category" pl={1} sx={{ color: 'gray-700' }}>
-                Categoria
+                Categorias
               </Label>
             </Flex>
 
             <Select
-              value={formData?.challengeCategory}
+              value={formData?.challengeCategories}
               disabled
               size="small"
               multi={false}

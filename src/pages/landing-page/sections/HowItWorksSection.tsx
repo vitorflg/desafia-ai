@@ -5,21 +5,22 @@ import { Box } from '@theme-ui/components';
 
 const HowItWorksSection: React.FC = () => {
   return (
-    <Box py={5} px={4}>
+    <Box py={6} px={6}>
       <Heading sx={{ py: 2 }} as="h1">
         Como funciona?
       </Heading>
 
-      <Flex sx={{ py: 4, flexDirection: ['column', 'column', 'row'] }}>
-        <Card sx={{ maxWidth: '25rem' }}>
+      <Flex
+        sx={{ py: 4, flexDirection: ['column', 'column', 'row'], justifyContent: 'space-between' }}
+      >
+        <Card sx={{ width: '18.75rem' }}>
           <CardContent>
             <Heading sx={{ mt: 2 }} as="h2">
-              Encontre/crie um desafio
+              Desafie-se
             </Heading>
 
-            <Paragraph sx={{ mt: 3, color: 'gray--400' }}>
-              Escolha uma categoria e proponha/aceite um desafio relacionado à
-              ciência da computação
+            <Paragraph variant="styles.p" sx={{ mt: 3, color: 'gray--400' }}>
+              Encontre um desafio relacionado à computação.
             </Paragraph>
           </CardContent>
         </Card>
@@ -27,12 +28,23 @@ const HowItWorksSection: React.FC = () => {
         <Card sx={{ maxWidth: '18.7rem', marginLeft: [0, 0, 4] }}>
           <CardContent>
             <Heading sx={{ mt: 2 }} as="h2">
-              Convide pessoas
+              Resolva
             </Heading>
 
-            <Paragraph sx={{ mt: 3, color: 'gray--400' }}>
-              Envie o link para pessoas vinculadas à UFF para colaborar, seja
-              com soluções ou avaliações!
+            <Paragraph variant="styles.p" sx={{ mt: 3, color: 'gray--400' }}>
+              Desenvolva uma solução criativa para o problema proposto.
+            </Paragraph>
+          </CardContent>
+        </Card>
+
+        <Card sx={{ maxWidth: '18.7rem', marginLeft: [0, 0, 4] }}>
+          <CardContent>
+            <Heading sx={{ mt: 2 }} as="h2">
+              Colabore
+            </Heading>
+
+            <Paragraph variant="styles.p" sx={{ mt: 3, color: 'gray--400' }}>
+              Envie o link para pessoas vinculadas à UFF para colaborar!
             </Paragraph>
           </CardContent>
         </Card>

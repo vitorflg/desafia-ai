@@ -20,7 +20,7 @@ function ChallengesPage() {
   const colors = context?.theme?.rawColors;
   const [state, setState] = React.useState({
     search: '',
-    category: '',
+    categories: [],
     tags: [],
   });
 
@@ -58,7 +58,11 @@ function ChallengesPage() {
             e.preventDefault();
 
             listChallenges({
-              variables: { tags: state?.tags, category: state?.category, search: state?.search },
+              variables: {
+                tags: state?.tags,
+                categories: state?.categories,
+                search: state?.search,
+              },
             });
           }}
         />
@@ -70,9 +74,13 @@ function ChallengesPage() {
               multi={false}
               options={categoryOptions}
               onChange={(values: any) => {
-                setState({ ...state, category: values.label });
+                setState({ ...state, categories: values.label });
                 listChallenges({
-                  variables: { search: state?.search, tags: state?.tags, category: values.label },
+                  variables: {
+                    search: state?.search,
+                    tags: state?.tags,
+                    categories: state?.categories,
+                  },
                 });
               }}
             />
@@ -83,14 +91,15 @@ function ChallengesPage() {
               multi={true}
               options={tagOptions}
               onChange={(values: any) => {
-                const newValues = values.map((tag: any) => tag.label);
+                const newTagValues = values.map((tag: any) => tag.label);
+                const newCategoryValues = values.map((category: any) => category.label);
 
-                setState({ ...state, tags: newValues });
+                setState({ ...state, tags: newTagValues, categories: newCategoryValues });
                 listChallenges({
                   variables: {
                     search: state?.search,
-                    category: state?.category,
-                    tags: newValues,
+                    categories: newCategoryValues,
+                    tags: newTagValues,
                   },
                 });
               }}
@@ -123,21 +132,22 @@ function ChallengesPage() {
                   {challenge.description}
                 </Paragraph>
 
-                <Badge sx={badgeStyle}>{challenge.category}</Badge>
+                {/* <Badge sx={badgeStyle}>{challenge.category}</Badge> */}
+                {[...challenge?.tags, ...(challenge?.categories ? challenge.categories : [])].map(
+                  (tag: string) => {
+                    return (
+                      <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
+                        <Tag bgColor={colors?.purple} color={colors?.white}>
+                          <Flex sx={{ alignItems: 'center' }}>
+                            <AiOutlineTags size={17} />
+                            {tag}
+                          </Flex>
+                        </Tag>
+                      </Box>
+                    );
+                  }
+                )}
               </Box>
-
-              {challenge.tags?.map((tag: string) => {
-                return (
-                  <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
-                    <Tag bgColor={colors?.purple} color={colors?.white}>
-                      <Flex sx={{ alignItems: 'center' }}>
-                        <AiOutlineTags size={17} />
-                        {tag}
-                      </Flex>
-                    </Tag>
-                  </Box>
-                );
-              })}
             </Flex>
           </Box>
         );

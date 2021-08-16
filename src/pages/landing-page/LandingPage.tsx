@@ -4,7 +4,7 @@ import { Header } from '../../components/headers/PublicHeader';
 import { Menu } from '../../components/menus/Menu';
 import HeroSection from './sections/HeroSection';
 import HowItWorksSection from './sections/HowItWorksSection';
-import IntegrationsSection from './sections/IntegrationsSection';
+// import IntegrationsSection from './sections/IntegrationsSection';
 import NewsletterSection from './sections/NewsletterSection';
 import { Footer } from '../../components/footers/PublicFooter';
 import {
@@ -28,7 +28,6 @@ const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
   left: [
     { text: 'Criar desafio', href: '/create-challenge' },
     { text: 'Como funciona?', href: '#como-funciona' },
-    { text: 'Apoio', href: '/' },
   ],
   right: [
     { icon: CgMenuGridO, href: '/' },
@@ -38,18 +37,13 @@ const MENU_SCHEMA: Record<'left' | 'right', MenuItemType[]> = {
 
 const footerLinks = [
   {
-    id: 0,
-    name: 'Direitos Autorais',
-    link: '',
-  },
-  {
     id: 1,
-    name: 'Termos de Uso',
+    name: 'Criar desafio',
     link: '',
   },
   {
-    id: 2,
-    name: 'Políticas de privacidade',
+    id: 0,
+    name: 'Como funciona?',
     link: '',
   },
 ];
@@ -70,7 +64,7 @@ const LandingPage: React.FC = () => {
       <HeaderSection />
       <HeroSection />
       <HowItWorksSection />
-      <IntegrationsSection />
+      {/* <IntegrationsSection /> */}
       <NewsletterSection />
       <FooterSection />
     </Box>
@@ -158,16 +152,6 @@ const FooterSection = () => {
           >
             <AiOutlineWhatsApp color="#fff" />
           </Link>
-
-          <Link
-            sx={{
-              ml: [0, 4],
-              color: 'whiteIce',
-              display: ['inline-block', 'auto'],
-            }}
-          >
-            Central de Ajuda
-          </Link>
         </Box>
 
         <Text
@@ -182,11 +166,13 @@ const FooterSection = () => {
         </Text>
 
         <Link
+          onClick={() => window.scroll(0, 0)}
           sx={{
             backgroundColor: 'gray-700',
-            ml: 4,
+            ml: 2,
             display: 'inline-grid',
             padding: 1,
+            cursor: 'pointer',
           }}
         >
           <AiOutlineArrowUp color="#fff" />
