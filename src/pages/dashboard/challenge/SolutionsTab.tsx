@@ -13,7 +13,7 @@ import listSolutionsQuery from '../../../data/queries/listSolutionsQuery.graphql
 import createSolutionQuery from '../../../data/queries/createSolutionQuery.graphql';
 import deleteInteractionQuery from '../../../data/queries/deleteInteractionQuery.graphql';
 import likeSolutionQuery from '../../../data/queries/likeSolutionQuery.graphql';
-import dislikeSolutionQuery from '../../../data/queries/DislikeSolutionQuery.graphql';
+import dislikeSolutionQuery from '../../../data/queries/dislikeSolutionQuery.graphql';
 import MDEditor from '@uiw/react-md-editor';
 import { useDataState } from '../../../data/DataLayer';
 import Loader from '../../../components/loadings/loader';
