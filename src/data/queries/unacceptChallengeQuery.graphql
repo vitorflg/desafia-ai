@@ -1,0 +1,3 @@
+mutation UnacceptChallenge($challengeId: String!, $currentUserId: String!) {
+  unacceptChallenge(input: { challengeId: $challengeId, currentUserId: $currentUserId })
+}

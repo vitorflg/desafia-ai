@@ -1,9 +1,14 @@
-query listSolutions($challengeId: String) {
-  solutions(challengeId: $challengeId) {
-    title
-    description
-    likes
-    challengeId
-    userGoogleId
+query listSolutions($challengeId: String, $currentUserId: ID!, $limit: Int!) {
+  solutions(challengeId: $challengeId, currentUserId: $currentUserId, limit: $limit) {
+    hasMore
+    list {
+      id
+      title
+      description
+      likes
+      challengeId
+      userGoogleId
+      likedByCurrentUser
+    }
   }
 }

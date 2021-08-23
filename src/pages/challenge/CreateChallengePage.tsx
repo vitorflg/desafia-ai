@@ -59,8 +59,8 @@ const CreateChallengePage: React.FC = () => {
         categories: formData.challengeCategories.map((category: any) => category.label),
       },
     })
-      .then(() => {
-        setLocation('/dashboard');
+      .then((payload) => {
+        setLocation(`/dashboard/challenges/${payload?.data?.challenge}`);
       })
       .catch(() => {
         setIsModalOpen(true);

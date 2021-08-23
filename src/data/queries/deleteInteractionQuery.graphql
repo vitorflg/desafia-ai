@@ -1,0 +1,5 @@
+mutation DeleteInteraction($solutionId: String, $commentId: String, $challengeId: String) {
+  deleteInteraction(
+    input: { solutionId: $solutionId, commentId: $commentId, challengeId: $challengeId }
+  )
+}

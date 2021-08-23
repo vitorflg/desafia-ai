@@ -1,10 +1,13 @@
-query listChallenges($search: String, $tags: [String], $category: String) {
-  challenges(search: $search, tags: $tags, category: $category) {
-    id
-    name
-    description
-    imageUrl
-    category
-    tags
+query listChallenges($search: String, $tags: [String], $categories: [String], $page: Int) {
+  challenges(search: $search, tags: $tags, categories: $categories, page: $page) {
+    count
+    list {
+      id
+      name
+      description
+      imageUrl
+      categories
+      tags
+    }
   }
 }

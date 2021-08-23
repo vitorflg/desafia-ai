@@ -4,7 +4,7 @@ mutation Challenge(
   $name: String!
   $description: String!
   $tags: [JSON]
-  $category: String
+  $categories: [JSON]
   $details: String
 ) {
   challenge(
@@ -14,7 +14,7 @@ mutation Challenge(
       name: $name
       description: $description
       tags: $tags
-      category: $category
+      categories: $categories
       details: $details
     }
   )

@@ -3,5 +3,6 @@
     googleId
     name
     email
+    interactions
   }
 }

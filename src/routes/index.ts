@@ -5,6 +5,7 @@ export type Routes = {
 const routes: Routes = {
   landing_page: '/',
   auth: '/auth',
+  challenges: '/challenges',
   dashboard: {
     home: '/dashboard',
     challenges: '/dashboard/challenges',

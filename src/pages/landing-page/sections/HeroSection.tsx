@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Heading, Flex, Text, Badge, Button, Image } from 'theme-ui';
 import illustrationSrc from '../../../assets/images/illustration.png';
+import { useLocation } from 'wouter';
 
 export const badgeStyle = {
   padding: 2,
@@ -15,6 +16,8 @@ export const badgeStyle = {
 };
 
 const HeroSection: React.FC = () => {
+  const [, setLocation] = useLocation();
+
   return (
     <>
       <Flex
@@ -123,11 +126,14 @@ const HeroSection: React.FC = () => {
               flexGrow: 1,
             }}
           >
-            Encontre desafios reais junto à uma comunidade acadêmica e
-            colaborativa.
+            Encontre desafios reais junto à uma comunidade acadêmica e colaborativa.
           </Heading>
 
-          <Button id="como-funciona" sx={{ marginTop: 4 }}>
+          <Button
+            onClick={() => setLocation('/challenges')}
+            id="como-funciona"
+            sx={{ marginTop: 4 }}
+          >
             Buscar desafios
           </Button>
         </Box>

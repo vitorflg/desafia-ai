@@ -1,0 +1,19 @@
+mutation LikeSolution(
+  $solutionId: String!
+  $challengeId: String!
+  $currentUserId: String
+  $currentUserEmail: String
+  $likes: Int!
+  $interactions: Int
+) {
+  likeSolution(
+    input: {
+      solutionId: $solutionId
+      challengeId: $challengeId
+      currentUserId: $currentUserId
+      currentUserEmail: $currentUserEmail
+      likes: $likes
+      interactions: $interactions
+    }
+  )
+}

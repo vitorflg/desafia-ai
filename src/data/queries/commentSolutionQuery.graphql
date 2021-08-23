@@ -1,0 +1,19 @@
+mutation CommentSolution(
+  $solutionId: String!
+  $challengeId: String!
+  $currentUserId: String
+  $currentUserEmail: String
+  $interactions: Int
+  $message: String!
+) {
+  commentSolution(
+    input: {
+      solutionId: $solutionId
+      challengeId: $challengeId
+      currentUserId: $currentUserId
+      currentUserEmail: $currentUserEmail
+      interactions: $interactions
+      message: $message
+    }
+  )
+}

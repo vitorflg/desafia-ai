@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image, Heading, Flex } from '@theme-ui/components';
 import logoSrc from '../../assets/images/white-logo--no-cursor.png';
-import { AiFillHome, AiFillTrophy, AiOutlineAliwangwang } from 'react-icons/ai';
+import { AiFillHome, AiFillTrophy } from 'react-icons/ai';
 
 import { GiNetworkBars } from 'react-icons/gi';
 import { IconType } from 'react-icons';
@@ -17,7 +17,6 @@ type Link = {
 const LINKS: Link[] = [
   { Icon: AiFillHome, label: 'Home', href: routes.dashboard.home },
   { Icon: AiFillTrophy, label: 'Desafios', href: routes.dashboard.challenges },
-  { Icon: AiOutlineAliwangwang, label: 'Comunidade', href: routes.dashboard.community },
   { Icon: GiNetworkBars, label: 'Ranking', href: routes.dashboard.ranking },
 ];
 function Sidebar() {

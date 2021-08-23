@@ -88,7 +88,7 @@ export default function PrincipalTab({ challenge }: any) {
               value={formData?.challengeCategories}
               disabled
               size="small"
-              multi={true}
+              multi={false}
               options={categoryOptions}
             />
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import DashboardWrapper from './DashboardWrapper';
 import { Heading, Box, Paragraph, Flex, Badge } from 'theme-ui';
-import { badgeStyle } from '../landing-page/sections/HeroSection';
 import Tag from '@vtex/styleguide/lib/Tag';
 import InputSearch from '@vtex/styleguide/lib/InputSearch';
 import Select from '@vtex/styleguide/lib/EXPERIMENTAL_Select';
@@ -22,16 +21,21 @@ function ChallengesPage() {
     search: '',
     categories: [],
     tags: [],
+    page: 0,
   });
 
   const [listChallenges, { data }] = useLazyQuery(listChallengesQuery, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'network-only',
   });
 
-  const challenges = data?.challenges ?? [];
+  const challenges = data?.challenges?.list ?? [];
 
   React.useEffect(() => {
-    listChallenges();
+    listChallenges({
+      variables: {
+        page: state?.page,
+      },
+    });
   }, []);
 
   return (
@@ -62,6 +66,7 @@ function ChallengesPage() {
                 tags: state?.tags,
                 categories: state?.categories,
                 search: state?.search,
+                page: state?.page,
               },
             });
           }}
@@ -71,15 +76,18 @@ function ChallengesPage() {
           <Box sx={{ width: '30%' }}>
             <Select
               size="large"
-              multi={false}
+              multi={true}
               options={categoryOptions}
               onChange={(values: any) => {
-                setState({ ...state, categories: values.label });
+                const newCategoryValues = values.map((category: any) => category.label);
+
+                setState({ ...state, categories: newCategoryValues });
                 listChallenges({
                   variables: {
                     search: state?.search,
                     tags: state?.tags,
-                    categories: state?.categories,
+                    categories: newCategoryValues,
+                    page: state?.page,
                   },
                 });
               }}
@@ -100,6 +108,7 @@ function ChallengesPage() {
                     search: state?.search,
                     categories: newCategoryValues,
                     tags: newTagValues,
+                    page: state?.page,
                   },
                 });
               }}
@@ -136,7 +145,13 @@ function ChallengesPage() {
                 {[...challenge?.tags, ...(challenge?.categories ? challenge.categories : [])].map(
                   (tag: string) => {
                     return (
-                      <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
+                      <Box
+                        sx={{
+                          maxWidth: '16rem',
+                          '> div': { mt: 2, ml: 2 },
+                          display: 'inline-block',
+                        }}
+                      >
                         <Tag bgColor={colors?.purple} color={colors?.white}>
                           <Flex sx={{ alignItems: 'center' }}>
                             <AiOutlineTags size={17} />
@@ -153,14 +168,38 @@ function ChallengesPage() {
         );
       })}
 
-      <Pagination
-        rowsOptions={[5, 10, 15, 20]}
-        currentItemFrom={1}
-        currentItemTo={10}
-        textOf="of"
-        textShowRows="show rows"
-        totalItems={20}
-      />
+      <Box sx={{ mb: 3 }}>
+        <Pagination
+          onNextClick={() => {
+            listChallenges({
+              variables: {
+                tags: state?.tags,
+                categories: state?.categories,
+                search: state?.search,
+                page: state?.page + 1,
+              },
+            });
+
+            setState({ ...state, page: state.page + 1 });
+          }}
+          onPrevClick={() => {
+            listChallenges({
+              variables: {
+                tags: state?.tags,
+                categories: state?.categories,
+                search: state?.search,
+                page: state?.page - 1,
+              },
+            });
+
+            setState({ ...state, page: state.page - 1 });
+          }}
+          currentItemFrom={state?.page * 5 > 0 ? state?.page * 5 : 1}
+          currentItemTo={state?.page * 5 + 5}
+          totalItems={data?.challenges?.count}
+          textOf="de"
+        />
+      </Box>
     </DashboardWrapper>
   );
 }

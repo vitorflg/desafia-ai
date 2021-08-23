@@ -1,0 +1,12 @@
+query listSolutionComments($solutionId: String!, $limit: Int!) {
+  solutionComments(solutionId: $solutionId, limit: $limit) {
+    hasMore
+    list {
+      id
+      challengeId
+      userGoogleId
+      userEmail
+      message
+    }
+  }
+}

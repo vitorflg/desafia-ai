@@ -11,12 +11,15 @@ export default function RankingPage() {
       {
         ranking {
           name
+          interactions
         }
       }
     `
   );
 
-  const ranking = usersData?.ranking;
+  const ranking = usersData?.ranking.map((userRanking: any) => {
+    return { ...userRanking, interactions: userRanking.interactions ?? 0 };
+  });
 
   return (
     <DashboardWrapper>
@@ -43,6 +46,9 @@ export default function RankingPage() {
             properties: {
               name: {
                 title: 'Name',
+              },
+              interactions: {
+                title: 'Interações',
               },
             },
           }}

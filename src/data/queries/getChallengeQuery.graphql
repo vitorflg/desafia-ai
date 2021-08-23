@@ -1,12 +1,13 @@
-query getChallenge($id: String!) {
-  challenge(id: $id) {
+query getChallenge($id: String!, $currentUserId: String) {
+  challenge(id: $id, currentUserId: $currentUserId) {
     id
     details
     userGoogleId
     name
     description
     imageUrl
-    category
+    categories
     tags
+    acceptedByCurrentUser
   }
 }

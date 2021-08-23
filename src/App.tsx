@@ -21,6 +21,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import PrivateRoutes from './routes/PrivateRoute';
 import { CookiesProvider } from 'react-cookie';
 import { ToastProvider } from '@vtex/styleguide/lib/ToastProvider'
+import PublicChallengesPage from './pages/public-challenges/PublicChallengesPage';
 
 const client = new ApolloClient({
   uri: 'https://ahx0ie83l6.execute-api.sa-east-1.amazonaws.com/dev/graphql',
@@ -38,6 +39,7 @@ const App = () => {
                 <Switch>
                   <Route path={routes.landing_page} component={LandingPage}></Route>
                   <Route path={routes.auth} component={AuthenticationPage}></Route>
+                  <Route path={routes.challenges} component={PublicChallengesPage}></Route>
                   <PrivateRoutes>
                     <Route path={routes.dashboard.home} component={HomePage}></Route>
                     <Route path={routes.dashboard.ranking} component={RankingPage}></Route>

@@ -26,12 +26,15 @@ function HomePage(props) {
       {
         ranking {
           name
+          interactions
         }
       }
     `
   );
 
-  const ranking = usersData?.ranking;
+  const ranking = usersData?.ranking.map((userRanking: any) => {
+    return { ...userRanking, interactions: userRanking.interactions ?? 0 };
+  });
   const theOne = theOneData?.theOne;
   const userName = currentUser?.email?.match(/^([^@]*)@/)?.[1];
   const formattedUserName = `@${userName}!`;
@@ -79,6 +82,10 @@ function HomePage(props) {
                 properties: {
                   name: {
                     title: 'Name',
+                    width: 300,
+                  },
+                  interactions: {
+                    title: 'Interações',
                     width: 300,
                   },
                 },

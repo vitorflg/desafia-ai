@@ -1,7 +1,8 @@
-mutation User($googleId: String!, $email: String!, $name: String) {
-  user(input: { googleId: $googleId, email: $email, name: $name }) {
+mutation User($googleId: String!, $email: String!, $name: String, $interactions: Int) {
+  user(input: { googleId: $googleId, email: $email, name: $name, interactions: $interactions }) {
     googleId
     name
     email
+    interactions
   }
 }

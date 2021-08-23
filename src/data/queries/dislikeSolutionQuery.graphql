@@ -1,0 +1,15 @@
+mutation DislikeSolution(
+  $solutionId: String!
+  $challengeId: String!
+  $currentUserId: String
+  $likes: Int!
+) {
+  dislikeSolution(
+    input: {
+      solutionId: $solutionId
+      challengeId: $challengeId
+      currentUserId: $currentUserId
+      likes: $likes
+    }
+  )
+}

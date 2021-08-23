@@ -92,6 +92,7 @@ export function useAuthentication() {
         googleId: currentUser?.profile?.ID,
         email: currentUser?.profile?.email,
         name: currentUser?.profile?.name,
+        interactions: currentUser?.interactions,
       },
     }).catch(() => {
       signOut();
