@@ -23,7 +23,7 @@ import exampleMd from './solution-example.md';
 export default function SolutionsTab({ challenge, challengeId }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [updatingCacheStore, setUpdatingCacheStore] = React.useState(null);
-  const Form = useForm();
+  const Form = useForm({ solutionDescription: exampleMd });
   const formData = Form?.formData;
   const [state, setState] = React.useState();
   const [limit, setLimit] = React.useState(5);
@@ -37,6 +37,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
 
   const solutions = listSolutionsData?.solutions.list;
   const hasMore = listSolutionsData?.solutions.hasMore ?? false;
+  const [solutionTitle, setSolutionTitle] = React.useState('')
   const [createSolution] = useMutation(createSolutionQuery);
   const [deleteInteraction] = useMutation(deleteInteractionQuery);
   const [likeSolution] = useMutation(likeSolutionQuery);
@@ -48,7 +49,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
     createSolution({
       variables: {
         challengeId: challengeId,
-        title: formData.solutionTitle,
+        title: solutionTitle,
         description: formData?.solutionDescription,
         userGoogleId: currentUser?.googleId,
       },
@@ -215,7 +216,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
             name="solution-name"
             id="solution-name"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              Form.handleInputChange('solutionTitle', e.target.value);
+              setSolutionTitle(e.target.value);
             }}
           />
 
@@ -307,6 +308,8 @@ export default function SolutionsTab({ challenge, challengeId }) {
                                   setTimeout(() => {
                                     setIsSaving(false);
                                   }, 1500);
+
+                                  refetch()
                                 })
                               }
                             >

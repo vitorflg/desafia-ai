@@ -100,13 +100,12 @@ function ChallengesPage() {
               options={tagOptions}
               onChange={(values: any) => {
                 const newTagValues = values.map((tag: any) => tag.label);
-                const newCategoryValues = values.map((category: any) => category.label);
-
-                setState({ ...state, tags: newTagValues, categories: newCategoryValues });
+                
+                setState({ ...state, tags: newTagValues });
                 listChallenges({
                   variables: {
                     search: state?.search,
-                    categories: newCategoryValues,
+                    categories: state?.categories,
                     tags: newTagValues,
                     page: state?.page,
                   },

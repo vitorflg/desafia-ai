@@ -54,6 +54,7 @@ const CreateChallengePage: React.FC = () => {
       variables: {
         userGoogleId,
         name: formData.challengeName,
+        searchName: formData.challengeName?.toUpperCase(),
         description: formData.challengeDescription,
         tags: formData.challengeTags.map((tag: any) => tag.label),
         categories: formData.challengeCategories.map((category: any) => category.label),

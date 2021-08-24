@@ -14,7 +14,9 @@ export default function RankingPage() {
           interactions
         }
       }
-    `
+    `, {
+      fetchPolicy: 'network-only',
+    }
   );
 
   const ranking = usersData?.ranking.map((userRanking: any) => {

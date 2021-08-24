@@ -84,6 +84,7 @@ export default function DetailsTab({ challenge, getChallengeRefetch }) {
                   variables: {
                     userGoogleId: currentUser?.googleId,
                     name: challenge?.name,
+                    searchName: challenge?.searchName,
                     id: challenge?.id,
                     description: challenge?.description,
                     tags: challenge?.tags,

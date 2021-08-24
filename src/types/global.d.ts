@@ -24,6 +24,7 @@ export type GoogleUser = {
     email?: string;
     imageUrl?: string;
   };
+  interactions: boolean;
   getBasicProfile?: () => GoogleProfile;
   [key: string]: any;
 };

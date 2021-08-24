@@ -2,6 +2,7 @@ mutation Challenge(
   $userGoogleId: String!
   $id: String
   $name: String!
+  $searchName: String
   $description: String!
   $tags: [JSON]
   $categories: [JSON]
@@ -12,6 +13,7 @@ mutation Challenge(
       id: $id
       userGoogleId: $userGoogleId
       name: $name
+      searchName: $searchName
       description: $description
       tags: $tags
       categories: $categories

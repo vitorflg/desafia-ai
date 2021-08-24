@@ -2,8 +2,8 @@ import React from 'react';
 
 type State = Record<string, any>;
 
-export default function useForm() {
-  const [state, setState] = React.useState<State>({});
+export default function useForm(initialValues?: Record<string, string>) {
+  const [state, setState] = React.useState<State>(initialValues ?? {});
 
   function handleInputChange(name: string, value: any) {
     setState({
