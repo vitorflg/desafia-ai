@@ -24,7 +24,7 @@ import { ToastProvider } from '@vtex/styleguide/lib/ToastProvider'
 import PublicChallengesPage from './pages/public-challenges/PublicChallengesPage';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/dev/graphql',
+  uri: 'https://ahx0ie83l6.execute-api.sa-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache(),
 });
 
