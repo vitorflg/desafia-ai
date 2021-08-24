@@ -19,7 +19,7 @@ import unacceptChallengeQuery from '../../../data/queries/unacceptChallengeQuery
 import Loader from '../../../components/loadings/loader';
 
 function ChallengePage({ id }) {
-  const [state, setState] = React.useState({ currentTab: 3 });
+  const [state, setState] = React.useState({ currentTab: 1 });
   const context = useThemeUI();
   const colors = context?.theme?.rawColors;
   const currentUser = useDataState();
