@@ -35,10 +35,10 @@ export default function SolutionComments({ solution }) {
         message: formData.message,
         currentUserId: currentUser?.googleId,
         currentUserEmail: currentUser?.email,
+        currentUserName: currentUser?.name,
         interactions: currentUser?.interactions ? currentUser.interactions + 1 : 1,
       },
     }).finally(() => {
-      console.log('refetching');
       Form.setFormData({});
       setTimeout(() => {
         refetch();
@@ -66,7 +66,7 @@ export default function SolutionComments({ solution }) {
         {comments.map((comment) => {
           return (
             <Box sx={{ mt: 2 }}>
-              {comment.userEmail && <Paragraph sx={{ mb: 1 }}>{`${comment.userEmail}:`}</Paragraph>}
+              {(comment.userEmail || comment.userName) && <Paragraph sx={{ mb: 1 }}>{`${comment.userName ?? comment.userEmail}:`}</Paragraph>}
               <Flex
                 sx={{
                   mt: 2,

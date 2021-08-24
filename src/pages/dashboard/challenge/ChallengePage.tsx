@@ -6,7 +6,7 @@ import Tag from '@vtex/styleguide/lib/Tag';
 import Tabs from '@vtex/styleguide/lib/Tabs';
 import Tab from '@vtex/styleguide/lib/Tab';
 import { AiOutlineTags } from 'react-icons/ai';
-import { GiConfirmed } from 'react-icons/gi';
+import { IoMdCheckmark } from 'react-icons/io';
 import DashboardWrapper from '../DashboardWrapper';
 import getChallenge from '../../../data/queries/getChallengeQuery.graphql';
 import { useMutation, useQuery } from '@apollo/client';
@@ -17,6 +17,7 @@ import { useDataState } from '../../../data/DataLayer';
 import acceptChallengeQuery from '../../../data/queries/acceptChallengeQuery.graphql';
 import unacceptChallengeQuery from '../../../data/queries/unacceptChallengeQuery.graphql';
 import Loader from '../../../components/loadings/loader';
+import Skeleton from 'react-loading-skeleton';
 
 function ChallengePage({ id }) {
   const [state, setState] = React.useState({ currentTab: 1 });
@@ -27,7 +28,7 @@ function ChallengePage({ id }) {
   const [acceptChallenge] = useMutation(acceptChallengeQuery);
   const [unacceptChallenge] = useMutation(unacceptChallengeQuery);
 
-  const { data: challengeData, refetch: getChallengeRefetch } = useQuery(getChallenge, {
+  const { data: challengeData, refetch: getChallengeRefetch, loading } = useQuery(getChallenge, {
     variables: { id, currentUserId: currentUser?.googleId },
     fetchPolicy: 'network-only',
   });
@@ -49,16 +50,31 @@ function ChallengePage({ id }) {
         }}
       >
         <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
-          <Image sx={{ width: '7rem' }} src={challenge?.imageUrl} />
+          {loading ? (
+            <Skeleton width={106} height={106} />
+          ) : (
+            <Image sx={{ width: '7rem' }} src={challenge?.imageUrl} />
+          )}
 
-          <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
-            <Heading sx={{}} as="h3">
-              {challenge?.name}
-            </Heading>
+          <Box
+            sx={{ flexGrow: 1, cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
+            ml={3}
+          >
+            {loading ? (
+              <Skeleton width={300} />
+            ) : (
+              <Heading sx={{}} as="h3">
+                {challenge?.name}
+              </Heading>
+            )}
 
-            <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
-              {challenge?.description}
-            </Paragraph>
+            {loading ? (
+              <Skeleton width={400} count={1} />
+            ) : (
+              <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
+                {challenge?.description}
+              </Paragraph>
+            )}
 
             {!challenge?.acceptedByCurrentUser ? (
               <Button
@@ -74,7 +90,7 @@ function ChallengePage({ id }) {
                     getChallengeRefetch();
                   });
                 }}
-                sx={{ ...badgeStyle, '> svg': { verticalAlign: 'middle' } }}
+                sx={{ ...badgeStyle, '> svg': { verticalAlign: 'middle' }, maxWidth: '15rem' }}
               >
                 {updatingCacheStore && <Loader size={21} />}
                 <Paragraph sx={{ ml: 1, display: 'inline-block' }}>Aceitar desafio</Paragraph>
@@ -111,11 +127,12 @@ function ChallengePage({ id }) {
                   backgroundColor: 'green',
                   color: 'white',
                   border: 'none',
+                  maxWidth: '15rem',
                   '> svg': { verticalAlign: 'middle' },
                 }}
               >
                 {updatingCacheStore && <Loader size={21} />}
-                {!updatingCacheStore && <GiConfirmed size={21} />}
+                {!updatingCacheStore && <IoMdCheckmark size={21} />}
                 <Paragraph sx={{ ml: 1, display: 'inline-block' }}>Desafio aceito</Paragraph>
               </Button>
             )}
@@ -159,7 +176,11 @@ function ChallengePage({ id }) {
             active={state.currentTab === 3}
             onClick={() => setState({ currentTab: 3 })}
           >
-            <SolutionsTab challenge={challenge} challengeId={id} />
+            <SolutionsTab
+              getChallengeRefetch={getChallengeRefetch}
+              challenge={challenge}
+              challengeId={id}
+            />
           </Tab>
         </Tabs>
       </Box>

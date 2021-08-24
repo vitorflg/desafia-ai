@@ -132,7 +132,7 @@ const HeroSection: React.FC = () => {
           <Button
             onClick={() => setLocation('/challenges')}
             id="como-funciona"
-            sx={{ marginTop: 4 }}
+            sx={{ marginTop: 4, padding: 3 }}
           >
             Buscar desafios
           </Button>

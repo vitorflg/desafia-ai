@@ -35,7 +35,6 @@ export default function SolutionComments({ solution }) {
         interactions: currentUser?.interactions ? currentUser.interactions + 1 : 1,
       },
     }).finally(() => {
-      console.log('refetching');
       Form.setFormData({});
       setTimeout(() => {
         refetch();

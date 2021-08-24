@@ -13,6 +13,7 @@ import listChallengesQuery from '../../data/queries/listChallengesQuery.graphql'
 import { Image } from '@theme-ui/components';
 import { tagOptions, categoryOptions } from '../../utils/constants';
 import challengeImgSrc from '../../assets/images/challenges.svg';
+import Skeleton from 'react-loading-skeleton';
 
 function ChallengesPage() {
   const context = useThemeUI();
@@ -24,7 +25,7 @@ function ChallengesPage() {
     page: 0,
   });
 
-  const [listChallenges, { data }] = useLazyQuery(listChallengesQuery, {
+  const [listChallenges, { data, loading }] = useLazyQuery(listChallengesQuery, {
     fetchPolicy: 'network-only',
   });
 
@@ -100,7 +101,7 @@ function ChallengesPage() {
               options={tagOptions}
               onChange={(values: any) => {
                 const newTagValues = values.map((tag: any) => tag.label);
-                
+
                 setState({ ...state, tags: newTagValues });
                 listChallenges({
                   variables: {
@@ -116,56 +117,64 @@ function ChallengesPage() {
         </Flex>
       </Box>
 
-      {challenges.map((challenge: any) => {
-        return (
-          <Box
-            p={4}
-            mt={2}
-            sx={{
-              boxShadow: 'primary',
-              borderRadius: '1rem',
-            }}
-          >
-            <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
-              <Image sx={{ width: '7rem' }} src={challenge.imageUrl} />
+      {loading && (
+        <Box sx={{ span: { mt: '0.75rem' } }}>
+          <Skeleton width="100%" height={210} count={3}></Skeleton>
+        </Box>
+      )}
 
-              <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
+      {!loading &&
+        challenges.map((challenge: any) => {
+          return (
+            <Box
+              p={4}
+              mt={2}
+              sx={{
+                boxShadow: 'primary',
+                borderRadius: '1rem',
+              }}
+            >
+              <Flex mt={2} py={3} sx={{ flexDirection: 'row' }}>
+                <Image sx={{ width: '7rem' }} src={challenge.imageUrl} />
+
                 <Link to={`/dashboard/challenges/${challenge?.id}`}>
-                  <Heading sx={{}} as="h3">
-                    {challenge.name}
-                  </Heading>
+                  <Box sx={{ flexGrow: 1, cursor: 'pointer' }} ml={3}>
+                    <Heading sx={{}} as="h3">
+                      {challenge.name}
+                    </Heading>
+
+                    <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
+                      {challenge.description}
+                    </Paragraph>
+
+                    {/* <Badge sx={badgeStyle}>{challenge.category}</Badge> */}
+                    {[
+                      ...challenge?.tags,
+                      ...(challenge?.categories ? challenge.categories : []),
+                    ].map((tag: string) => {
+                      return (
+                        <Box
+                          sx={{
+                            maxWidth: '16rem',
+                            '> div': { mt: 2, ml: 2 },
+                            display: 'inline-block',
+                          }}
+                        >
+                          <Tag bgColor={colors?.purple} color={colors?.white}>
+                            <Flex sx={{ alignItems: 'center' }}>
+                              <AiOutlineTags size={17} />
+                              {tag}
+                            </Flex>
+                          </Tag>
+                        </Box>
+                      );
+                    })}
+                  </Box>
                 </Link>
-
-                <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
-                  {challenge.description}
-                </Paragraph>
-
-                {/* <Badge sx={badgeStyle}>{challenge.category}</Badge> */}
-                {[...challenge?.tags, ...(challenge?.categories ? challenge.categories : [])].map(
-                  (tag: string) => {
-                    return (
-                      <Box
-                        sx={{
-                          maxWidth: '16rem',
-                          '> div': { mt: 2, ml: 2 },
-                          display: 'inline-block',
-                        }}
-                      >
-                        <Tag bgColor={colors?.purple} color={colors?.white}>
-                          <Flex sx={{ alignItems: 'center' }}>
-                            <AiOutlineTags size={17} />
-                            {tag}
-                          </Flex>
-                        </Tag>
-                      </Box>
-                    );
-                  }
-                )}
-              </Box>
-            </Flex>
-          </Box>
-        );
-      })}
+              </Flex>
+            </Box>
+          );
+        })}
 
       <Box sx={{ mb: 3 }}>
         <Pagination

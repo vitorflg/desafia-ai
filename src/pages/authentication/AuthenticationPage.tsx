@@ -69,11 +69,11 @@ const AuthenticationPage: React.FC = () => {
                   <>
                     <Box>
                       <Image variant="avatar" sx={{ mr: 3 }} src={currentUserProfile.imageUrl} />
-                      <Heading sx={{ display: 'inline-block' }}>{currentUserProfile.name}</Heading>
+                      <Heading sx={{ display: 'inline-block', fontSize: 3 }}>{currentUserProfile.name}</Heading>
                     </Box>
                     <Button
                       onClick={() => Authentication.checkAPIAndRedirect(window?.history?.state)}
-                      mr={3}
+                      mr={1}
                     >
                       Continuar como {currentUserProfile.firstName}
                     </Button>

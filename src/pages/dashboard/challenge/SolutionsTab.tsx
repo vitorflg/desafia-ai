@@ -19,8 +19,9 @@ import { useDataState } from '../../../data/DataLayer';
 import Loader from '../../../components/loadings/loader';
 import SolutionComments from './SolutionComments';
 import exampleMd from './solution-example.md';
+import acceptChallengeQuery from '../../../data/queries/acceptChallengeQuery.graphql';
 
-export default function SolutionsTab({ challenge, challengeId }) {
+export default function SolutionsTab({ challenge, challengeId, getChallengeRefetch }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [updatingCacheStore, setUpdatingCacheStore] = React.useState(null);
   const Form = useForm({ solutionDescription: exampleMd });
@@ -33,12 +34,15 @@ export default function SolutionsTab({ challenge, challengeId }) {
 
   const { data: listSolutionsData, refetch } = useQuery(listSolutionsQuery, {
     variables: { challengeId, currentUserId: currentUser?.googleId, limit },
+    fetchPolicy: 'network-only',
   });
 
   const solutions = listSolutionsData?.solutions.list;
   const hasMore = listSolutionsData?.solutions.hasMore ?? false;
-  const [solutionTitle, setSolutionTitle] = React.useState('')
+  const [solutionTitle, setSolutionTitle] = React.useState('');
+  const [solutionDescription, setSolutionDescription] = React.useState('');
   const [createSolution] = useMutation(createSolutionQuery);
+  const [acceptChallenge] = useMutation(acceptChallengeQuery);
   const [deleteInteraction] = useMutation(deleteInteractionQuery);
   const [likeSolution] = useMutation(likeSolutionQuery);
   const [dislikeSolution] = useMutation(dislikeSolutionQuery);
@@ -50,7 +54,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
       variables: {
         challengeId: challengeId,
         title: solutionTitle,
-        description: formData?.solutionDescription,
+        description: solutionDescription,
         userGoogleId: currentUser?.googleId,
       },
     })
@@ -60,6 +64,15 @@ export default function SolutionsTab({ challenge, challengeId }) {
         Form.setFormData({});
 
         refetch();
+
+        acceptChallenge({
+          variables: {
+            currentUserId: currentUser?.googleId,
+            challengeId,
+          },
+        }).then(() => {
+          getChallengeRefetch();
+        });
       })
       .catch(() => {});
   };
@@ -202,8 +215,6 @@ export default function SolutionsTab({ challenge, challengeId }) {
       </Flex>
 
       <Modal centered isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Heading mb={4}>Criar solução</Heading>
-
         <Box onSubmit={onSubmit} as="form">
           <Label htmlFor="challenge-name" pl={1} sx={{ color: 'gray-700' }}>
             Título da solução
@@ -225,7 +236,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
               preview={'live'}
               height={400}
               value={formData?.solutionDescription ?? exampleMd}
-              onChange={(value?: string) => Form.handleInputChange('solutionDescription', value)}
+              onChange={(value?: string) => setSolutionDescription(value ?? '')}
             />
           </div>
 
@@ -243,6 +254,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
             return (
               <>
                 <Collapsible
+                  caretColor="muted"
                   header={<CollapsibleHeader solution={solution} />}
                   onClick={toggleAccordion(index + 1)}
                   isOpen={state?.openQuestion === index + 1}
@@ -289,6 +301,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
                         {previewMode === 'live' && (
                           <Box sx={{ mt: 4, float: 'right' }}>
                             <Button
+                              disabled={!solutionDescription || !solutionTitle}
                               onClick={() =>
                                 createSolution({
                                   variables: {
@@ -309,7 +322,7 @@ export default function SolutionsTab({ challenge, challengeId }) {
                                     setIsSaving(false);
                                   }, 1500);
 
-                                  refetch()
+                                  refetch();
                                 })
                               }
                             >
@@ -323,8 +336,6 @@ export default function SolutionsTab({ challenge, challengeId }) {
                     </>
                   )}
                 </Collapsible>
-
-                <hr className="ma0 bb bb-0 b--black-10" />
               </>
             );
           })}

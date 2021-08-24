@@ -6,6 +6,7 @@ query listSolutionComments($solutionId: String!, $limit: Int!) {
       challengeId
       userGoogleId
       userEmail
+      userName
       message
     }
   }

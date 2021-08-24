@@ -3,6 +3,7 @@ mutation CommentSolution(
   $challengeId: String!
   $currentUserId: String
   $currentUserEmail: String
+  $currentUserName: String
   $interactions: Int
   $message: String!
 ) {
@@ -12,6 +13,7 @@ mutation CommentSolution(
       challengeId: $challengeId
       currentUserId: $currentUserId
       currentUserEmail: $currentUserEmail
+      currentUserName: $currentUserName
       interactions: $interactions
       message: $message
     }
