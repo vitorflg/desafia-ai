@@ -33,9 +33,9 @@ const CreateChallengePage: React.FC = () => {
   });
 
   React.useEffect(() => {
-    if (!currentUser?.email.includes('ic.uff.br')) {
-      setLocation('/dashboard');
-    }
+    // if (!currentUser?.email.includes('ic.uff.br')) {
+    //   setLocation('/dashboard');
+    // }
   }, []);
 
   const isFilled = () => {

@@ -39,12 +39,12 @@ const footerLinks = [
   {
     id: 1,
     name: 'Criar desafio',
-    link: '',
+    link: '/create-challenge',
   },
   {
     id: 0,
     name: 'Como funciona?',
-    link: '',
+    link: '#como-funciona',
   },
 ];
 
@@ -114,7 +114,11 @@ const FooterSection = () => {
       </Box>
 
       {footerLinks.map((link) => (
-        <Link key={link.id} sx={{ ml: [0, 4], color: 'whiteIce', width: ['100%', 'auto'] }}>
+        <Link
+          href={link.link}
+          key={link.id}
+          sx={{ ml: [0, 4], color: 'whiteIce', width: ['100%', 'auto'] }}
+        >
           {link.name}
         </Link>
       ))}

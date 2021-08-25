@@ -150,12 +150,12 @@ function ChallengesPage() {
                     <Flex
                       sx={{
                         flexDirection: 'row',
-                        '> div': { mt: 2, ml: 2 },
+                        '> div': { mt: 2, ml: 2, ':first-child': { ml: 0 } },
                       }}
                     >
                       {challenge?.categories.map((tag: string) => {
                         return (
-                          <Tag bgColor={colors?.white} color={colors?.black}>
+                          <Tag bgColor={'#f2f2f2'} color={colors?.black}>
                             <Paragraph sx={{ fontSize: 1 }}>{tag}</Paragraph>
                           </Tag>
                         );
@@ -167,7 +167,7 @@ function ChallengesPage() {
                         <Flex
                           sx={{
                             flexDirection: 'row',
-                            '> div': { mt: 2, ml: 2 },
+                            '> div': { mt: 2, ml: 2, ':first-child': { ml: 0 } },
                           }}
                         >
                           <Tag bgColor={colors?.purple} color={colors?.white}>

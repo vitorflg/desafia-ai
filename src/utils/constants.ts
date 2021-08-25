@@ -13,34 +13,86 @@ export const categoryOptions: Options = [
     label: 'Lógica de Programação',
   },
   {
-    value: 'iot',
-    label: 'Internet das Coisas',
+    value: 'bd',
+    label: 'Banco de Dados',
   },
   {
-    value: 'machine-learning',
-    label: 'Machine Learning',
+    value: 'es',
+    label: 'Engenharia de Software',
   },
   {
     value: 'redes',
     label: 'Redes',
   },
   {
-    value: 'ciencia-dados',
-    label: 'Ciência de Dados',
+    value: 'ihc',
+    label: 'IHC',
+  },
+  {
+    value: 'si',
+    label: 'Segurança da Informação',
+  },
+  {
+    value: 'q&t',
+    label: 'Qualidade e teste',
   },
 ];
 
 export const tagOptions: Options = [
   {
-    value: 'react.js',
+    value: 'python',
+    label: 'Python',
+  },
+  {
+    value: 'java',
+    label: 'Java',
+  },
+  {
+    value: 'C#',
+    label: 'C',
+  },
+  {
+    value: 'html',
+    label: 'HTML',
+  },
+  {
+    value: 'css',
+    label: 'CSS',
+  },
+  {
+    value: 'javascript',
+    label: 'Javascript',
+  },
+  {
+    value: 'react',
     label: 'ReactJs',
   },
   {
-    value: 'node.js',
+    value: 'vue',
+    label: 'VueJs',
+  },
+  {
+    value: 'node',
     label: 'NodeJs',
   },
   {
-    value: 'dynamo-db',
-    label: 'DynamoDB',
+    value: 'sql',
+    label: 'SQL',
+  },
+  {
+    value: 'my-sql',
+    label: 'MySQL',
+  },
+  {
+    value: 'postgres',
+    label: 'PostgreSQl',
+  },
+  {
+    value: 'oracle',
+    label: 'Oracle',
+  },
+  {
+    value: 'figma',
+    label: 'Figma',
   },
 ];

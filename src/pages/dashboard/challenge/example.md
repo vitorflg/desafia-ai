@@ -1,14 +1,14 @@
-# 💡Template de detalhes do desafio
+## 💡 Template de detalhes do desafio
 
-## 💻 Projeto
+### 💻 Projeto
 
 **Lorem Ipsum** é um projeto teste que serve para exemplificar o template de detalhes do desafio.
 
-## 🔖 Documentação/layout
+### 🔖 Documentação/layout
 
 Você pode visualizar o layout, documentação, especificações do projeto através [desse link](#).
 
-## 🚀 Como executar
+### 🚀 Como executar
 
 - Clone o repositório https://github.com/lorem/ipsum
 - Instale as dependências com `yarn`

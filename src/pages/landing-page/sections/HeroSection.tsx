@@ -47,16 +47,7 @@ const HeroSection: React.FC = () => {
               ...badgeStyle,
             }}
           >
-            Internet das Coisas
-          </Badge>
-
-          <Badge
-            sx={{
-              marginLeft: '0.5rem',
-              ...badgeStyle,
-            }}
-          >
-            Machine Learning
+            Banco de dados
           </Badge>
 
           <Badge
@@ -74,7 +65,35 @@ const HeroSection: React.FC = () => {
               ...badgeStyle,
             }}
           >
-            Ciência de Dados
+            Engenharia de Software
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              minWidth: '80px',
+              textAlign: 'center',
+              ...badgeStyle,
+            }}
+          >
+            IHC
+          </Badge>
+
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              ...badgeStyle,
+            }}
+          >
+            Segurança da Informação
+          </Badge>
+          <Badge
+            sx={{
+              marginLeft: '0.5rem',
+              ...badgeStyle,
+            }}
+          >
+            Qualidade e teste
           </Badge>
         </Box>
       </Flex>

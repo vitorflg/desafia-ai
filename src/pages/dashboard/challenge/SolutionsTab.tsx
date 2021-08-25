@@ -241,9 +241,12 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
             mt={3}
             sx={{
               '.w-md-editor-show-preview': { height: '405px !important' },
+              '.w-md-editor-show-edit': { height: '405px !important' },
+              '.w-md-editor-show-live': { height: '405px !important' },
             }}
           >
             <MDEditor
+              height={400}
               preview={'live'}
               value={formData?.solutionDescription ?? exampleMd}
               onChange={(value?: string) => setSolutionDescription(value ?? '')}
@@ -317,6 +320,8 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                             mt={3}
                             sx={{
                               '.w-md-editor-show-preview': { height: '405px !important' },
+                              '.w-md-editor-show-edit': { height: '405px !important' },
+                              '.w-md-editor-show-live': { height: '405px !important' },
                             }}
                           >
                             <MDEditor
@@ -332,9 +337,9 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                           {previewMode === 'live' && (
                             <Box sx={{ mt: 4, float: 'right' }}>
                               <Button
-                                disabled={!solutionDescription || !solutionTitle}
                                 sx={{ borderRadius: 99 }}
-                                onClick={() =>
+                                onClick={() => {
+                                  console.log('creating solution');
                                   createSolution({
                                     variables: {
                                       challengeId: solution?.challengeId,
@@ -355,8 +360,8 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                                     }, 1500);
 
                                     refetch();
-                                  })
-                                }
+                                  });
+                                }}
                               >
                                 Salvar
                               </Button>
@@ -376,12 +381,12 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
 
       {hasMore && (
         <Button
-          sx={{ margin: 'auto', display: 'block' }}
+          sx={{ margin: 'auto', display: 'block', marginTop: 3 }}
           variant="tertiary"
           onClick={() => {
-            setLimit(limit + 5);
-
-            refetch();
+            setLimit(limit + 5).then(() => {
+              refetch();
+            });
           }}
         >
           Carregar mais
