@@ -147,26 +147,36 @@ function ChallengesPage() {
                       {challenge.description}
                     </Paragraph>
 
-                    {/* <Badge sx={badgeStyle}>{challenge.category}</Badge> */}
-                    {[
-                      ...challenge?.tags,
-                      ...(challenge?.categories ? challenge.categories : []),
-                    ].map((tag: string) => {
+                    <Flex
+                      sx={{
+                        flexDirection: 'row',
+                        '> div': { mt: 2, ml: 2 },
+                      }}
+                    >
+                      {challenge?.categories.map((tag: string) => {
+                        return (
+                          <Tag bgColor={colors?.white} color={colors?.black}>
+                            <Paragraph sx={{ fontSize: 1 }}>{tag}</Paragraph>
+                          </Tag>
+                        );
+                      })}
+                    </Flex>
+
+                    {challenge?.tags.map((tag: string) => {
                       return (
-                        <Box
+                        <Flex
                           sx={{
-                            maxWidth: '16rem',
+                            flexDirection: 'row',
                             '> div': { mt: 2, ml: 2 },
-                            display: 'inline-block',
                           }}
                         >
                           <Tag bgColor={colors?.purple} color={colors?.white}>
                             <Flex sx={{ alignItems: 'center' }}>
                               <AiOutlineTags size={17} />
-                              {tag}
+                              <Paragraph sx={{ fontSize: 1 }}>{tag}</Paragraph>
                             </Flex>
                           </Tag>
-                        </Box>
+                        </Flex>
                       );
                     })}
                   </Box>

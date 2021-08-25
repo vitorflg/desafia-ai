@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paragraph, Textarea, Button } from 'theme-ui';
+import { Box, Paragraph, Textarea, Button, Heading } from 'theme-ui';
 import useForm from '../../../modules/useForm';
 import commentSolutionQuery from '../../../data/queries/commentSolutionQuery.graphql';
 import listSolutionCommentsQuery from '../../../data/queries/listSolutionCommentsQuery.graphql';
@@ -23,7 +23,6 @@ export default function SolutionComments({ solution }) {
 
   async function onSubmit(e) {
     e.preventDefault();
-    console.log(formData);
 
     await commentSolution({
       variables: {
@@ -44,7 +43,8 @@ export default function SolutionComments({ solution }) {
 
   return (
     <Box sx={{ mt: 4 }}>
-      Comentários
+      <Heading as="h3">Comentários</Heading>
+
       {hasMore && (
         <Button
           sx={{ display: 'block', mt: 4 }}
@@ -58,6 +58,7 @@ export default function SolutionComments({ solution }) {
           Carregar mais
         </Button>
       )}
+
       <Box sx={{ paddingY: 3 }}>
         {comments.map((comment) => {
           return (
@@ -66,7 +67,7 @@ export default function SolutionComments({ solution }) {
 
               <Paragraph
                 sx={{
-                  text: 'body',
+                  fontWeight: 'body',
                   padding: 3,
                   border: '1px solid #dedede',
                   borderRadius: '0.25rem',

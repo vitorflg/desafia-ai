@@ -63,7 +63,7 @@ function ChallengePage({ id }) {
             {loading ? (
               <Skeleton width={300} />
             ) : (
-              <Heading sx={{}} as="h3">
+              <Heading sx={{ mt: 2 }} as="h3">
                 {challenge?.name}
               </Heading>
             )}
@@ -71,7 +71,7 @@ function ChallengePage({ id }) {
             {loading ? (
               <Skeleton width={400} count={1} />
             ) : (
-              <Paragraph sx={{ marginTop: '0.5rem', color: 'gray--300' }}>
+              <Paragraph sx={{ marginTop: '0.25rem', color: 'gray--300' }}>
                 {challenge?.description}
               </Paragraph>
             )}
@@ -131,25 +131,12 @@ function ChallengePage({ id }) {
                   '> svg': { verticalAlign: 'middle' },
                 }}
               >
-                {updatingCacheStore && <Loader size={21} />}
+                {updatingCacheStore && <Loader color="#fff" size={21} />}
                 {!updatingCacheStore && <IoMdCheckmark size={21} />}
                 <Paragraph sx={{ ml: 1, display: 'inline-block' }}>Desafio aceito</Paragraph>
               </Button>
             )}
           </Box>
-
-          {challenge?.tags?.map((tag: string) => {
-            return (
-              <Box sx={{ maxWidth: '12rem', '> div': { mt: 2, ml: 2 } }}>
-                <Tag bgColor={colors?.purple} color={colors?.white}>
-                  <Flex sx={{ alignItems: 'center' }}>
-                    <AiOutlineTags size={17} />
-                    {tag}
-                  </Flex>
-                </Tag>
-              </Box>
-            );
-          })}
         </Flex>
       </Box>
 

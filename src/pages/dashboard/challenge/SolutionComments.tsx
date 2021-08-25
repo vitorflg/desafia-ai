@@ -63,10 +63,13 @@ export default function SolutionComments({ solution }) {
         </Button>
       )}
       <Box sx={{ paddingY: 3 }}>
+        {!comments.length && <Paragraph variant="display">Ainda não possui comentários</Paragraph>}
         {comments.map((comment) => {
           return (
             <Box sx={{ mt: 2 }}>
-              {(comment.userEmail || comment.userName) && <Paragraph sx={{ mb: 1 }}>{`${comment.userName ?? comment.userEmail}:`}</Paragraph>}
+              {(comment.userEmail || comment.userName) && (
+                <Paragraph sx={{ mb: 1 }}>{`${comment.userName ?? comment.userEmail}:`}</Paragraph>
+              )}
               <Flex
                 sx={{
                   mt: 2,
@@ -76,6 +79,7 @@ export default function SolutionComments({ solution }) {
                 }}
               >
                 <Paragraph
+                  variant="display"
                   sx={{
                     text: 'body',
                     flexGrow: 1,
@@ -122,8 +126,9 @@ export default function SolutionComments({ solution }) {
             fontSize: 1,
           }}
         />
-        <Box sx={{ float: 'right', my: 3 }}>
-          <Button variant="primary" type="submit">
+
+        <Box sx={{ my: 3 }}>
+          <Button variant="primary" type="submit" sx={{ borderRadius: 99 }}>
             Enviar
           </Button>
         </Box>

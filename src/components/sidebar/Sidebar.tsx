@@ -34,7 +34,7 @@ function Sidebar() {
       }}
     >
       <Box sx={{ '> *': { display: 'inline-block' } }}>
-        <Image width="125" src={logoSrc} />
+        <Image width="105" src={logoSrc} />
         <div className="cursor"></div>
       </Box>
 

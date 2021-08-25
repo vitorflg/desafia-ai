@@ -32,6 +32,7 @@ export const theme: Theme = {
     red: '#db0404',
     whiteIce: '#E0E0E0',
     'black--500': '#333333',
+    black: '#333333',
     'black--600': '#222222',
   },
   links: {

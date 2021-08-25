@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Label, Box, Paragraph, Button } from 'theme-ui';
+import { Image, Label, Box, Paragraph, Button } from 'theme-ui';
 import useForm from '../../../modules/useForm';
 import Input from '@vtex/styleguide/lib/Input';
 import Modal from '@vtex/styleguide/lib/Modal';
@@ -8,12 +8,14 @@ import Collapsible from '@vtex/styleguide/lib/Collapsible';
 import Tag from '@vtex/styleguide/lib/Tag';
 import { useMutation, useQuery } from '@apollo/client';
 import { Flex } from '@theme-ui/components';
-import { AiFillDelete, AiFillLike } from 'react-icons/ai';
+import { AiFillDelete, AiFillHeart } from 'react-icons/ai';
 import listSolutionsQuery from '../../../data/queries/listSolutionsQuery.graphql';
 import createSolutionQuery from '../../../data/queries/createSolutionQuery.graphql';
 import deleteInteractionQuery from '../../../data/queries/deleteInteractionQuery.graphql';
 import likeSolutionQuery from '../../../data/queries/likeSolutionQuery.graphql';
 import dislikeSolutionQuery from '../../../data/queries/dislikeSolutionQuery.graphql';
+import loaderGifSrc from '../../../assets/images/loader.gif';
+
 import MDEditor from '@uiw/react-md-editor';
 import { useDataState } from '../../../data/DataLayer';
 import Loader from '../../../components/loadings/loader';
@@ -32,7 +34,7 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
   const [previewMode, setPreviewMode] = React.useState('preview');
   const [isSaving, setIsSaving] = React.useState(false);
 
-  const { data: listSolutionsData, refetch } = useQuery(listSolutionsQuery, {
+  const { data: listSolutionsData, refetch, loading } = useQuery(listSolutionsQuery, {
     variables: { challengeId, currentUserId: currentUser?.googleId, limit },
     fetchPolicy: 'network-only',
   });
@@ -99,9 +101,10 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
             justifyContent: 'center',
             ':hover': { color: 'purple' },
             color: solution.likedByCurrentUser ? 'purple' : 'black--600',
+            svg: { verticalAlign: 'middle' },
           }}
         >
-          <AiFillLike
+          <Box
             onClick={(e) => {
               e.stopPropagation();
               setUpdatingCacheStore(solution.id);
@@ -173,34 +176,37 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                 });
               }
             }}
-            size={20}
-          />
-          <Paragraph as="span" sx={{ fontSize: 1, mr: 1 }}>
-            {updatingCacheStore && updatingCacheStore === solution.id ? (
-              <Loader size="20" />
-            ) : (
-              `(${solution.likes?.count ?? 0})`
+          >
+            <AiFillHeart size={20} />
+            <Paragraph as="span" sx={{ fontSize: 1, mr: 1 }}>
+              {updatingCacheStore && updatingCacheStore === solution.id ? (
+                <Loader size="20" />
+              ) : (
+                `(${solution.likes?.count ?? 0})`
+              )}
+            </Paragraph>
+          </Box>
+
+          <Box pl={3}>
+            {currentUser?.googleId === solution.userGoogleId && (
+              <AiFillDelete
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  deleteInteraction({
+                    variables: {
+                      solutionId: solution.id,
+                      challengeId: challenge.id,
+                    },
+                  }).then(() => {
+                    refetch();
+                  });
+                }}
+                color="#DD372C"
+                size={20}
+              />
             )}
-          </Paragraph>
-
-          {currentUser?.googleId === solution.userGoogleId && (
-            <AiFillDelete
-              onClick={(e) => {
-                e.stopPropagation();
-
-                deleteInteraction({
-                  variables: {
-                    solutionId: solution.id,
-                    challengeId: challenge.id,
-                  },
-                }).then(() => {
-                  refetch();
-                });
-              }}
-              color="#DD372C"
-              size={20}
-            />
-          )}
+          </Box>
         </Flex>
       </div>
     );
@@ -209,7 +215,7 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
   return (
     <>
       <Flex mt={4} sx={{ justifyContent: 'flex-end' }}>
-        <Button onClick={() => setIsModalOpen(true)} iconPosition="right">
+        <Button onClick={() => setIsModalOpen(true)} iconPosition="right" sx={{ borderRadius: 99 }}>
           Criar solução
         </Button>
       </Flex>
@@ -231,14 +237,18 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
             }}
           />
 
-          <div className="mt3">
+          <Box
+            mt={3}
+            sx={{
+              '.w-md-editor-show-preview': { height: '405px !important' },
+            }}
+          >
             <MDEditor
               preview={'live'}
-              height={400}
               value={formData?.solutionDescription ?? exampleMd}
               onChange={(value?: string) => setSolutionDescription(value ?? '')}
             />
-          </div>
+          </Box>
 
           <div className="nowrap mt4">
             <span className="mr4">
@@ -248,98 +258,121 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
         </Box>
       </Modal>
 
-      <Box py={4}>
-        {solutions &&
-          solutions.map((solution: any, index) => {
-            return (
-              <>
-                <Collapsible
-                  caretColor="muted"
-                  header={<CollapsibleHeader solution={solution} />}
-                  onClick={toggleAccordion(index + 1)}
-                  isOpen={state?.openQuestion === index + 1}
+      {loading && (
+        <Image mt={6} mb={6} ml={'50%'} sx={{ display: 'block' }} src={loaderGifSrc} width="30" />
+      )}
+
+      {!loading && (
+        <Box mt={4}>
+          {solutions &&
+            solutions.map((solution: any, index) => {
+              return (
+                <Box
+                  px={3}
+                  sx={{
+                    border: '1px solid #dedede',
+                    borderBottom: 'none',
+                    ':last-child': { borderBottom: '1px solid #dedede' },
+                  }}
                 >
-                  {state?.openQuestion === index + 1 && (
-                    <>
-                      <div className="pa5 flex justify-end">
-                        <SelectableCard
-                          noPadding
-                          selected={previewMode === 'preview'}
-                          onClick={() => setPreviewMode('preview')}
-                        >
-                          <div className="pa4">
-                            <div className="f5 tc">Preview</div>
+                  <Collapsible
+                    caretColor="muted"
+                    header={<CollapsibleHeader solution={solution} />}
+                    onClick={toggleAccordion(index + 1)}
+                    isOpen={state?.openQuestion === index + 1}
+                  >
+                    {state?.openQuestion === index + 1 && (
+                      <>
+                        <div className="pa5 flex justify-end">
+                          <SelectableCard
+                            noPadding
+                            selected={previewMode === 'preview'}
+                            onClick={() => setPreviewMode('preview')}
+                          >
+                            <div className="pa4">
+                              <div className="f5 tc">Preview</div>
+                            </div>
+                          </SelectableCard>
+
+                          {currentUser &&
+                            challenge &&
+                            currentUser?.googleId === solution?.userGoogleId && (
+                              <SelectableCard
+                                hasGroupLeft
+                                noPadding
+                                selected={previewMode === 'live'}
+                                onClick={() => setPreviewMode('live')}
+                              >
+                                <div className="pa4">
+                                  <div className="f5 tc">Editar</div>
+                                </div>
+                              </SelectableCard>
+                            )}
+                        </div>
+                        <div className="pa6">
+                          <div className="mt3 mb3">
+                            {isSaving && <Tag type="success">Salvo</Tag>}
                           </div>
-                        </SelectableCard>
-
-                        {currentUser &&
-                          challenge &&
-                          currentUser?.googleId === solution?.userGoogleId && (
-                            <SelectableCard
-                              hasGroupLeft
-                              noPadding
-                              selected={previewMode === 'live'}
-                              onClick={() => setPreviewMode('live')}
-                            >
-                              <div className="pa4">
-                                <div className="f5 tc">Editar</div>
-                              </div>
-                            </SelectableCard>
-                          )}
-                      </div>
-                      <div className="pa6">
-                        <div className="mt3 mb3">{isSaving && <Tag type="success">Salvo</Tag>}</div>
-                        <MDEditor
-                          preview={previewMode}
-                          height={400}
-                          value={solution?.description}
-                          onChange={(value?: string) =>
-                            Form.handleInputChange('solutionDescription', value)
-                          }
-                        />
-
-                        {previewMode === 'live' && (
-                          <Box sx={{ mt: 4, float: 'right' }}>
-                            <Button
-                              disabled={!solutionDescription || !solutionTitle}
-                              onClick={() =>
-                                createSolution({
-                                  variables: {
-                                    challengeId: solution?.challengeId,
-                                    title: solution?.title,
-                                    description: formData?.solutionDescription,
-                                    userGoogleId: solution?.userGoogleId,
-                                    id: solution?.id,
-                                  },
-                                }).then(() => {
-                                  setIsSaving(true);
-
-                                  setPreviewMode('preview');
-
-                                  Form.setFormData({});
-
-                                  setTimeout(() => {
-                                    setIsSaving(false);
-                                  }, 1500);
-
-                                  refetch();
-                                })
+                          <Box
+                            mt={3}
+                            sx={{
+                              '.w-md-editor-show-preview': { height: '405px !important' },
+                            }}
+                          >
+                            <MDEditor
+                              preview={previewMode}
+                              height={400}
+                              value={solution?.description}
+                              onChange={(value?: string) =>
+                                Form.handleInputChange('solutionDescription', value)
                               }
-                            >
-                              Salvar
-                            </Button>
+                            />
                           </Box>
-                        )}
 
-                        <SolutionComments solution={solution} />
-                      </div>
-                    </>
-                  )}
-                </Collapsible>
-              </>
-            );
-          })}
-      </Box>
+                          {previewMode === 'live' && (
+                            <Box sx={{ mt: 4, float: 'right' }}>
+                              <Button
+                                disabled={!solutionDescription || !solutionTitle}
+                                sx={{ borderRadius: 99 }}
+                                onClick={() =>
+                                  createSolution({
+                                    variables: {
+                                      challengeId: solution?.challengeId,
+                                      title: solution?.title,
+                                      description: formData?.solutionDescription,
+                                      userGoogleId: solution?.userGoogleId,
+                                      id: solution?.id,
+                                    },
+                                  }).then(() => {
+                                    setIsSaving(true);
+
+                                    setPreviewMode('preview');
+
+                                    Form.setFormData({});
+
+                                    setTimeout(() => {
+                                      setIsSaving(false);
+                                    }, 1500);
+
+                                    refetch();
+                                  })
+                                }
+                              >
+                                Salvar
+                              </Button>
+                            </Box>
+                          )}
+
+                          <SolutionComments solution={solution} />
+                        </div>
+                      </>
+                    )}
+                  </Collapsible>
+                </Box>
+              );
+            })}
+        </Box>
+      )}
 
       {hasMore && (
         <Button
