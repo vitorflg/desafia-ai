@@ -4,6 +4,7 @@ mutation Solution(
   $description: JSON!
   $userGoogleId: String!
   $id: String
+  $date: Float
 ) {
   solution(
     input: {
@@ -12,6 +13,7 @@ mutation Solution(
       description: $description
       userGoogleId: $userGoogleId
       id: $id
+      date: $date
     }
   )
 }

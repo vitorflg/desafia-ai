@@ -33,9 +33,9 @@ const CreateChallengePage: React.FC = () => {
   });
 
   React.useEffect(() => {
-    // if (!currentUser?.email.includes('ic.uff.br')) {
-    //   setLocation('/dashboard');
-    // }
+    if (!currentUser?.email.includes('ic.uff.br')) {
+      setLocation('/dashboard');
+    }
   }, []);
 
   const isFilled = () => {
@@ -79,8 +79,8 @@ const CreateChallengePage: React.FC = () => {
         <PrivateHeader />
 
         <Flex
-          px={7}
-          py={7}
+          px={4}
+          py={6}
           sx={{
             flexDirection: ['column', 'row'],
             justifyContent: 'center',

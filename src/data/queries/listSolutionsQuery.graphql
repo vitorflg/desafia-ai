@@ -9,6 +9,7 @@ query listSolutions($challengeId: String, $currentUserId: ID!, $limit: Int!) {
       challengeId
       userGoogleId
       likedByCurrentUser
+      date
     }
   }
 }

@@ -63,9 +63,9 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
       .then(() => {
         setIsModalOpen(false);
 
-        Form.setFormData({});
+        refetch({ limit, challengeId, currentUserId: currentUser?.googleId });
 
-        refetch();
+        Form.setFormData({});
 
         acceptChallenge({
           variables: {
@@ -122,7 +122,6 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                       query: listSolutionsQuery,
                       data: {
                         solutions: [
-                          ...solutions,
                           {
                             id: solution.id,
                             likedByCurrentUser: false,
@@ -130,6 +129,7 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                               count: solution.likes?.count ? solution.likes.count - 1 : 0,
                             },
                           },
+                          ...solutions,
                         ],
                       },
                       variables: {
@@ -339,7 +339,6 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                               <Button
                                 sx={{ borderRadius: 99 }}
                                 onClick={() => {
-                                  console.log('creating solution');
                                   createSolution({
                                     variables: {
                                       challengeId: solution?.challengeId,
@@ -347,6 +346,33 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                                       description: formData?.solutionDescription,
                                       userGoogleId: solution?.userGoogleId,
                                       id: solution?.id,
+                                      date: solution?.date,
+                                    },
+                                    update: async (proxy) => {
+                                      console.log(solutions);
+                                      const s = solutions.map((item) => {
+                                        if (item.id === solution.id) {
+                                          return {
+                                            ...item,
+                                            title: solution?.title,
+                                            description: formData?.solutionDescription,
+                                          };
+                                        }
+
+                                        return item;
+                                      });
+                                      console.log(s);
+                                      await proxy.writeQuery({
+                                        query: listSolutionsQuery,
+                                        data: {
+                                          solutions: s,
+                                        },
+                                        variables: {
+                                          challengeId: solution.challengeId,
+                                          currentUserId: currentUser?.googleId,
+                                          limit,
+                                        },
+                                      });
                                     },
                                   }).then(() => {
                                     setIsSaving(true);
@@ -358,8 +384,6 @@ export default function SolutionsTab({ challenge, challengeId, getChallengeRefet
                                     setTimeout(() => {
                                       setIsSaving(false);
                                     }, 1500);
-
-                                    refetch();
                                   });
                                 }}
                               >
