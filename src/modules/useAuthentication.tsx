@@ -59,15 +59,8 @@ export function useAuthentication() {
     setGoogleAPIStatus({ loading: true });
 
     return GoogleClient?.signIn().then((user: GoogleUser = {}) => {
-      const userEmail = user?.getBasicProfile?.().getEmail() ?? '';
-
-      if (userEmail.includes('uff.br')) {
-        setCurrentUser(user);
-        window?.localStorage.setItem('da_google_token', user?.getAuthResponse().id_token);
-      } else {
-        alert('Apenas alunos do instituto de computação da UFF podem fazer parte do beta.');
-      }
-
+      setCurrentUser(user);
+      window?.localStorage.setItem('da_google_token', user?.getAuthResponse().id_token);
       setGoogleAPIStatus({ loading: false });
     });
   };

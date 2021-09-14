@@ -58,30 +58,29 @@ const AuthenticationPage: React.FC = () => {
             {Authentication.isLoading() && (
               <Image mb={3} sx={{ display: 'block' }} src={loaderGifSrc} width="30" />
             )}
-            {!isTokenValid && (
-              <Button variant="primary" onClick={Authentication.signIn}>
-                Entrar com google
-              </Button>
-            )}
-            {isTokenValid && (
+            {!isTokenValid ||
+              (!currentUserProfile && (
+                <Button variant="primary" onClick={Authentication.signIn}>
+                  Entrar com google
+                </Button>
+              ))}
+            {isTokenValid && currentUserProfile && (
               <>
-                {currentUserProfile && (
-                  <>
-                    <Box>
-                      <Image variant="avatar" sx={{ mr: 3 }} src={currentUserProfile.imageUrl} />
-                      <Heading sx={{ display: 'inline-block', fontSize: 3 }}>{currentUserProfile.name}</Heading>
-                    </Box>
-                    <Button
-                      onClick={() => Authentication.checkAPIAndRedirect(window?.history?.state)}
-                      mr={1}
-                    >
-                      Continuar como {currentUserProfile.firstName}
-                    </Button>
-                    <Button variant="primary" mt={3} onClick={Authentication.signOut}>
-                      Sair
-                    </Button>
-                  </>
-                )}
+                <Box>
+                  <Image variant="avatar" sx={{ mr: 3 }} src={currentUserProfile.imageUrl} />
+                  <Heading sx={{ display: 'inline-block', fontSize: 3 }}>
+                    {currentUserProfile.name}
+                  </Heading>
+                </Box>
+                <Button
+                  onClick={() => Authentication.checkAPIAndRedirect(window?.history?.state)}
+                  mr={1}
+                >
+                  Continuar como {currentUserProfile.firstName}
+                </Button>
+                <Button variant="primary" mt={3} onClick={Authentication.signOut}>
+                  Sair
+                </Button>
               </>
             )}
           </Box>
