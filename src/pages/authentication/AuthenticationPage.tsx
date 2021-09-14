@@ -13,7 +13,12 @@ const AuthenticationPage: React.FC = () => {
   const Authentication = useAuthentication();
   const currentUser = useDataState();
   const currentUserProfile = currentUser?.profile;
+  console.log(
+    '🚀 ~ file: AuthenticationPage.tsx ~ line 16 ~ currentUserProfile',
+    currentUserProfile
+  );
   const isTokenValid = window?.localStorage.getItem('da_google_token');
+  console.log('🚀 ~ file: AuthenticationPage.tsx ~ line 18 ~ isTokenValid', isTokenValid);
 
   function onClick() {
     setLocation('/');
@@ -58,12 +63,11 @@ const AuthenticationPage: React.FC = () => {
             {Authentication.isLoading() && (
               <Image mb={3} sx={{ display: 'block' }} src={loaderGifSrc} width="30" />
             )}
-            {!isTokenValid ||
-              (!currentUserProfile && (
-                <Button variant="primary" onClick={Authentication.signIn}>
-                  Entrar com google
-                </Button>
-              ))}
+            {(!isTokenValid || !currentUserProfile) && (
+              <Button variant="primary" onClick={Authentication.signIn}>
+                Entrar com google
+              </Button>
+            )}
             {isTokenValid && currentUserProfile && (
               <>
                 <Box>

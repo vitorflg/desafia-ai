@@ -32,11 +32,11 @@ const CreateChallengePage: React.FC = () => {
     clearAllBodyScrollLocks();
   });
 
-  React.useEffect(() => {
-    if (!currentUser?.email.includes('ic.uff.br')) {
-      setLocation('/dashboard');
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (!currentUser?.email.includes('ic.uff.br')) {
+  //     setLocation('/dashboard');
+  //   }
+  // }, []);
 
   const isFilled = () => {
     return (
